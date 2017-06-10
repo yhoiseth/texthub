@@ -73,9 +73,23 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldHaveAGitRepository()
     {
+        /** @var \FOS\UserBundle\Doctrine\UserManager $userManager */
+        $userManager = $this->grabService('fos_user.user_manager');
+
+        /** @var \AppBundle\Entity\User $user */
+        $user = $userManager->findUsers()[0];
+
+        $username = $user->getUsernameCanonical();
+
+        /** @var AppKernel $kernel */
+        $kernel = $this->grabService('kernel');
+
+        $projectDirectory = $kernel->getProjectDir();
+
+        $rootRepositoriesDirectory = $projectDirectory . '/var/root_repositories';
+
+        verify(file_exists($rootRepositoriesDirectory))->true();
         
-
-
         throw new \Codeception\Exception\Incomplete("Step `I should have a Git repository` is not defined");
     }
 }
