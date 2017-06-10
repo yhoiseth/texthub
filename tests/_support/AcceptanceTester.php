@@ -25,7 +25,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldSee($arg1)
     {
-        dump('hello');
-        throw new \Codeception\Exception\Incomplete("Step `I should see :arg1` is not defined");
+        $this->amOnPage('/');
+        $this->canSee($arg1);
     }
 }
