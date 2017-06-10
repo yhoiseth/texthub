@@ -57,7 +57,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldBeLoggedIn()
     {
-        $this->canSee('Logout');
+        $this->canSee('Log out');
     }
 
     /**
