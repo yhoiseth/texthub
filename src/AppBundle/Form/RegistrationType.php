@@ -12,12 +12,12 @@ class RegistrationType extends AbstractType
         $builder->add('name');
     }
 
-    public function getParent()
+    public function getParent(): string
     {
-        return 'fos_user_registration';
+        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'app_user_registration';
     }

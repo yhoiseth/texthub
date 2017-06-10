@@ -10,6 +10,7 @@ Feature: Register
     And I fill in the "Username" field with "marelius"
     And I fill in the "Email" field with "marcus@aurelius.com"
     And I fill in the "Password" field with "take it easy"
+    And I fill in the "Repeat password" field with "take it easy"
     And I press "Enter"
     Then my user account should be created
     And I should have a Git repository
