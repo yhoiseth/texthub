@@ -41,7 +41,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iFillInTheFieldWith($arg1, $arg2)
     {
-        throw new \Codeception\Exception\Incomplete("Step `I fill in the :arg1 field with :arg2` is not defined");
+        $this->fillField($arg1, $arg2);
     }
 
     /**
