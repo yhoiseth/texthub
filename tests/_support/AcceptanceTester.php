@@ -21,11 +21,66 @@ class AcceptanceTester extends \Codeception\Actor
     use _generated\AcceptanceTesterActions;
 
     /**
-     * @Then I should see :arg1
+     * @Given I am on :arg1
      */
-    public function iShouldSee($arg1)
+    public function iAmOn($arg1)
     {
         $this->amOnPage('/');
-        $this->canSee($arg1);
+    }
+
+    /**
+     * @When I click :arg1
+     */
+    public function iClick($arg1)
+    {
+        $this->click($arg1);
+    }
+
+    /**
+     * @When I fill in the :arg1 field with :arg2
+     */
+    public function iFillInTheFieldWith($arg1, $arg2)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I fill in the :arg1 field with :arg2` is not defined");
+    }
+
+    /**
+     * @When I press :arg1
+     */
+    public function iPress($arg1)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I press :arg1` is not defined");
+    }
+
+    /**
+     * @Then my user account should be created
+     */
+    public function myUserAccountShouldBeCreated()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `my user account should be created` is not defined");
+    }
+
+    /**
+     * @Then I should have a Git repository
+     */
+    public function iShouldHaveAGitRepository()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I should have a Git repository` is not defined");
+    }
+
+    /**
+     * @Then I should be logged in
+     */
+    public function iShouldBeLoggedIn()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I should be logged in` is not defined");
+    }
+
+    /**
+     * @Then I should be redirected to :arg1
+     */
+    public function iShouldBeRedirectedTo($arg1)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I should be redirected to :arg1` is not defined");
     }
 }
