@@ -4,4 +4,4 @@ Feature: javascript-execution
   I need to ...
 
   Scenario: try javascript-execution
-    Then I should see "Added with JavaScriptzzz"
+    Then I should see "Added with JavaScript"
