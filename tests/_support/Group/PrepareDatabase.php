@@ -22,7 +22,7 @@ class PrepareDatabase extends \Codeception\Platform\Group
             'doctrine:database:create',
             'doctrine:database:drop --force',
             'doctrine:database:create',
-            'doctrine:migrations:migrate --no-interaction',
+            'doctrine:migrations:migrate --no-interaction --allow-no-migration --quiet',
         ];
 
         foreach ($commands as $command) {
