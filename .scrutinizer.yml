@@ -1,0 +1,6 @@
+build:
+  environment:
+    selenium: true
+  tests:
+    before:
+      - 'bin/console server:start'
