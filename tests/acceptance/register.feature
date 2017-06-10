@@ -12,7 +12,6 @@ Feature: Register
     And I fill in the "Password" field with "take it easy"
     And I fill in the "Repeat password" field with "take it easy"
     And I press the "Register" button
-    Then my user account should be created
-    And I should have a Git repository
-    And I should be logged in
+    Then I should be logged in
     And I should be redirected to "/register/confirmed"
+    And I should have a Git repository

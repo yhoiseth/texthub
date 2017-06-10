@@ -53,27 +53,11 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then my user account should be created
-     */
-    public function myUserAccountShouldBeCreated()
-    {
-        throw new \Codeception\Exception\Incomplete("Step `my user account should be created` is not defined");
-    }
-
-    /**
-     * @Then I should have a Git repository
-     */
-    public function iShouldHaveAGitRepository()
-    {
-        throw new \Codeception\Exception\Incomplete("Step `I should have a Git repository` is not defined");
-    }
-
-    /**
      * @Then I should be logged in
      */
     public function iShouldBeLoggedIn()
     {
-        throw new \Codeception\Exception\Incomplete("Step `I should be logged in` is not defined");
+        $this->canSee('Logout');
     }
 
     /**
@@ -81,6 +65,17 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldBeRedirectedTo($arg1)
     {
-        throw new \Codeception\Exception\Incomplete("Step `I should be redirected to :arg1` is not defined");
+        $this->canSeeInCurrentUrl($arg1);
+    }
+
+    /**
+     * @Then I should have a Git repository
+     */
+    public function iShouldHaveAGitRepository()
+    {
+        
+
+
+        throw new \Codeception\Exception\Incomplete("Step `I should have a Git repository` is not defined");
     }
 }
