@@ -20,7 +20,12 @@ class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @Then I should see :arg1
+     */
+    public function iShouldSee($arg1)
+    {
+        dump('hello');
+        throw new \Codeception\Exception\Incomplete("Step `I should see :arg1` is not defined");
+    }
 }
