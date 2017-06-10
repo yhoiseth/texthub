@@ -6,3 +6,4 @@ build:
     before:
       - 'bin/console doctrine:database:create --if-not-exists'
       - 'bin/console server:start'
+      - 'export SYMFONY_DEPRECATIONS_HELPER=weak'
