@@ -1,4 +1,4 @@
-@prepare_database
+@prepare_database @clean_files
 Feature: Register
   As a visitor
   I need to be able to register

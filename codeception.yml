@@ -9,3 +9,4 @@ extensions:
     enabled:
         - Codeception\Extension\RunFailed
         - Group\PrepareDatabase
+        - Group\CleanFiles
