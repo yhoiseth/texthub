@@ -86,10 +86,33 @@ class AcceptanceTester extends \Codeception\Actor
 
         $projectDirectory = $kernel->getProjectDir();
 
-        $rootRepositoriesDirectory = $projectDirectory . '/var/root_repositories';
+        $mainRepositoriesDirectory = $projectDirectory . '/var/repositories/main';
 
-        verify(file_exists($rootRepositoriesDirectory))->true();
-        
-        throw new \Codeception\Exception\Incomplete("Step `I should have a Git repository` is not defined");
+        verify(file_exists($mainRepositoriesDirectory))->true();
+
+        $userMainRepositoryDirectory = $mainRepositoriesDirectory . '/' . $username;
+
+        verify(file_exists($userMainRepositoryDirectory))->true();
+
+        $userMainRepositoryGitDirectory = $userMainRepositoryDirectory . '/.git';
+
+        verify(file_exists($userMainRepositoryGitDirectory))
+            ->true();
+
+        $namesOfStandardFilesInGitDirectory = [
+            'HEAD',
+            'config',
+            'description',
+            'hooks',
+            'info',
+            'objects',
+            'refs',
+        ];
+
+        foreach ($namesOfStandardFilesInGitDirectory as $filename) {
+            $file = $userMainRepositoryGitDirectory . DIRECTORY_SEPARATOR . $filename;
+
+            verify(file_exists($file))->true();
+        }
     }
 }

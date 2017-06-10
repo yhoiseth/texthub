@@ -19,7 +19,7 @@ class PrepareDatabase extends \Codeception\Platform\Group
     public function _before(TestEvent $e)
     {
         $commands = [
-            'doctrine:database:create',
+            'doctrine:database:create --if-not-exists',
             'doctrine:database:drop --force',
             'doctrine:database:create',
             'doctrine:migrations:migrate --no-interaction --allow-no-migration --quiet',
