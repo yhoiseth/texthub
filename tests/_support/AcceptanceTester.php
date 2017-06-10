@@ -45,11 +45,11 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @When I press :arg1
+     * @When I press the :arg1 button
      */
-    public function iPress($arg1)
+    public function iPressTheButton($arg1)
     {
-        throw new \Codeception\Exception\Incomplete("Step `I press :arg1` is not defined");
+        $this->click("input[value=$arg1]");
     }
 
     /**
