@@ -1,3 +1,4 @@
+@prepare_database
 Feature: Register
   As a visitor
   I need to be able to register
