@@ -57,6 +57,11 @@
         {
             color: #333;
         }
+
+        .nav > li > a > img
+        {
+            max-width: 30px;
+        }
     </style>
 
     <title>{% block title %}Texthub{% endblock %}</title>
@@ -93,6 +98,16 @@
                                 role="button"
                                 aria-haspopup="true"
                                 aria-expanded="false">
+                            <img
+                                    src="{{ gravatar(
+                                        app.user.emailCanonical,
+                                        60,
+                                        'g',
+                                        'mm',
+                                        true
+                                    ) }}"
+                                    class="img-circle"
+                            >
                             {{ app.user.name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
