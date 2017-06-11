@@ -42,8 +42,6 @@ class RegisterUserListener implements EventSubscriberInterface
 
         $userMainRepositoryDirectory = $mainRepositoriesDirectory . '/' . $user->getUsernameCanonical();
 
-//        $this->getContainer()->get('logger')->log('debug', $projectDirectory);
-
         if (!file_exists($userMainRepositoryDirectory)) {
             mkdir(
                 $userMainRepositoryDirectory,
@@ -53,11 +51,6 @@ class RegisterUserListener implements EventSubscriberInterface
         }
 
         exec("git init $userMainRepositoryDirectory");
-
-//        $this->getContainer()->get('logger')->log(
-//            'debug',
-//            passthru("git init $userMainRepositoryDirectory")
-//        );
     }
 
     /**

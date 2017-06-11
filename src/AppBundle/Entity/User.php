@@ -1,5 +1,4 @@
 <?php
-// src/AppBundle/Entity/User.php
 
 namespace AppBundle\Entity;
 
@@ -13,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class User extends BaseUser
 {
     /**
+     * @var integer
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -24,12 +24,6 @@ class User extends BaseUser
      * @ORM\Column(type="string")
      */
     protected $name;
-
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
 
     /**
      * @return string
