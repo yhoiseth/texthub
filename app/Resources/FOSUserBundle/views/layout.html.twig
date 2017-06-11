@@ -147,32 +147,14 @@
                         </ul>
                     </li>
                 {% else %}
-                    <li
-                            class="
-                                {% if app.request.get('_route') == 'fos_user_security_login' %}
-                                    active
-                                {% endif %}
-                            "
-                    >
-                        <a
-                                href="{{ path('fos_user_security_login') }}"
-                        >
-                            {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
-                        </a>
-                    </li>
-                    <li
-                            class="
-                                {% if app.request.get('_route') == 'fos_user_registration_register' %}
-                                    active
-                                {% endif %}
-                            "
-                    >
-                        <a
-                                href="{{ path('fos_user_registration_register') }}"
-                        >
-                            {{ 'layout.register'|trans({}, 'FOSUserBundle') }}
-                        </a>
-                    </li>
+                    {% include ':components/navbar:link.html.twig' with {
+                        path_name: 'fos_user_security_login',
+                        text: 'layout.login',
+                    } %}
+                    {% include ':components/navbar:link.html.twig' with {
+                        path_name: 'fos_user_registration_register',
+                        text: 'layout.register',
+                    } %}
                 {% endif %}
             </ul>
         </div>

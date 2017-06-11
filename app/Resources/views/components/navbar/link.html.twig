@@ -1,0 +1,13 @@
+<li
+        class="
+            {% if app.request.get('_route') == path_name %}
+                active
+            {% endif %}
+        "
+>
+    <a
+            href="{{ path(path_name) }}"
+    >
+        {{ text|trans({}, 'FOSUserBundle') }}
+    </a>
+</li>
