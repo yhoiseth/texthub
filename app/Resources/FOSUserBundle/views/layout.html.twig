@@ -111,50 +111,60 @@
                             {{ app.user.name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a
-                                        href="{{ path('fos_user_profile_show') }}"
-                                >
-                                    {{ 'profile.show'|trans() }}
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                        href="{{ path('fos_user_profile_edit') }}"
-                                >
-                                    {{ 'profile.edit'|trans() }}
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                        href="{{ path('fos_user_change_password') }}"
-                                >
-                                    {{ 'change_password'|trans() }}
-                                </a>
-                            </li>
+                            
+                            {% set links = [
+                                {
+                                    path_name: 'fos_user_profile_show',
+                                    text: 'profile.show',
+                                    translation_domain: 'messages',
+                                },
+                                {
+                                    path_name: 'fos_user_profile_edit',
+                                    text: 'profile.edit',
+                                    translation_domain: 'messages',
+                                },
+                                {
+                                    path_name: 'fos_user_change_password',
+                                    text: 'change_password',
+                                    translation_domain: 'messages',
+                                },
+                            ] %}
+
+                            {% for link in links %}
+                                {% include ':components/navbar/dropdown:link.html.twig' with link %}
+                            {% endfor %}
+
                             <li
                                     role="separator"
                                     class="divider">
 
                             </li>
-                            <li>
-                                <a
-                                        href="{{ path('fos_user_security_logout') }}"
-                                >
-                                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                                </a>
-                            </li>
+
+                            {% include ':components/navbar/dropdown:link.html.twig' with {
+                                path_name: 'fos_user_security_logout',
+                                text: 'layout.logout',
+                                translation_domain: 'FOSUserBundle',
+                            } %}
+
                         </ul>
                     </li>
                 {% else %}
-                    {% include ':components/navbar:link.html.twig' with {
-                        path_name: 'fos_user_security_login',
-                        text: 'layout.login',
-                    } %}
-                    {% include ':components/navbar:link.html.twig' with {
-                        path_name: 'fos_user_registration_register',
-                        text: 'layout.register',
-                    } %}
+
+                    {% set links = [
+                        {
+                            path_name: 'fos_user_security_login',
+                            text: 'layout.login',
+                        },
+                        {
+                            path_name: 'fos_user_registration_register',
+                            text: 'layout.register',
+                        },
+                    ] %}
+
+                    {% for link in links %}
+                        {% include ':components/navbar:link.html.twig' with link %}
+                    {% endfor %}
+
                 {% endif %}
             </ul>
         </div>
