@@ -49,6 +49,10 @@
             background-color: white;
             border-color: white;
         }
+
+        #navbar-brand {
+            color: #333;
+        }
     </style>
 
     <title>{% block title %}Texthub{% endblock %}</title>
@@ -68,6 +72,7 @@
             <a
                     class="navbar-brand"
                     href="{{ path('homepage') }}"
+                    id="navbar-brand"
             >
                 Texthub
             </a>
