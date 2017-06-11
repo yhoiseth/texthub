@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
+            new Ivory\OrderedFormBundle\IvoryOrderedFormBundle(),
             new AppBundle\AppBundle(),
         ];
 
