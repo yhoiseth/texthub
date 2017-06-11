@@ -7,6 +7,10 @@
 actor: AcceptanceTester
 modules:
     enabled:
+        - Symfony:
+            part: SERVICES
+        - Doctrine2:
+            depends: Symfony
         - WebDriver:
             url: http://localhost:8000
             browser: chrome

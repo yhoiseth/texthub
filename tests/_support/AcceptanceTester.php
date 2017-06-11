@@ -21,11 +21,99 @@ class AcceptanceTester extends \Codeception\Actor
     use _generated\AcceptanceTesterActions;
 
     /**
-     * @Then I should see :arg1
+     * @Given I am on :arg1
      */
-    public function iShouldSee($arg1)
+    public function iAmOn($arg1)
     {
         $this->amOnPage('/');
-        $this->canSee($arg1);
+    }
+
+    /**
+     * @When I click :arg1
+     */
+    public function iClick($arg1)
+    {
+        $this->click($arg1);
+    }
+
+    /**
+     * @When I fill in the :arg1 field with :arg2
+     */
+    public function iFillInTheFieldWith($arg1, $arg2)
+    {
+        $this->fillField($arg1, $arg2);
+    }
+
+    /**
+     * @When I press the :arg1 button
+     */
+    public function iPressTheButton($arg1)
+    {
+        $this->click("input[value=$arg1]");
+    }
+
+    /**
+     * @Then I should be logged in
+     */
+    public function iShouldBeLoggedIn()
+    {
+        $this->cantSee('Log in');
+        $this->cantSee('Register');
+    }
+
+    /**
+     * @Then I should be redirected to :arg1
+     */
+    public function iShouldBeRedirectedTo($arg1)
+    {
+        $this->canSeeInCurrentUrl($arg1);
+    }
+
+    /**
+     * @Then I should have a Git repository
+     */
+    public function iShouldHaveAGitRepository()
+    {
+        /** @var \FOS\UserBundle\Doctrine\UserManager $userManager */
+        $userManager = $this->grabService('fos_user.user_manager');
+
+        /** @var \AppBundle\Entity\User $user */
+        $user = $userManager->findUsers()[0];
+
+        $username = $user->getUsernameCanonical();
+
+        /** @var AppKernel $kernel */
+        $kernel = $this->grabService('kernel');
+
+        $projectDirectory = $kernel->getProjectDir();
+
+        $mainRepositoriesDirectory = $projectDirectory . '/var/repositories/main';
+
+        verify(file_exists($mainRepositoriesDirectory))->true();
+
+        $userMainRepositoryDirectory = $mainRepositoriesDirectory . '/' . $username;
+
+        verify(file_exists($userMainRepositoryDirectory))->true();
+
+        $userMainRepositoryGitDirectory = $userMainRepositoryDirectory . '/.git';
+
+        verify(file_exists($userMainRepositoryGitDirectory))
+            ->true();
+
+        $namesOfStandardFilesInGitDirectory = [
+            'HEAD',
+            'config',
+            'description',
+            'hooks',
+            'info',
+            'objects',
+            'refs',
+        ];
+
+        foreach ($namesOfStandardFilesInGitDirectory as $filename) {
+            $file = $userMainRepositoryGitDirectory . DIRECTORY_SEPARATOR . $filename;
+
+            verify(file_exists($file))->true();
+        }
     }
 }
