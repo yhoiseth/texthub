@@ -14,7 +14,7 @@
     >
 
         <h1>
-            {{ 'layout.register'|trans({}, 'FOSUserBundle') }}
+            {{ title }}
         </h1>
 
         {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
