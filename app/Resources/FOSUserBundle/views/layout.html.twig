@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta
             charset="utf-8"
@@ -70,21 +70,26 @@
 
 {% include ':components/navbar:main.html.twig' %}
 
-{% if app.request.hasPreviousSession %}
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="flash-{{ type }}">
-                {{ message }}
-            </div>
+<div
+        class="container-fluid"
+>
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-{% endif %}
+    {% endif %}
 
-<div>
-    {% block fos_user_content %}
-    {% endblock fos_user_content %}
+    <div>
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+    </div>
+    {% block body %}{% endblock %}
 </div>
-{% block body %}{% endblock %}
+
 {% block javascripts %}
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
