@@ -11,3 +11,4 @@ build:
 filter:
   excluded_paths:
     - 'var/'
+    - 'app/AppCache.php'
