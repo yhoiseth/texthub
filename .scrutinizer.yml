@@ -12,3 +12,4 @@ filter:
   excluded_paths:
     - 'var/'
     - 'app/AppCache.php'
+    - 'app/AppKernel.php'
