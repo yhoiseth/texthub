@@ -42,6 +42,6 @@ services:
     app.register_user_listener:
         class: AppBundle\EventListener\RegisterUserListener
         arguments:
-            - '@service_container'
+            - '@kernel'
         tags:
             - { name: kernel.event_subscriber }

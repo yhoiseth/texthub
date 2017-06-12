@@ -6,18 +6,20 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class RegisterUserListener implements EventSubscriberInterface
 {
-    /** @var ContainerInterface */
-    private $container;
+    /** @var KernelInterface $kernel */
+    private $kernel;
 
     /**
      * RegisterUserListener constructor.
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(KernelInterface $kernel)
     {
-        $this->setContainer($container);
+        $this->setKernel($kernel);
     }
 
     /**
@@ -34,7 +36,8 @@ class RegisterUserListener implements EventSubscriberInterface
     {
         $user = $event->getUser();
 
-        $kernel = $this->getContainer()->get('kernel');
+        /** @var Kernel $kernel */
+        $kernel = $this->getKernel();
 
         $projectDirectory = $kernel->getProjectDir();
 
@@ -54,20 +57,20 @@ class RegisterUserListener implements EventSubscriberInterface
     }
 
     /**
-     * @return ContainerInterface
+     * @return KernelInterface
      */
-    public function getContainer(): ContainerInterface
+    public function getKernel(): KernelInterface
     {
-        return $this->container;
+        return $this->kernel;
     }
 
     /**
-     * @param ContainerInterface $container
+     * @param KernelInterface $kernel
      * @return $this
      */
-    public function setContainer(ContainerInterface $container)
+    public function setKernel(KernelInterface $kernel)
     {
-        $this->container = $container;
+        $this->kernel = $kernel;
 
         return $this;
     }
