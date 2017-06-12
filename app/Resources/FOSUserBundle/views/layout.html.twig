@@ -10,6 +10,7 @@
     {% include ':components/head:icons.html.twig' %}
 
     <title>{% block title %}Texthub{% endblock %}</title>
+
 </head>
 <body>
 
@@ -18,15 +19,6 @@
 <div
         class="container-fluid"
 >
-    {% if app.request.hasPreviousSession %}
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="flash-{{ type }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-    {% endif %}
 
     {% block fos_user_content %}
     {% endblock fos_user_content %}
