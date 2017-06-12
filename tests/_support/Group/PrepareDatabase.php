@@ -26,7 +26,7 @@ class PrepareDatabase extends \Codeception\Platform\Group
         ];
 
         foreach ($commands as $command) {
-            exec('bin/console ' . $command . ' --env=dev');
+            exec('bin/console '.$command.' --env=dev');
         }
     }
 
