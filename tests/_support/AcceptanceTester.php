@@ -87,15 +87,15 @@ class AcceptanceTester extends \Codeception\Actor
 
         $projectDirectory = $kernel->getProjectDir();
 
-        $mainRepositoriesDirectory = $projectDirectory . '/var/repositories/main';
+        $mainRepositoriesDirectory = $projectDirectory.'/var/repositories/main';
 
         verify(file_exists($mainRepositoriesDirectory))->true();
 
-        $userMainRepositoryDirectory = $mainRepositoriesDirectory . '/' . $username;
+        $userMainRepositoryDirectory = $mainRepositoriesDirectory.'/'.$username;
 
         verify(file_exists($userMainRepositoryDirectory))->true();
 
-        $userMainRepositoryGitDirectory = $userMainRepositoryDirectory . '/.git';
+        $userMainRepositoryGitDirectory = $userMainRepositoryDirectory.'/.git';
 
         verify(file_exists($userMainRepositoryGitDirectory))
             ->true();
@@ -111,7 +111,7 @@ class AcceptanceTester extends \Codeception\Actor
         ];
 
         foreach ($namesOfStandardFilesInGitDirectory as $filename) {
-            $file = $userMainRepositoryGitDirectory . DIRECTORY_SEPARATOR . $filename;
+            $file = $userMainRepositoryGitDirectory.DIRECTORY_SEPARATOR.$filename;
 
             verify(file_exists($file))->true();
         }
