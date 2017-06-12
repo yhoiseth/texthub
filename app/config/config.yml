@@ -80,6 +80,6 @@ fos_user:
         sender_name: "%mailer_user%"
     registration:
         form:
-            type: AppBundle\Form\RegistrationType
+            type: AppBundle\Form\Type\RegistrationType
 
 ornicar_gravatar: ~
