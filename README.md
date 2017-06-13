@@ -6,3 +6,4 @@ Texthub
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/92570026-27cd-4775-a73e-09e1f1e81e50/mini.png)](https://insight.sensiolabs.com/projects/92570026-27cd-4775-a73e-09e1f1e81e50)
 
 Git writing app.
+
