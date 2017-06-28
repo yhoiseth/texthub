@@ -37,11 +37,13 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @When I fill in the :arg1 field with :arg2
+     * @When I fill in :field with :value
+     * @param string $field
+     * @param string $value
      */
-    public function iFillInTheFieldWith($arg1, $arg2)
+    public function iFillInWith(string $field, string $value)
     {
-        $this->fillField($arg1, $arg2);
+        $this->fillField($field, $value);
     }
 
     /**
