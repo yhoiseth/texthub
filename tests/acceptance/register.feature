@@ -45,7 +45,7 @@ Feature: Register
     Given I am on "/"
     When I click "Register"
     And I fill in "Name" with "Marcus Aurelius"
-    And I fill in "Username" with "mårelius"
+    And I fill in "Username" with "@@@@@"
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
