@@ -43,7 +43,7 @@ Feature: Register
     When I click "Register"
     And I fill in "Name" with "Marcus Aurelius"
     And I fill in "Username" with "mårelius"
-    Then I should see "Illegal character(s) in username – use a-z and dashes (-) only"
+    Then I should see "Illegal character(s) in username – use the letters a-z, digits 0-9 and dashes (-) only"
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
