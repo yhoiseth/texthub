@@ -34,12 +34,12 @@ Feature: Register
     And I click "Register"
     And I fill in "Name" with "Marcus Aurelius"
     And I fill in "Username" with "marcus-aurelius"
-    Then I should see "Username not available"
     And I fill in "Email" with "marcus2@aurelius.com"
     And I fill in "Password" with "take it easy"
-    And I fill in "Repeat Password" with "take it easy"
+    And I fill in "Repeat password" with "take it easy"
     And I press the "Register" button
     Then I should not be logged in
+    And I should see "The username is already used"
 
   Scenario: Illegal characters
     Given I am on "/"
@@ -58,12 +58,12 @@ Feature: Register
     When I click "Register"
     And I fill in "Name" with "Marcus Aurelius"
     And I fill in "Username" with "<username>"
-    Then I should see "Username not available"
     And I fill in "Email" with "marcus2@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat Password" with "take it easy"
     And I press the "Register" button
     Then I should not be logged in
+    And I should see "The username is already used"
 
     Examples:
       | username      |

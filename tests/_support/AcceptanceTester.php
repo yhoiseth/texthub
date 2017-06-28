@@ -125,7 +125,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldSee(string $text)
     {
-        throw new \Codeception\Exception\Incomplete("Step `I should see :arg1` is not defined");
+        $this->canSee($text);
     }
 
     /**
@@ -133,6 +133,6 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldNotBeLoggedIn()
     {
-        throw new \Codeception\Exception\Incomplete("Step `I should not be logged in` is not defined");
+        $this->canSee('Log in');
     }
 }
