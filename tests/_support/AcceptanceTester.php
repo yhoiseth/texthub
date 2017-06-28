@@ -118,4 +118,21 @@ class AcceptanceTester extends \Codeception\Actor
             verify(file_exists($file))->true();
         }
     }
+
+    /**
+     * @Then I should see :text
+     * @param string $text
+     */
+    public function iShouldSee(string $text)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I should see :arg1` is not defined");
+    }
+
+    /**
+     * @Then I should not be logged in
+     */
+    public function iShouldNotBeLoggedIn()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I should not be logged in` is not defined");
+    }
 }
