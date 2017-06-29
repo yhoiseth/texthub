@@ -26,6 +26,11 @@ Feature: Register
       | ma              |
       | m-a             |
       | m-to-the-arcus  |
+      | marcus-121      |
+      | marcus121       |
+      | 121-marcus      |
+      | 121marcus       |
+      | 121             |
 
   Scenario: Existing username
     Given I am on "/"
@@ -50,18 +55,31 @@ Feature: Register
     Then I should not be logged in
     And I should see "The username is already used"
 
-
-  Scenario: Illegal characters
+  @watch
+  Scenario Outline: Illegal characters or character order
     Given I am on "/"
     When I click "Register"
     And I fill in "Name" with "Marcus Aurelius"
-    And I fill in "Username" with "@@@@@"
+    And I fill in "Username" with "<username>"
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
     And I press the "Register" button
     Then I should not be logged in
     And I should see "Illegal character(s) in username – use the letters a-z, digits 0-9 and dashes (-) only"
+
+    Examples:
+      | username |
+      | @        |
+      | å        |
+      | A        |
+      | -        |
+      | marcus-  |
+      | .        |
+      | ...      |
+      | /        |
+      |          |
+
 
   Scenario Outline: Reserved usernames
     Given I am on "/"
