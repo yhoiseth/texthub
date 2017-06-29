@@ -7,31 +7,31 @@
     <class name="FOS\UserBundle\Model\User">
 
         <property name="username">
-            <constraint name="NotBlank">
-                <option name="message">fos_user.username.blank</option>
-                <option name="groups">
-                    <value>Registration</value>
-                    <value>Profile</value>
-                </option>
-            </constraint>
-            <constraint name="Length">
+            <!--<constraint name="NotBlank">-->
+                <!--<option name="message">fos_user.username.blank</option>-->
+                <!--<option name="groups">-->
+                    <!--<value>Registration</value>-->
+                    <!--<value>Profile</value>-->
+                <!--</option>-->
+            <!--</constraint>-->
+            <!--<constraint name="Length">-->
                 <!--<option name="min">1</option>-->
                 <!--<option name="minMessage">fos_user.username.short</option>-->
-                <option name="max">180</option>
-                <option name="maxMessage">fos_user.username.long</option>
-                <option name="groups">
-                    <value>Registration</value>
-                    <value>Profile</value>
-                </option>
-            </constraint>
+                <!--<option name="max">180</option>-->
+                <!--<option name="maxMessage">fos_user.username.long</option>-->
+                <!--<option name="groups">-->
+                    <!--<value>Registration</value>-->
+                    <!--<value>Profile</value>-->
+                <!--</option>-->
+            <!--</constraint>-->
             <constraint name="Regex">
                 <!--<option name="pattern">/[a-z0-9\-]/</option>-->
                 <option name="pattern">/[a-z]/</option>
                 <option name="match">true</option>
                 <option name="message">fos_user.username.illegal_characters</option>
                 <option name="groups">
-                    <value>Registration</value>
-                    <value>Profile</value>
+                    <value>AppRegistration</value>
+                    <!--<value>Profile</value>-->
                 </option>
             </constraint>
         </property>
