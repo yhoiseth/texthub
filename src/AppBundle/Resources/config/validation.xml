@@ -15,8 +15,8 @@
                 </option>
             </constraint>
             <constraint name="Length">
-                <option name="min">2</option>
-                <option name="minMessage">fos_user.username.short</option>
+                <!--<option name="min">1</option>-->
+                <!--<option name="minMessage">fos_user.username.short</option>-->
                 <option name="max">180</option>
                 <option name="maxMessage">fos_user.username.long</option>
                 <option name="groups">

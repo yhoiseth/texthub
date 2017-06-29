@@ -82,5 +82,6 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\Type\RegistrationType
+            validation_groups: ~
 
 ornicar_gravatar: ~
