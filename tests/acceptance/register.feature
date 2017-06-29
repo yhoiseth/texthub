@@ -31,6 +31,7 @@ Feature: Register
       | 121-marcus      |
       | 121marcus       |
       | 121             |
+      | 0               |
 
   Scenario: Existing username
     Given I am on "/"
@@ -55,7 +56,7 @@ Feature: Register
     Then I should not be logged in
     And I should see "The username is already used"
 
-  @watch
+#  @watch
   Scenario Outline: Illegal characters or character order
     Given I am on "/"
     When I click "Register"
