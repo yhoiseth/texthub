@@ -14,7 +14,7 @@ class RegistrationType extends AbstractType
             null,
             [
                 'position' => 'first',
-                "help_block"=>"This is the short descriptions shown somewhere",
+                'help_block' => "Your full name. If you don't type anything here, your username will be used instead.",
             ]
         );
     }
