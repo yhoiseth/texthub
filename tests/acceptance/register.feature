@@ -33,6 +33,18 @@ Feature: Register
       | 0               |
 
   @watch
+  Scenario: No name
+    Given I am on "/"
+    When I click "Register"
+    And I fill in "Username" with "marcus-aurelius"
+    And I fill in "Email" with "marcus@aurelius.com"
+    And I fill in "Password" with "take it easy"
+    And I fill in "Repeat password" with "take it easy"
+    And I press the "Register" button
+    Then I should be logged in
+    And I should be redirected to "/register/confirmed"
+    And I should have a Git repository
+
   Scenario: Existing username
     Given I am on "/"
     When I click "Register"
@@ -79,7 +91,6 @@ Feature: Register
     Then I should not be logged in
     And I should see "This value is already used"
 
-    @watch
   Scenario Outline: Illegal characters or character order
     Given I am on "/"
     When I click "Register"
