@@ -56,6 +56,30 @@ Feature: Register
     Then I should not be logged in
     And I should see "This value is already used"
 
+  @watch
+  Scenario: Existing email
+    Given I am on "/"
+    When I click "Register"
+    And I fill in "Name" with "Marcus Aurelius"
+    And I fill in "Username" with "marcus-aurelius"
+    And I fill in "Email" with "marcus@aurelius.com"
+    And I fill in "Password" with "take it easy"
+    And I fill in "Repeat password" with "take it easy"
+    And I press the "Register" button
+    Then I should be logged in
+
+    When I click "Marcus Aurelius"
+    And I click "Log out"
+    And I click "Register"
+    And I fill in "Name" with "Marcus Aurelius"
+    And I fill in "Username" with "marcus-aurelius-2"
+    And I fill in "Email" with "marcus@aurelius.com"
+    And I fill in "Password" with "take it easy"
+    And I fill in "Repeat password" with "take it easy"
+    And I press the "Register" button
+    Then I should not be logged in
+    And I should see "This value is already used"
+
   Scenario Outline: Illegal characters or character order
     Given I am on "/"
     When I click "Register"
