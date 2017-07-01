@@ -38,7 +38,8 @@
                                     ) }}"
                                     class="img-circle"
                             >
-                            {{ app.user.name }} <span class="caret"></span>
+                            {#{{ app.user.name }} <span class="caret"></span>#}
+                            {% include ':components/user:name.html.twig' %} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
 
