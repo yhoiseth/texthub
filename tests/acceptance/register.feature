@@ -16,6 +16,7 @@ Feature: Register
     Then I should be logged in
     And I should be redirected to "/register/confirmed"
     And I should have a Git repository
+    And I should see "Marcus Aurelius"
 
     Examples:
       | username        |
@@ -44,6 +45,8 @@ Feature: Register
     Then I should be logged in
     And I should be redirected to "/register/confirmed"
     And I should have a Git repository
+    And I visit "/"
+    And I should see "marcus-aurelius"
 
   Scenario: Existing username
     Given I am on "/"

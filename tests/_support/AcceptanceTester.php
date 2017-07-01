@@ -22,6 +22,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @Given I am on :arg1
+     * @Given I visit :arg1
      */
     public function iAmOn($arg1)
     {
