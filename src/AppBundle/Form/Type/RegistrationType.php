@@ -13,7 +13,8 @@ class RegistrationType extends AbstractType
             'name',
             null,
             [
-                'position' => 'first'
+                'position' => 'first',
+                "help_block"=>"This is the short descriptions shown somewhere",
             ]
         );
     }

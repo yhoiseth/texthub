@@ -38,8 +38,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    form_themes:
-        - 'bootstrap_3_layout.html.twig'
+#    form_themes:
+#        - 'bootstrap_3_layout.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -86,3 +86,9 @@ fos_user:
                 - AppRegistration
 
 ornicar_gravatar: ~
+
+mopa_bootstrap:
+    form:
+        horizontal_label_class: ~
+        horizontal_input_wrapper_class: ~
+        show_legend: false
