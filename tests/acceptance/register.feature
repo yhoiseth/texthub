@@ -41,12 +41,14 @@ Feature: Register
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-    And I press the "Register" button
+#    And I press the "Register" button
+    And I press ENTER
     Then I should be logged in
     And I should be redirected to "/register/confirmed"
     And I should have a Git repository
-    And I visit "/"
-    And I should see "marcus-aurelius"
+
+    When I visit "/"
+    Then I should see "marcus-aurelius"
 
   Scenario: Existing username
     Given I am on "/"
