@@ -79,6 +79,7 @@ Feature: Register
     Then I should not be logged in
     And I should see "This value is already used"
 
+    @watch
   Scenario Outline: Illegal characters or character order
     Given I am on "/"
     When I click "Register"
@@ -104,7 +105,6 @@ Feature: Register
       |                 |
 
 
-  @watch
   Scenario Outline: Reserved usernames
     Given I am on "/"
     When I click "Register"
@@ -157,7 +157,7 @@ Feature: Register
       | contact       |
       | privacy       |
       | careers       |
-      | developer    |
+      | developer     |
       | developers    |
       | team          |
       | app           |
@@ -166,7 +166,7 @@ Feature: Register
       | preferences   |
       | analytics     |
       | search        |
-      | user         |
+      | user          |
       | users         |
       | organizations |
       | organisations |
