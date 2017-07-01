@@ -34,6 +34,16 @@
                     <!--<value>Profile</value>-->
                 </option>
             </constraint>
+            <constraint name="Regex">
+                <!--<option name="pattern">/[a-z0-9\-]/</option>-->
+                <option name="pattern">/.*[^\-]$/</option>
+                <option name="match">true</option>
+                <option name="message">fos_user.username.illegal_characters</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <!--<value>Profile</value>-->
+                </option>
+            </constraint>
         </property>
 
         <property name="email">
