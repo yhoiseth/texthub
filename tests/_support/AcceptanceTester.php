@@ -22,6 +22,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @Given I am on :arg1
+     * @Given I visit :arg1
      */
     public function iAmOn($arg1)
     {
@@ -37,11 +38,24 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @When I fill in the :arg1 field with :arg2
+     * @When I press ENTER
      */
-    public function iFillInTheFieldWith($arg1, $arg2)
+    public function iPressENTER()
     {
-        $this->fillField($arg1, $arg2);
+        $this->pressKey(
+            'input[type="submit"]',
+            WebDriverKeys::ENTER
+        );
+    }
+
+    /**
+     * @When I fill in :field with :value
+     * @param string $field
+     * @param string $value
+     */
+    public function iFillInWith(string $field, string $value)
+    {
+        $this->fillField($field, $value);
     }
 
     /**
@@ -115,5 +129,22 @@ class AcceptanceTester extends \Codeception\Actor
 
             verify(file_exists($file))->true();
         }
+    }
+
+    /**
+     * @Then I should see :text
+     * @param string $text
+     */
+    public function iShouldSee(string $text)
+    {
+        $this->canSee($text);
+    }
+
+    /**
+     * @Then I should not be logged in
+     */
+    public function iShouldNotBeLoggedIn()
+    {
+        $this->canSee('Log in');
     }
 }

@@ -21,7 +21,10 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(
+     *     type="string",
+     *     nullable=true
+     * )
      */
     protected $name;
 
@@ -30,14 +33,14 @@ class User extends BaseUser
      */
     public function getName()
     {
-        return $this->name;
+        return $this->name ?: $this->getUsername();
     }
 
     /**
      * @param string $name
      * @return $this
      */
-    public function setName(string $name)
+    public function setName(?string $name)
     {
         $this->name = $name;
 

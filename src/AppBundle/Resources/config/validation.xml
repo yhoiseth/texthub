@@ -1,0 +1,467 @@
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="FOS\UserBundle\Model\User">
+
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">username</option>
+            <option name="groups">
+                <value>AppRegistration</value>
+            </option>
+        </constraint>
+
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">email</option>
+            <option name="groups">
+                <value>AppRegistration</value>
+            </option>
+        </constraint>
+
+        <property name="username">
+            <constraint name="NotBlank">
+                <option name="message">fos_user.username.blank</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">1</option>
+                <option name="minMessage">fos_user.username.short</option>
+                <option name="max">180</option>
+                <option name="maxMessage">fos_user.username.long</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="pattern">/([a-z0-9])+(\-[a-z0-9])*/</option>
+                <option name="match">true</option>
+                <option name="message">fos_user.username.illegal_characters</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="pattern">/.*[^\-]$/</option>
+                <option name="match">true</option>
+                <option name="message">fos_user.username.illegal_characters</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="pattern">/\s/</option>
+                <option name="match">false</option>
+                <option name="message">fos_user.username.illegal_characters</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">login</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">log-in</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">login_check</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">log-in_check</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">log-in-check</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">logout</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">profile</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">register</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">resetting</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">notifications</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">settings</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">support</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">terms</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">user</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">webhook</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">api</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">help</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">about</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">pricing</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">product</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">new</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">jobs</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">integrations</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">add-ons</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">templates</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">themes</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">blog</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">news</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">downloads</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">press</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">social</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">documentation</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">customers</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">case-studies</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">references</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">open-source</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">contact</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">privacy</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">careers</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">developer</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">developers</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">team</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">app</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">system</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">dashboard</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">preferences</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">analytics</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">search</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">user</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">users</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">organizations</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">organisations</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">publishers</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">teams</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="email">
+            <constraint name="NotBlank">
+                <option name="message">fos_user.email.blank</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">fos_user.email.short</option>
+                <option name="max">180</option>
+                <option name="maxMessage">fos_user.email.long</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Email">
+                <option name="message">fos_user.email.invalid</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="plainPassword">
+            <constraint name="NotBlank">
+                <option name="message">fos_user.password.blank</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Registration</value>
+                    <value>ResetPassword</value>
+                    <value>ChangePassword</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">4096</option>
+                <option name="minMessage">fos_user.password.short</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                    <value>Registration</value>
+                    <value>Profile</value>
+                    <value>ResetPassword</value>
+                    <value>ChangePassword</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+
+    <class name="FOS\UserBundle\Model\Group">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">fos_user.group.blank</option>
+                <option name="groups">Registration</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">fos_user.group.short</option>
+                <option name="max">180</option>
+                <option name="maxMessage">fos_user.group.long</option>
+                <option name="groups">Registration</option>
+            </constraint>
+        </property>
+    </class>
+
+</constraint-mapping>
