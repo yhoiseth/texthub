@@ -115,7 +115,6 @@ Feature: Register
     And I fill in "Repeat password" with "take it easy"
     And I press the "Register" button
     Then I should not be logged in
-    And I should see "The username is already used"
 
     Examples:
       | username      |

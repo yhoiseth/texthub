@@ -73,6 +73,13 @@
                     <!--<value>Profile</value>-->
                 </option>
             </constraint>
+                <constraint name="NotEqualTo">
+                    <option name="value">login</option>
+                    <option name="groups">
+                        <value>AppRegistration</value>
+                        <!--<value>Profile</value>-->
+                    </option>
+                </constraint>
         </property>
 
         <property name="email">
