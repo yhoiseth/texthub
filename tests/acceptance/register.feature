@@ -32,7 +32,7 @@ Feature: Register
       | 121             |
       | 0               |
 
-    @watch
+  @watch
   Scenario: Existing username
     Given I am on "/"
     When I click "Register"
@@ -56,7 +56,6 @@ Feature: Register
     Then I should not be logged in
     And I should see "This value is already used"
 
-  @watch
   Scenario: Existing email
     Given I am on "/"
     When I click "Register"
@@ -92,18 +91,20 @@ Feature: Register
     Then I should not be logged in
 
     Examples:
-      | username |
-      | @        |
-      | å        |
-      | A        |
-      | -        |
-      | marcus-  |
-      | .        |
-      | ...      |
-      | /        |
-      |          |
+      | username        |
+      | @               |
+      | å               |
+      | A               |
+      | -               |
+      | marcus-         |
+      | .               |
+      | ...             |
+      | /               |
+      | marcus aurelius |
+      |                 |
 
 
+  @watch
   Scenario Outline: Reserved usernames
     Given I am on "/"
     When I click "Register"
@@ -111,7 +112,7 @@ Feature: Register
     And I fill in "Username" with "<username>"
     And I fill in "Email" with "marcus2@aurelius.com"
     And I fill in "Password" with "take it easy"
-    And I fill in "Repeat Password" with "take it easy"
+    And I fill in "Repeat password" with "take it easy"
     And I press the "Register" button
     Then I should not be logged in
     And I should see "The username is already used"
@@ -119,7 +120,10 @@ Feature: Register
     Examples:
       | username      |
       | login         |
+      | log-in        |
       | login_check   |
+      | log-in_check  |
+      | log-in-check  |
       | logout        |
       | profile       |
       | register      |
