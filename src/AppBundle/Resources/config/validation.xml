@@ -73,13 +73,330 @@
                     <!--<value>Profile</value>-->
                 </option>
             </constraint>
-                <constraint name="NotEqualTo">
-                    <option name="value">login</option>
-                    <option name="groups">
-                        <value>AppRegistration</value>
-                        <!--<value>Profile</value>-->
-                    </option>
-                </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">login</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">log-in</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">login_check</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">log-in_check</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">log-in-check</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">logout</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">profile</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">register</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">resetting</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">notifications</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">settings</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">support</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">terms</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">user</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">webhook</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">api</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">help</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">about</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">pricing</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">product</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">new</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">jobs</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">integrations</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">add-ons</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">templates</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">themes</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">blog</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">news</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">downloads</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">press</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">social</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">documentation</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">customers</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">case-studies</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">references</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">open-source</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">contact</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">privacy</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">careers</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">developer</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">developers</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">team</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">app</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">system</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">dashboard</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">preferences</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">analytics</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">search</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">user</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">users</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">organizations</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">organisations</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">publishers</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
+            <constraint name="NotEqualTo">
+                <option name="value">teams</option>
+                <option name="groups">
+                    <value>AppRegistration</value>
+                </option>
+            </constraint>
         </property>
 
         <property name="email">

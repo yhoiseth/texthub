@@ -157,6 +157,7 @@ Feature: Register
       | contact       |
       | privacy       |
       | careers       |
+      | developer    |
       | developers    |
       | team          |
       | app           |
@@ -165,6 +166,7 @@ Feature: Register
       | preferences   |
       | analytics     |
       | search        |
+      | user         |
       | users         |
       | organizations |
       | organisations |
