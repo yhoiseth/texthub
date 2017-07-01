@@ -6,7 +6,29 @@
 
     <class name="FOS\UserBundle\Model\User">
 
+        <!--<constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">-->
+            <!--<option name="fields">username</option>-->
+            <!--<option name="fields">email</option>-->
+            <!--<option name="groups">-->
+                <!--<value>AppRegistration</value>-->
+                <!--&lt;!&ndash;<value>Profile</value>&ndash;&gt;-->
+            <!--</option>-->
+        <!--</constraint>-->
+
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">username</option>
+            <option name="groups">
+                <value>AppRegistration</value>
+            </option>
+        </constraint>
+
         <property name="username">
+            <!--<constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">-->
+                <!--<option name="fields">username</option>-->
+                <!--<option name="groups">-->
+                    <!--<value>AppRegistration</value>-->
+                <!--</option>-->
+            <!--</constraint>-->
             <!--<constraint name="NotBlank">-->
                 <!--<option name="message">fos_user.username.blank</option>-->
                 <!--<option name="groups">-->

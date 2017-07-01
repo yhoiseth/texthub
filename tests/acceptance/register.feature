@@ -4,7 +4,6 @@ Feature: Register
   As a website visitor
   I need to be able to create a user account
 
-#  @watch
   Scenario Outline: Happy path
     Given I am on "/"
     When I click "Register"
@@ -33,6 +32,7 @@ Feature: Register
       | 121             |
       | 0               |
 
+    @watch
   Scenario: Existing username
     Given I am on "/"
     When I click "Register"
@@ -54,9 +54,8 @@ Feature: Register
     And I fill in "Repeat password" with "take it easy"
     And I press the "Register" button
     Then I should not be logged in
-    And I should see "The username is already used"
+    And I should see "This value is already used"
 
-  @watch
   Scenario Outline: Illegal characters or character order
     Given I am on "/"
     When I click "Register"
