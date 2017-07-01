@@ -33,7 +33,6 @@ Feature: Register
       | 121             |
       | 0               |
 
-  @watch
   Scenario: No name
     Given I am on "/"
     When I click "Register"
@@ -41,7 +40,6 @@ Feature: Register
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-#    And I press ENTER
     And I press ENTER
     Then I should be logged in
     And I should be redirected to "/register/confirmed"

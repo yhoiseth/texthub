@@ -4,7 +4,7 @@ fos_user:
         blank: 'Please enter a username.'
         short: 'The username is too short.'
         long: 'The username is too long.'
-        illegal_characters: 'Illegal character(s) in username – use the letters a-z, digits 0-9 and dashes (-) only'
+        illegal_characters: 'Illegal character(s) in username – use the letters a-z, digits 0-9 and hyphens (-) only'
     email:
         already_used: 'The email is already used.'
         blank: 'Please enter an email.'
