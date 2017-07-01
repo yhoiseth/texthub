@@ -12,7 +12,7 @@ Feature: Register
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-    And I press the "Register" button
+    And I press ENTER
     Then I should be logged in
     And I should be redirected to "/register/confirmed"
     And I should have a Git repository
@@ -41,7 +41,7 @@ Feature: Register
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-#    And I press the "Register" button
+#    And I press ENTER
     And I press ENTER
     Then I should be logged in
     And I should be redirected to "/register/confirmed"
@@ -58,7 +58,7 @@ Feature: Register
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-    And I press the "Register" button
+    And I press ENTER
     Then I should be logged in
 
     When I click "Marcus Aurelius"
@@ -69,7 +69,7 @@ Feature: Register
     And I fill in "Email" with "marcus2@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-    And I press the "Register" button
+    And I press ENTER
     Then I should not be logged in
     And I should see "This value is already used"
 
@@ -81,7 +81,7 @@ Feature: Register
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-    And I press the "Register" button
+    And I press ENTER
     Then I should be logged in
 
     When I click "Marcus Aurelius"
@@ -92,7 +92,7 @@ Feature: Register
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-    And I press the "Register" button
+    And I press ENTER
     Then I should not be logged in
     And I should see "This value is already used"
 
@@ -104,7 +104,7 @@ Feature: Register
     And I fill in "Email" with "marcus@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-    And I press the "Register" button
+    And I press ENTER
     Then I should not be logged in
 
     Examples:
@@ -129,7 +129,7 @@ Feature: Register
     And I fill in "Email" with "marcus2@aurelius.com"
     And I fill in "Password" with "take it easy"
     And I fill in "Repeat password" with "take it easy"
-    And I press the "Register" button
+    And I press ENTER
     Then I should not be logged in
 
     Examples:

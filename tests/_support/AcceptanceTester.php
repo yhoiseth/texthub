@@ -35,7 +35,6 @@ class AcceptanceTester extends \Codeception\Actor
     public function iClick($arg1)
     {
 
-
 //        $this->scrollTo($arg1);
         $this->click($arg1);
     }
