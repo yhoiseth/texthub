@@ -1,4 +1,8 @@
 <?php
+use AppBundle\Entity\User;
+use Behat\Gherkin\Node\TableNode;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use FOS\UserBundle\Doctrine\UserManager;
 
 
 /**
@@ -88,10 +92,10 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldHaveAGitRepository()
     {
-        /** @var \FOS\UserBundle\Doctrine\UserManager $userManager */
+        /** @var UserManager $userManager */
         $userManager = $this->grabService('fos_user.user_manager');
 
-        /** @var \AppBundle\Entity\User $user */
+        /** @var User $user */
         $user = $userManager->findUsers()[0];
 
         $username = $user->getUsernameCanonical();
@@ -146,5 +150,66 @@ class AcceptanceTester extends \Codeception\Actor
     public function iShouldNotBeLoggedIn()
     {
         $this->canSee('Log in');
+        $this->canSee('Register');
+    }
+
+    /**
+     * @When I click the :arg1 button
+     */
+    public function iClickTheButton($arg1)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I click the :arg1 button` is not defined");
+    }
+
+    /**
+     * @Given a user:
+     * @param TableNode $tableNode
+     */
+    public function aUser(TableNode $tableNode)
+    {
+        /** @var UserManager $userManager */
+        $userManager = $this->grabService('fos_user.user_manager');
+
+        /** @var Registry $doctrine */
+        $doctrine = $this->grabService('doctrine');
+
+        $entityManager = $doctrine->getManager();
+
+        $rows = $tableNode->getHash();
+
+        foreach ($rows as $row) {
+            /** @var User $user */
+            $user = $userManager->createUser();
+
+            extract($row);
+
+            /** @var string $name */
+            $user->setName($name);
+
+            /** @var string $username */
+            $user->setUsername($username);
+            $user->setUsernameCanonical($username);
+
+            /** @var string $email */
+            $user->setEmail($email);
+            $user->setEmailCanonical($email);
+
+            /** @var string $password */
+            $user->setPlainPassword($password);
+
+            $user->setEnabled(true);
+
+            $entityManager->persist($user);
+        }
+
+        $entityManager->flush();
+    }
+
+    /**
+     * @Given I am not logged in
+     */
+    public function iAmNotLoggedIn()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I am not logged in` is not defined");
     }
 }
