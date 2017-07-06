@@ -158,7 +158,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iClickTheButton($arg1)
     {
-        throw new \Codeception\Exception\Incomplete("Step `I click the :arg1 button` is not defined");
+        $this->click('input[type=submit]');
     }
 
     /**
@@ -199,10 +199,12 @@ class AcceptanceTester extends \Codeception\Actor
 
             $user->setEnabled(true);
 
-            $entityManager->persist($user);
+            $this->amOnPage('/register');
+
+//            $entityManager->persist($user);
         }
 
-        $entityManager->flush();
+//        $entityManager->flush();
     }
 
     /**
