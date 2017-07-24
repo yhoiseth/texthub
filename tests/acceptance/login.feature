@@ -1,4 +1,4 @@
-@watch
+@prepare_database @clean_files
 Feature: Login
   In order to authenticate
   As a web visitor
@@ -15,6 +15,7 @@ Feature: Login
     And I press ENTER
     And I visit "/logout"
 
+  @watch
   Scenario: Username and password
     When I visit "/"
     And I click "Log in"

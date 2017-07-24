@@ -30,7 +30,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iAmOn($arg1)
     {
-        $this->amOnPage('/');
+        $this->amOnPage($arg1);
     }
 
     /**
