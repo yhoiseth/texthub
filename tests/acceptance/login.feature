@@ -19,7 +19,6 @@ Feature: Login
 #      | William Braxton Irvine | williambirvine | williambirvine@williambirvine.com | visualize |
 #    And I visit "/logout"
 
-  @watch
   Scenario: Username and password
     When I visit "/"
     And I click "Log in"
@@ -28,6 +27,7 @@ Feature: Login
     And I click the "Log in" button
     Then I should be logged in
 
+  @watch
   Scenario: Email and password
     When I visit "/"
     And I click "Log in"
