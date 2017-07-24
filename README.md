@@ -14,3 +14,4 @@ Git writing app.
 3. Prevent deprecation warnings from messing up your output: `export SYMFONY_DEPRECATIONS_HELPER=weak`
 4. Start development web server: `bin/console server:start`
 3. Make sure that existing tests pass: `codecept run`
+
