@@ -4,10 +4,20 @@ Feature: Login
   I need to login
 
   Background:
-    Given a user:
-      | name                   | username       | email                             | password  |
-      | William Braxton Irvine | williambirvine | williambirvine@williambirvine.com | visualize |
+    Given I am on "/"
+    When I click "Register"
+    And I fill in "Name" with "William Braxton Irvine"
+    And I fill in "Username" with "williambirvine"
+    And I fill in "Email" with "williambirvine@williambirvine.com"
+    And I fill in "Password" with "visualize"
+    And I fill in "Repeat password" with "visualize"
+    And I press ENTER
     And I visit "/logout"
+
+#    Given a user:
+#      | name                   | username       | email                             | password  |
+#      | William Braxton Irvine | williambirvine | williambirvine@williambirvine.com | visualize |
+#    And I visit "/logout"
 
   @watch
   Scenario: Username and password
