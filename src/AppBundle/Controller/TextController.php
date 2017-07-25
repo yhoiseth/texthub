@@ -16,7 +16,15 @@ class TextController extends Controller
         return $this->render(
             'AppBundle:Text:new.html.twig',
             [
-                'form' => $this->createForm('AppBundle\Form\Type\TextType')->createView()
+                'form' => $this
+                    ->createForm(
+                        'AppBundle\Form\Type\TextType',
+                        null,
+                        [
+                            'action' => $this->generateUrl('app_text_new')
+                        ]
+                    )
+                    ->createView()
             ]
         );
     }
