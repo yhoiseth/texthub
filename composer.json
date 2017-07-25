@@ -41,6 +41,7 @@
     "require-dev": {
         "codeception/codeception": "^2.3",
         "codeception/verify": "^0.3.3",
+        "remg/generator-bundle": "dev-master",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
     },
