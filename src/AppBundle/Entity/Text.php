@@ -34,7 +34,7 @@ class Text
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -46,7 +46,7 @@ class Text
      *
      * @return Text
      */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
 
@@ -56,9 +56,9 @@ class Text
     /**
      * Get title
      *
-     * @return string
+     * @return null|string
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
