@@ -27,20 +27,6 @@
 
 {% block javascripts %}
     {% include ':components/javascripts:main.html.twig' %}
-
-        <script>
-          $(document).ready(function () {
-            $('#new-text-modal').on('shown.bs.modal', function () {
-              $('#appbundle_text_title').focus();
-            })
-
-//            $('#js-show-new-text-modal').click(function () {
-//              console.log('here we go');
-//              $('#appbundle_text_title').focus();
-//            });
-          });
-        </script>
-
 {% endblock %}
 </body>
 </html>
