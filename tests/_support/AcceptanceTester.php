@@ -196,7 +196,18 @@ class AcceptanceTester extends \Codeception\Actor
 
         verify($text)->notNull();
 
+        /** @var AppKernel $kernel */
+        $kernel = $this->grabService('kernel');
 
+        $projectDirectory = $kernel->getProjectDir();
+
+        $slug = $text->getSlug();
+
+        verify_file(
+            "$projectDirectory/var/repositories/main/$username/$slug.md"
+        )
+            ->exists()
+        ;
 
 
         throw new \Codeception\Exception\Incomplete("Step `the text :arg1 should be created in the main repository of :arg2` is not defined");
