@@ -176,7 +176,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function theBlinkingTextCursorShouldBeInTheField(string $label)
     {
-
+        sleep(2);
     }
 
     /**
