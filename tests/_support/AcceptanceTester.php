@@ -1,4 +1,8 @@
 <?php
+use AppBundle\Entity\User;
+use Behat\Gherkin\Node\TableNode;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use FOS\UserBundle\Doctrine\UserManager;
 
 
 /**
@@ -26,7 +30,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iAmOn($arg1)
     {
-        $this->amOnPage('/');
+        $this->amOnPage($arg1);
     }
 
     /**
@@ -88,10 +92,10 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldHaveAGitRepository()
     {
-        /** @var \FOS\UserBundle\Doctrine\UserManager $userManager */
+        /** @var UserManager $userManager */
         $userManager = $this->grabService('fos_user.user_manager');
 
-        /** @var \AppBundle\Entity\User $user */
+        /** @var User $user */
         $user = $userManager->findUsers()[0];
 
         $username = $user->getUsernameCanonical();
@@ -146,5 +150,14 @@ class AcceptanceTester extends \Codeception\Actor
     public function iShouldNotBeLoggedIn()
     {
         $this->canSee('Log in');
+        $this->canSee('Register');
+    }
+
+    /**
+     * @When I submit the form
+     */
+    public function iSubmitTheForm()
+    {
+        $this->click('input[type=submit]');
     }
 }
