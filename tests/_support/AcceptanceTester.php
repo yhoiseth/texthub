@@ -160,4 +160,37 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $this->click('input[type=submit]');
     }
+
+    /**
+     * @Then I should not see :text
+     * @param string $text
+     */
+    public function iShouldNotSee(string $text)
+    {
+        $this->cantSee($text);
+    }
+
+    /**
+     * @Then the blinking text cursor should be in the :arg1 field
+     */
+    public function theBlinkingTextCursorShouldBeInTheField($arg1)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the blinking text cursor should be in the :arg1 field` is not defined");
+    }
+
+    /**
+     * @Then the text should be created
+     */
+    public function theTextShouldBeCreated()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the text should be created` is not defined");
+    }
+
+    /**
+     * @Then the page title should contain :arg1
+     */
+    public function thePageTitleShouldContain($arg1)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the page title should contain :arg1` is not defined");
+    }
 }
