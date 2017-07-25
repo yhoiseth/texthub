@@ -28,10 +28,7 @@ class Text
      */
     private $title;
 
-
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId(): ?int
@@ -40,8 +37,6 @@ class Text
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      *
      * @return Text
@@ -54,8 +49,6 @@ class Text
     }
 
     /**
-     * Get title
-     *
      * @return null|string
      */
     public function getTitle(): ?string
