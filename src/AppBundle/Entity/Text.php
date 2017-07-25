@@ -46,7 +46,7 @@ class Text
      *
      * @return Text
      */
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): Text
     {
         $this->title = $title;
 
