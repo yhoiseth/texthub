@@ -25,6 +25,6 @@ Feature: New text
     Then the blinking text cursor should be in the "Title" field
     When I fill in "Title" with "Meditations Revisited"
     And I click "Let's go"
-    Then the text should be created
+    Then the text with title "Meditations Revisited" should be created in the main repository of "marcus-aurelius"
     And I should be redirected to "/marcus-aurelius/meditations-revisited"
     And the page title should contain "Meditations Revisited"

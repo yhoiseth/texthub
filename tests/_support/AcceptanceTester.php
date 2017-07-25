@@ -180,11 +180,26 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the text should be created
+     * @Then the text with title :textTitle should be created in the main repository of :username
+     * @param string $textTitle
+     * @param string $username
      */
-    public function theTextShouldBeCreated()
+    public function theTextShouldBeCreatedInTheMainRepositoryOf(string $textTitle, string $username)
     {
-        throw new \Codeception\Exception\Incomplete("Step `the text should be created` is not defined");
+        /** @var Registry $doctrine */
+        $doctrine = $this->grabService('doctrine');
+        $textRepository = $doctrine->getRepository('AppBundle:Text');
+
+        $text = $textRepository->findOneBy([
+            'title' => $textTitle
+        ]);
+
+        verify($text)->notNull();
+
+
+
+
+        throw new \Codeception\Exception\Incomplete("Step `the text :arg1 should be created in the main repository of :arg2` is not defined");
     }
 
     /**
