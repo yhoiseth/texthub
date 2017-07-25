@@ -15,13 +15,12 @@ Feature: Login
     And I press ENTER
     And I visit "/logout"
 
-  @watch
   Scenario: Username and password
     When I visit "/"
     And I click "Log in"
     And I fill in "Email or username" with "williambirvine"
     And I fill in "Password" with "visualize"
-    And I click the "Log in" button
+    And I submit the form
     Then I should be logged in
 
   Scenario: Email and password
@@ -29,7 +28,7 @@ Feature: Login
     And I click "Log in"
     And I fill in "Email or username" with "williambirvine@williambirvine.com"
     And I fill in "Password" with "visualize"
-    And I click the "Log in" button
+    And I submit the form
     Then I should be logged in
 
   Scenario: Wrong password
@@ -37,5 +36,5 @@ Feature: Login
     And I click "Log in"
     And I fill in "Email or username" with "williambirvine@williambirvine.com"
     And I fill in "Password" with "this is wrong"
-    And I click the "Log in" button
+    And I submit the form
     Then I should not be logged in

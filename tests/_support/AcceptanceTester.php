@@ -154,9 +154,9 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @When I click the :arg1 button
+     * @When I submit the form
      */
-    public function iClickTheButton($arg1)
+    public function iSubmitTheForm()
     {
         $this->click('input[type=submit]');
     }
