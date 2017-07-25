@@ -171,11 +171,12 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the blinking text cursor should be in the :arg1 field
+     * @Then the blinking text cursor should be in the :label field
+     * @param string $label
      */
-    public function theBlinkingTextCursorShouldBeInTheField($arg1)
+    public function theBlinkingTextCursorShouldBeInTheField(string $label)
     {
-        throw new \Codeception\Exception\Incomplete("Step `the blinking text cursor should be in the :arg1 field` is not defined");
+
     }
 
     /**
