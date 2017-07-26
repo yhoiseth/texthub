@@ -31,6 +31,13 @@ class Text
     private $title;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=false)
+     */
+    private $slug;
+
+    /**
      * @return integer
      */
     public function getId(): ?int
@@ -39,11 +46,19 @@ class Text
     }
 
     /**
+     * @return null|string
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
      * @param string $title
      *
      * @return Text
      */
-    public function setTitle(?string $title): Text
+    public function setTitle(string $title): Text
     {
         $this->title = $title;
 
@@ -53,8 +68,19 @@ class Text
     /**
      * @return null|string
      */
-    public function getTitle(): ?string
+    public function getSlug(): ?string
     {
-        return $this->title;
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     * @return Text
+     */
+    public function setSlug(string $slug): Text
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
