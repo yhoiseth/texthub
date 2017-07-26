@@ -84,8 +84,17 @@ class TextController extends Controller
             /** @var \AppKernel $kernel */
             $kernel = $this->get('kernel');
             $projectDirectory = $kernel->getProjectDir();
+            $filename = "$slug.md";
 
-            touch("$projectDirectory/var/repositories/main/$username/$slug.md");
+            touch("$projectDirectory/var/repositories/main/$username/$filename");
+
+            $navigationCommand = "cd $projectDirectory/var/repositories/main/$username";
+            $stageCommand = "git add $filename";
+            $commitCommand = "git commit -m 'Create text'";
+
+            $completeCommand = "$navigationCommand && $stageCommand && $commitCommand";
+
+            shell_exec($completeCommand);
 
             return $this->redirectToRoute(
                 'app_text_edit',
