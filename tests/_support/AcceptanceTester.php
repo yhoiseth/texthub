@@ -211,10 +211,10 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the page title should contain :arg1
+     * @Then the page title should contain :string
      */
-    public function thePageTitleShouldContain($arg1)
+    public function thePageTitleShouldContain(string $string)
     {
-        throw new \Codeception\Exception\Incomplete("Step `the page title should contain :arg1` is not defined");
+        $this->canSeeInTitle($string);
     }
 }
