@@ -56,3 +56,27 @@ Feature: New text
     And I click "Let's go"
 
     Then I should be redirected to "/marcus-aurelius/meditations-revisited-4/_edit"
+
+  Scenario: Other user has text with same title
+    Given I click "New text"
+    And I wait "1" seconds
+    And I fill in "Title" with "Meditations Revisited"
+    And I click "Let's go"
+    And I visit "/logout"
+
+    And I click "Register"
+    And I fill in "Name" with "Hadrianus"
+    And I fill in "Username" with "hadrianus"
+    And I fill in "Email" with "hadrianus@aurelius.com"
+    And I fill in "Password" with "take it easy"
+    And I fill in "Repeat password" with "take it easy"
+    And I press ENTER
+
+    And I click "New text"
+    And I wait "1" seconds
+    And I fill in "Title" with "Meditations Revisited"
+    And I click "Let's go"
+    Then I should be redirected to "/hadrianus/meditations-revisited/_edit"
+
+
+
