@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\User;
 
 /**
  * Text
@@ -36,6 +37,13 @@ class Text
      * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=false)
      */
     private $slug;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     */
+    private $createdBy;
 
     /**
      * @return integer
@@ -80,6 +88,25 @@ class Text
     public function setSlug(string $slug): Text
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getCreatedBy(): User
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * @param User $createdBy
+     * @return Text
+     */
+    public function setCreatedBy(User $createdBy): Text
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

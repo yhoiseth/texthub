@@ -36,6 +36,9 @@ class TextController extends Controller
             /** @var Text $text */
             $text = $form->getData();
 
+            /** @var User $user */
+            $user = $this->getUser();
+
             $slugify = $this->get('slugify');
             $slug = $slugify->slugify($text->getTitle());
 
@@ -43,7 +46,8 @@ class TextController extends Controller
 
             $textsWithSameSlug = $textRepository
                 ->findBy([
-                    'slug' => $slug
+                    'slug' => $slug,
+                    'createdBy' => $user,
                 ])
             ;
 
@@ -68,13 +72,13 @@ class TextController extends Controller
 
             $text->setSlug($slug);
 
+            $text->setCreatedBy($user);
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->persist($text);
             $entityManager->flush();
 
-            /** @var User $user */
-            $user = $this->getUser();
             $username = $user->getUsername();
 
             /** @var \AppKernel $kernel */
