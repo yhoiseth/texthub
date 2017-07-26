@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Text;
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,11 +38,20 @@ class TextController extends Controller
             $slug = $slugify->slugify($text->getTitle());
             $text->setSlug($slug);
 
-
             $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->persist($text);
             $entityManager->flush();
+
+            /** @var User $user */
+            $user = $this->getUser();
+            $username = $user->getUsername();
+
+            /** @var \AppKernel $kernel */
+            $kernel = $this->get('kernel');
+            $projectDirectory = $kernel->getProjectDir();
+
+            touch("$projectDirectory/var/repositories/main/$username/$slug.md");
 
 //            return $this->redirectToRoute();
         }

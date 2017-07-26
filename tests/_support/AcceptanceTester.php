@@ -208,9 +208,6 @@ class AcceptanceTester extends \Codeception\Actor
         )
             ->exists()
         ;
-
-
-        throw new \Codeception\Exception\Incomplete("Step `the text :arg1 should be created in the main repository of :arg2` is not defined");
     }
 
     /**

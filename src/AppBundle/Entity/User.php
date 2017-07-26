@@ -29,9 +29,9 @@ class User extends BaseUser
     protected $name;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name ?: $this->getUsername();
     }
