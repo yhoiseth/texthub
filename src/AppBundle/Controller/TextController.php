@@ -36,6 +36,25 @@ class TextController extends Controller
 
             $slugify = $this->get('slugify');
             $slug = $slugify->slugify($text->getTitle());
+
+            $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+
+            $textsWithSameSlug = $textRepository
+                ->findBy([
+                    'slug' => $slug
+                ])
+            ;
+
+            if (count($textsWithSameSlug) > 0) {
+                $slug.= '-2';
+            }
+
+
+
+
+
+
+
             $text->setSlug($slug);
 
             $entityManager = $this->getDoctrine()->getManager();
