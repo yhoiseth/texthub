@@ -22,7 +22,8 @@ Feature: New text
     Then I should not see "Title"
     And I should not see "Let's go!"
     When I click "New text"
-    Then the blinking text cursor should be in the "Title" field
+    Then the "Title" field should contain "Untitled"
+    And "Untitled" should be selected
     When I fill in "Title" with "Meditations Revisited"
     And I click "Let's go"
     Then the text with title "Meditations Revisited" should be created in the main repository of "marcus-aurelius"

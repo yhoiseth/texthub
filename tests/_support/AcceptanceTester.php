@@ -171,10 +171,22 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the blinking text cursor should be in the :label field
+     * @Then the :label field should contain :value
      * @param string $label
+     * @param string $value
      */
-    public function theBlinkingTextCursorShouldBeInTheField(string $label)
+    public function theFieldShouldContain(string $label, string $value)
+    {
+        sleep(2);
+
+        $this->canSeeInField($label, $value);
+    }
+
+    /**
+     * @Then :string should be selected
+     * @param string $string
+     */
+    public function shouldBeSelected(string $string)
     {
         sleep(2);
     }
