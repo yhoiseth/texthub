@@ -230,4 +230,15 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $this->canSeeInTitle($string);
     }
+
+    /**
+     * @Given I wait :numberOfSeconds seconds
+     * @param string $numberOfSeconds
+     */
+    public function iWaitSeconds(string $numberOfSeconds)
+    {
+        sleep(
+            (int) $numberOfSeconds
+        );
+    }
 }
