@@ -241,4 +241,27 @@ class AcceptanceTester extends \Codeception\Actor
             (int) $numberOfSeconds
         );
     }
+
+    /**
+     * @Then all the files in the main repository of :username should be committed
+     * @param string $username
+     */
+    public function allTheFilesInTheMainRepositoryOfShouldBeCommitted(string $username)
+    {
+        /** @var AppKernel $kernel */
+        $kernel = $this->grabService('kernel');
+        $projectDirectory = $kernel->getProjectDir();
+        $mainRepository = "$projectDirectory/var/repositories/main/$username";
+
+        $navigationCommand = "cd $mainRepository";
+        $statusCommand = "git status";
+        $completeCommand = "$navigationCommand && $statusCommand";
+
+        $output = shell_exec($completeCommand);
+
+//        dump($completeCommand);
+//        dump($output);
+
+        verify($output)->contains('nothing to commit, working tree clean');
+    }
 }

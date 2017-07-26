@@ -1,4 +1,4 @@
-@prepare_database @clean_files @watch
+@prepare_database @clean_files
 Feature: New text
   In order to remember and share my thoughts
   As a logged in user
@@ -16,6 +16,7 @@ Feature: New text
     And I press ENTER
     Then I should see "New text"
 
+  @watch
   Scenario: Happy path
     Given I am on "/"
     Then I should not see "Title"
@@ -28,6 +29,7 @@ Feature: New text
     Then the text with title "Meditations Revisited" should be created in the main repository of "marcus-aurelius"
     And I should be redirected to "/marcus-aurelius/meditations-revisited/_edit"
     And the page title should contain "Meditations Revisited"
+    And all the files in the main repository of "marcus-aurelius" should be committed
 
   Scenario: Existing title
     Given I am on "/"
