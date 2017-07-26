@@ -30,7 +30,7 @@ Feature: New text
     And I should be redirected to "/marcus-aurelius/meditations-revisited/_edit"
     And the page title should contain "Meditations Revisited"
     And all the files in the main repository of "marcus-aurelius" should be committed
-    And the last commit should be authored by "Marcus Aurelius <marcus@aurelius.com>"
+    And the last commit should be authored by "marcus-aurelius"
 
   Scenario: Existing title
     Given I am on "/"

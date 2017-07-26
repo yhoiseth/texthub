@@ -267,12 +267,31 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the last commit should be authored by :author
-     * @param string $author
+     * @Then the last commit should be authored by :username
+     * @param string $username
+     * @internal param string $author
      */
-    public function theLastCommitShouldBeAuthoredBy(string $author)
+    public function theLastCommitShouldBeAuthoredBy(string $username)
     {
-        $output = shell_exec('git --no-pager log');
+        /** @var UserManager $userManager */
+        $userManager = $this->grabService('fos_user.user_manager');
+
+        /** @var User $user */
+        $user = $userManager->findUserByUsername($username);
+        $name = $user->getName();
+        $email = $user->getEmail();
+        $author = "$name <$email>";
+
+        /** @var AppKernel $kernel */
+        $kernel = $this->grabService('kernel');
+        $projectDirectory = $kernel->getProjectDir();
+        $mainRepository = "$projectDirectory/var/repositories/main/$username";
+
+        $navigationCommand = "cd $mainRepository";
+        $logCommand = "git --no-pager log";
+        $completeCommand = "$navigationCommand && $logCommand";
+
+        $output = shell_exec($completeCommand);
 
         $lines = stringy($output)->lines();
 

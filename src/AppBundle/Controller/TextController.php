@@ -80,6 +80,8 @@ class TextController extends Controller
             $entityManager->flush();
 
             $username = $user->getUsername();
+            $userName = $user->getName();
+            $email = $user->getEmail();
 
             /** @var \AppKernel $kernel */
             $kernel = $this->get('kernel');
@@ -90,7 +92,7 @@ class TextController extends Controller
 
             $navigationCommand = "cd $projectDirectory/var/repositories/main/$username";
             $stageCommand = "git add $filename";
-            $commitCommand = "git commit -m 'Create text'";
+            $commitCommand = "git commit --author='$userName <$email>' -m 'Create text'";
 
             $completeCommand = "$navigationCommand && $stageCommand && $commitCommand";
 
