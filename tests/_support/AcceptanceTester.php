@@ -212,6 +212,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @Then the page title should contain :string
+     * @param string $string
      */
     public function thePageTitleShouldContain(string $string)
     {

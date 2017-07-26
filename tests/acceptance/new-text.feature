@@ -26,5 +26,5 @@ Feature: New text
     When I fill in "Title" with "Meditations Revisited"
     And I click "Let's go"
     Then the text with title "Meditations Revisited" should be created in the main repository of "marcus-aurelius"
-    And I should be redirected to "/marcus-aurelius/meditations-revisited"
+    And I should be redirected to "/marcus-aurelius/meditations-revisited/_edit"
     And the page title should contain "Meditations Revisited"

@@ -53,7 +53,13 @@ class TextController extends Controller
 
             touch("$projectDirectory/var/repositories/main/$username/$slug.md");
 
-//            return $this->redirectToRoute();
+            return $this->redirectToRoute(
+                'app_text_edit',
+                [
+                    'username' => $username,
+                    'slug' => $slug,
+                ]
+            );
         }
 
 
@@ -66,4 +72,26 @@ class TextController extends Controller
         );
     }
 
+    /**
+     * @Route("/{username}/{slug}/_edit")
+     * @param Request $request
+     * @param string $username
+     * @param string $slug
+     * @return Response
+     */
+    public function editAction(Request $request, string $username, string $slug)
+    {
+        $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+
+        $text = $textRepository->findOneBy([
+            'slug' => $slug,
+        ]);
+
+        return $this->render(
+            '@App/Text/edit.html.twig',
+            [
+                'text' => $text,
+            ]
+        );
+    }
 }
