@@ -22,6 +22,10 @@
                 <source>Title</source>
                 <target>Title</target>
             </trans-unit>
+            <trans-unit id="app.text.new">
+                <source>app.text.new</source>
+                <target>New text</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
