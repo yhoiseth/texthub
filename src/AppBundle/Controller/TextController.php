@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Text;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,13 @@ class TextController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Text $text */
             $text = $form->getData();
+
+            $slugify = $this->get('slugify');
+            $slug = $slugify->slugify($text->getTitle());
+            $text->setSlug($slug);
+
 
             $entityManager = $this->getDoctrine()->getManager();
 
