@@ -36,10 +36,23 @@ Feature: New text
     And I fill in "Title" with "Meditations Revisited"
     And I click "Let's go"
 
-    Given I am on "/"
-    And I click "New text"
+    When I click "New text"
     And I wait "1" seconds
     And I fill in "Title" with "Meditations Revisited"
     And I click "Let's go"
 
     Then I should be redirected to "/marcus-aurelius/meditations-revisited-2/_edit"
+
+    When I click "New text"
+    And I wait "1" seconds
+    And I fill in "Title" with "Meditations Revisited"
+    And I click "Let's go"
+
+    Then I should be redirected to "/marcus-aurelius/meditations-revisited-3/_edit"
+
+    When I click "New text"
+    And I wait "1" seconds
+    And I fill in "Title" with "Meditations Revisited"
+    And I click "Let's go"
+
+    Then I should be redirected to "/marcus-aurelius/meditations-revisited-4/_edit"

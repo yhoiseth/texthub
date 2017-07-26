@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Stringy\Stringy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function Stringy\create as stringy;
 
 class TextController extends Controller
 {
@@ -45,8 +47,17 @@ class TextController extends Controller
                 ])
             ;
 
-            if (count($textsWithSameSlug) > 0) {
-                $slug.= '-2';
+            while (count($textsWithSameSlug) > 0) {
+//                $slug.= '-2';
+
+
+                $slug = $this->incrementSlug($slug);
+
+                $textsWithSameSlug = $textRepository
+                    ->findBy([
+                        'slug' => $slug
+                    ])
+                ;
             }
 
 
@@ -112,5 +123,27 @@ class TextController extends Controller
                 'text' => $text,
             ]
         );
+    }
+
+    /**
+     * @param string $slug
+     * @return string
+     */
+    private function incrementSlug(string $slug): string
+    {
+        /** @var Stringy[] $parts */
+        $parts = stringy($slug)->split('-');
+        $numberOfParts = count($parts);
+        $lastPartIndex = $numberOfParts - 1;
+        $lastPart = $parts[$lastPartIndex];
+        if (ctype_digit((string) $lastPart)) {
+            $oldVersionNumber = (integer) (string) $lastPart;
+            $incrementedVersionNumber = $oldVersionNumber + 1;
+            $newLastPart = stringy((string) $incrementedVersionNumber);
+            $parts[$lastPartIndex] = $newLastPart;
+            $slug = implode('-', $parts);
+            return $slug;
+        }
+        return $slug . '-2';
     }
 }
