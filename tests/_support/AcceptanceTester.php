@@ -3,6 +3,7 @@ use AppBundle\Entity\User;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Doctrine\UserManager;
+use function Stringy\create as stringy;
 
 
 /**
@@ -263,5 +264,18 @@ class AcceptanceTester extends \Codeception\Actor
 //        dump($output);
 
         verify($output)->contains('nothing to commit, working tree clean');
+    }
+
+    /**
+     * @Then the last commit should be authored by :author
+     * @param string $author
+     */
+    public function theLastCommitShouldBeAuthoredBy(string $author)
+    {
+        $output = shell_exec('git --no-pager log');
+
+        $lines = stringy($output)->lines();
+
+        verify($lines[1])->equals("Author: $author");
     }
 }
