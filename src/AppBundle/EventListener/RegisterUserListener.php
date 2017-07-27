@@ -27,7 +27,6 @@ class RegisterUserListener implements EventSubscriberInterface
      * @param FilesystemInterface $filesystem
      * @param VersionControlSystem $versionControlSystem
      */
-//    public function __construct(KernelInterface $kernel, FilesystemInterface $filesystem)
     public function __construct(KernelInterface $kernel, FilesystemInterface $filesystem, VersionControlSystem $versionControlSystem)
     {
         $this->setKernel($kernel);
