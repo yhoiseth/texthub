@@ -106,8 +106,8 @@ class TextController extends Controller
 
     /**
      * @param Text $text
-     * @param User $user
      * @return string
+     * @internal param User $user
      */
     private function generateSlug(Text $text): string
     {

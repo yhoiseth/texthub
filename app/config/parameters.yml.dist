@@ -15,6 +15,7 @@ parameters:
     mailer_user: texthub@example.com
     mailer_password: ~
     locale: en
+    repositories_main_directory: '%kernel.project_dir%/var/repositories/main'
 
     # A secret key that's used to generate certain security-related tokens
     secret: b01442c9292ef3ec0cf26d4f715e2e790d163ee3
