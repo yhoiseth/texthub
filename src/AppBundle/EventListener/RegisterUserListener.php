@@ -40,7 +40,7 @@ class RegisterUserListener implements EventSubscriberInterface
 
         $projectDirectory = $kernel->getProjectDir();
 
-        $mainRepositoriesDirectory = $projectDirectory.'/var/repositories/main';
+        $mainRepositoriesDirectory = $projectDirectory.'/var/collections';
 
         $userMainRepositoryDirectory = $mainRepositoriesDirectory.'/'.$user->getUsernameCanonical();
 

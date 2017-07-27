@@ -182,7 +182,7 @@ class TextController extends Controller
 
         $filename = $this->getTextFilename($text);
 
-        $filesystem = $this->get('oneup_flysystem.main_repositories_filesystem');
+        $filesystem = $this->get('oneup_flysystem.collections_filesystem');
 
         $filesystem
             ->write(
@@ -207,7 +207,7 @@ class TextController extends Controller
         $email = $user->getEmail();
         $filename = $this->getTextFilename($text);
 
-        $mainRepositoriesDirectory = $this->getParameter('repositories_main_directory');
+        $mainRepositoriesDirectory = $this->getParameter('collections_directory');
 
         $navigationCommand = "cd $mainRepositoriesDirectory/$username";
         $stageCommand = "git add $filename";

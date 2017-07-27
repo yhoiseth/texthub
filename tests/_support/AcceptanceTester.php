@@ -106,7 +106,7 @@ class AcceptanceTester extends \Codeception\Actor
 
         $projectDirectory = $kernel->getProjectDir();
 
-        $mainRepositoriesDirectory = $projectDirectory.'/var/repositories/main';
+        $mainRepositoriesDirectory = $projectDirectory.'/var/collections';
 
         verify(file_exists($mainRepositoriesDirectory))->true();
 
@@ -217,7 +217,7 @@ class AcceptanceTester extends \Codeception\Actor
         $slug = $text->getSlug();
 
         verify_file(
-            "$projectDirectory/var/repositories/main/$username/$slug.md"
+            "$projectDirectory/var/collections/$username/$slug.md"
         )
             ->exists()
         ;
@@ -252,7 +252,7 @@ class AcceptanceTester extends \Codeception\Actor
         /** @var AppKernel $kernel */
         $kernel = $this->grabService('kernel');
         $projectDirectory = $kernel->getProjectDir();
-        $mainRepository = "$projectDirectory/var/repositories/main/$username";
+        $mainRepository = "$projectDirectory/var/collections/$username";
 
         $navigationCommand = "cd $mainRepository";
         $statusCommand = "git status";
@@ -282,7 +282,7 @@ class AcceptanceTester extends \Codeception\Actor
         /** @var AppKernel $kernel */
         $kernel = $this->grabService('kernel');
         $projectDirectory = $kernel->getProjectDir();
-        $mainRepository = "$projectDirectory/var/repositories/main/$username";
+        $mainRepository = "$projectDirectory/var/collections/$username";
 
         $navigationCommand = "cd $mainRepository";
         $logCommand = "git --no-pager log";
