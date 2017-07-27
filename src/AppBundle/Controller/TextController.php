@@ -120,7 +120,7 @@ class TextController extends Controller
      * @param string $slug
      * @return string
      */
-    private function incrementSlug(string $slug): string
+    private function incrementSlugVersion(string $slug): string
     {
         /** @var Stringy[] $parts */
         $parts = stringy($slug)->split('-');
@@ -163,14 +163,14 @@ class TextController extends Controller
             ]);
 
         while (count($textsWithSameSlug) > 0) {
-            $slug = $this->incrementSlug($slug);
+            $slug = $this->incrementSlugVersion($slug);
 
             $textsWithSameSlug = $textRepository
                 ->findBy([
                     'slug' => $slug
                 ]);
         }
-        
+
         return $slug;
     }
 }
