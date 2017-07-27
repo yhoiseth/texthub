@@ -200,22 +200,14 @@ class TextController extends Controller
      */
     private function commitTextFileToVersionControlSystem(Text $text): void
     {
-        /** @var User $user */
-        $user = $this->getUser();
-        $username = $user->getUsername();
-        $userName = $user->getName();
-        $email = $user->getEmail();
+        $versionControlSystem = $this->get('app.version_control_system');
         $filename = $this->getTextFilename($text);
+        $message = 'Create text';
 
-        $mainRepositoriesDirectory = $this->getParameter('collections_directory');
-
-        $navigationCommand = "cd $mainRepositoriesDirectory/$username";
-        $stageCommand = "git add $filename";
-        $commitCommand = "git commit --author='$userName <$email>' -m 'Create text'";
-
-        $completeCommand = "$navigationCommand && $stageCommand && $commitCommand";
-
-        shell_exec($completeCommand);
+        $versionControlSystem->commit(
+            $filename,
+            $message
+        );
     }
 
     /**
