@@ -47,6 +47,14 @@ class TextController extends Controller
 
             return $this->redirectToRoute(
                 'app_text_edit',
+                compact(
+                    'username',
+                    'slug'
+                )
+            );
+
+            return $this->redirectToRoute(
+                'app_text_edit',
                 [
                     'username' => $username,
                     'slug' => $slug,
