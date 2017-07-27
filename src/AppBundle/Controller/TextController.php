@@ -181,7 +181,7 @@ class TextController extends Controller
         $entityManager->persist($text);
         $entityManager->flush();
 
-        return $text;
+//        return $text;
     }
 
     /**
