@@ -19,6 +19,6 @@ Feature: Edit text
     And I click "Let's go"
 
   Scenario: Happy path
-    Given I should see "Meditations Revisited"
+    Given "h1" should contain "Meditations Revisited"
     When I click "Edit title"
     Then the "Title" field should contain "Meditations Revisited"
