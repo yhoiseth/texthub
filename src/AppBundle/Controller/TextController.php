@@ -43,7 +43,7 @@ class TextController extends Controller
 
             $this->saveEmptyTextFile($text);
 
-            $this->commitTextFile($username, $filename, $userName, $email);
+            $this->commitTextFileToVersionControlSystem($text);
 
             return $this->redirectToRoute(
                 'app_text_edit',
@@ -57,8 +57,7 @@ class TextController extends Controller
         return $this->render(
             'AppBundle:Text:new.html.twig',
             [
-                'form' => $form
-                    ->createView(),
+                'form' => $form->createView(),
             ]
         );
     }
@@ -204,13 +203,21 @@ class TextController extends Controller
     }
 
     /**
-     * @param string $username
-     * @param string $filename
-     * @param string $userName
-     * @param string $email
+     * @param Text $text
+     * @internal param string $username
+     * @internal param string $filename
+     * @internal param string $userName
+     * @internal param string $email
      */
-    private function commitTextFile(string $username, string $filename, string $userName, string $email): void
+    private function commitTextFileToVersionControlSystem(Text $text): void
     {
+        /** @var User $user */
+        $user = $this->getUser();
+        $username = $user->getUsername();
+        $userName = $user->getName();
+        $email = $user->getEmail();
+        $filename = $this->getTextFilename($text);
+
         $mainRepositoriesDirectory = $this->getParameter('repositories_main_directory');
 
         $navigationCommand = "cd $mainRepositoriesDirectory/$username";
