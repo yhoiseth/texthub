@@ -111,20 +111,11 @@ class TextController extends Controller
      */
     private function generateSlug(Text $text): string
     {
-        $user = $this->getUser();
-
         $slugify = $this->get('slugify');
         $slug = $slugify->slugify($text->getTitle());
 
-        $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
-
         while ($this->slugIsUnavailable($slug)) {
             $slug = $this->incrementSlugVersion($slug);
-
-            $textsWithSameSlug = $textRepository
-                ->findBy([
-                    'slug' => $slug
-                ]);
         }
 
         return $slug;
