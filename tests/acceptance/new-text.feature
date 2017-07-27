@@ -1,4 +1,4 @@
-@prepare_database @clean_files @watch
+@prepare_database @clean_files
 Feature: New text
   In order to remember and share my thoughts
   As a logged in user
@@ -16,7 +16,7 @@ Feature: New text
     And I press ENTER
     Then I should see "New text"
 
-#  @watch
+  @watch
   Scenario: Happy path
     Given I am on "/"
     Then I should not see "Title"
