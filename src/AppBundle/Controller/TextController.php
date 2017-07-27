@@ -25,13 +25,13 @@ class TextController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Text $textNotSavedInDatabase */
-            $textNotSavedInDatabase = $form->getData();
+            /** @var Text $text */
+            $text = $form->getData();
 
             /** @var User $user */
             $user = $this->getUser();
 
-            $text = $this->saveTextInDatabase($textNotSavedInDatabase);
+            $this->saveTextInDatabase($text);
 
             $username = $user->getUsername();
             $userName = $user->getName();
@@ -167,7 +167,7 @@ class TextController extends Controller
      * @param Text $text
      * @return Text
      */
-    private function saveTextInDatabase(Text $text): Text
+    private function saveTextInDatabase(Text &$text)
     {
         $text->setCreatedBy(
             $this->getUser()
