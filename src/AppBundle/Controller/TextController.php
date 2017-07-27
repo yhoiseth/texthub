@@ -118,13 +118,7 @@ class TextController extends Controller
 
         $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
 
-        $textsWithSameSlug = $textRepository
-            ->findBy([
-                'slug' => $slug,
-                'createdBy' => $user,
-            ]);
-
-        while (count($textsWithSameSlug) > 0) {
+        while ($this->slugIsUnavailable($slug)) {
             $slug = $this->incrementSlugVersion($slug);
 
             $textsWithSameSlug = $textRepository
@@ -221,5 +215,23 @@ class TextController extends Controller
         $filename = "$slug.md";
 
         return $filename;
+    }
+
+    /**
+     * @param string $slug
+     * @return bool
+     */
+    private function slugIsUnavailable(string $slug): bool
+    {
+        $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+
+        $textsWithSameSlug = $textRepository
+            ->findBy([
+                'slug' => $slug,
+                'createdBy' => $this->getUser(),
+            ])
+        ;
+
+        return count($textsWithSameSlug) > 0;
     }
 }
