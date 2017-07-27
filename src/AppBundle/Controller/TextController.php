@@ -39,27 +39,7 @@ class TextController extends Controller
             /** @var User $user */
             $user = $this->getUser();
 
-            $slugify = $this->get('slugify');
-            $slug = $slugify->slugify($text->getTitle());
-
-            $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
-
-            $textsWithSameSlug = $textRepository
-                ->findBy([
-                    'slug' => $slug,
-                    'createdBy' => $user,
-                ])
-            ;
-
-            while (count($textsWithSameSlug) > 0) {
-                $slug = $this->incrementSlug($slug);
-
-                $textsWithSameSlug = $textRepository
-                    ->findBy([
-                        'slug' => $slug
-                    ])
-                ;
-            }
+            $slug = $this->generateSlug($text, $user);
 
             $text->setSlug($slug);
 
@@ -162,5 +142,35 @@ class TextController extends Controller
         }
 
         return $slug . '-2';
+    }
+
+    /**
+     * @param $text
+     * @param $user
+     * @return string
+     */
+    private function generateSlug(Text $text, $user): string
+    {
+        $slugify = $this->get('slugify');
+        $slug = $slugify->slugify($text->getTitle());
+
+        $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+
+        $textsWithSameSlug = $textRepository
+            ->findBy([
+                'slug' => $slug,
+                'createdBy' => $user,
+            ]);
+
+        while (count($textsWithSameSlug) > 0) {
+            $slug = $this->incrementSlug($slug);
+
+            $textsWithSameSlug = $textRepository
+                ->findBy([
+                    'slug' => $slug
+                ]);
+        }
+        
+        return $slug;
     }
 }
