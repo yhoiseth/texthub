@@ -39,9 +39,9 @@ class TextController extends Controller
 
             $slug = $text->getSlug();
 
-            $filename = "$slug.md";
+            $filename = $this->getTextFilename($text);
 
-            $this->saveTextFile($username, $filename);
+            $this->createEmptyTextFile($username, $filename);
 
             $this->commitTextFile($username, $filename, $userName, $email);
 
@@ -188,7 +188,7 @@ class TextController extends Controller
      * @param string $username
      * @param string $filename
      */
-    private function saveTextFile(string $username, string $filename): void
+    private function createEmptyTextFile(string $username, string $filename): void
     {
         $filesystem = $this->get('oneup_flysystem.main_repositories_filesystem');
 
@@ -216,5 +216,18 @@ class TextController extends Controller
         $completeCommand = "$navigationCommand && $stageCommand && $commitCommand";
 
         shell_exec($completeCommand);
+    }
+
+    /**
+     * @param Text $text
+     * @return string
+     * @internal param $slug
+     */
+    private function getTextFilename(Text $text): string
+    {
+        $slug = $text->getSlug();
+        $filename = "$slug.md";
+
+        return $filename;
     }
 }
