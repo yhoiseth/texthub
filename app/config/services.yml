@@ -44,9 +44,26 @@ services:
         arguments:
             - '@kernel'
             - '@oneup_flysystem.collections_filesystem'
+            - '@AppBundle\Service\VersionControlSystem'
         tags:
             - { name: kernel.event_subscriber }
 
     AppBundle\Service\VersionControlSystem:
+#        alias: app.version_control_system
         arguments:
             $collectionsDirectory: '%collections_directory%'
+
+
+#    app.register_user_listener:
+#        class: AppBundle\EventListener\RegisterUserListener
+#        arguments:
+#            - '@kernel'
+#            - '@oneup_flysystem.collections_filesystem'
+#            - '@app.version_control_system'
+#        tags:
+#            - { name: kernel.event_subscriber }
+#
+#    app.version_control_system:
+#        class: AppBundle\Service\VersionControlSystem
+#        arguments:
+#            $collectionsDirectory: '%collections_directory%'

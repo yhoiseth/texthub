@@ -2,6 +2,7 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Service\VersionControlSystem;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
 use League\Flysystem\FilesystemInterface;
@@ -22,7 +23,8 @@ class RegisterUserListener implements EventSubscriberInterface
      * @param KernelInterface $kernel
      * @param FilesystemInterface $filesystem
      */
-    public function __construct(KernelInterface $kernel, FilesystemInterface $filesystem)
+//    public function __construct(KernelInterface $kernel, FilesystemInterface $filesystem)
+    public function __construct(KernelInterface $kernel, FilesystemInterface $filesystem, VersionControlSystem $versionControlSystem)
     {
         $this->setKernel($kernel);
         $this->setFilesystem($filesystem);

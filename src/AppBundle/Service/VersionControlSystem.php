@@ -7,6 +7,6 @@ class VersionControlSystem
 {
     public function __construct(string $collectionsDirectory)
     {
-
+        
     }
 }
