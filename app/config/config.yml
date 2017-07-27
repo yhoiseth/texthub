@@ -93,10 +93,10 @@ mopa_bootstrap:
 
 oneup_flysystem:
     adapters:
-        my_adapter:
+        main_repositories:
             local:
                 directory: '%repositories_main_directory%'
 
     filesystems:
-        my_filesystem:
-            adapter: my_adapter
+        main_repositories:
+            adapter: main_repositories

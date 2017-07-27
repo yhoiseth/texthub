@@ -76,7 +76,7 @@ class TextController extends Controller
 
             $filename = "$slug.md";
 
-            $filesystem = $this->get('oneup_flysystem.my_filesystem_filesystem');
+            $filesystem = $this->get('oneup_flysystem.main_repositories_filesystem');
 
             $filesystem
                 ->write(
