@@ -58,7 +58,7 @@ class TextController extends Controller
             'AppBundle:Text:new.html.twig',
             [
                 'form' => $form
-                    ->createView()
+                    ->createView(),
             ]
         );
     }
