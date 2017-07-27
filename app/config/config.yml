@@ -95,7 +95,7 @@ oneup_flysystem:
     adapters:
         my_adapter:
             local:
-                directory: '%kernel.project_dir%/var/repositories/main'
+                directory: '%repositories_main_directory%'
 
     filesystems:
         my_filesystem:

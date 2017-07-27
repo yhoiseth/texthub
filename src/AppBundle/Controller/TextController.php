@@ -74,27 +74,20 @@ class TextController extends Controller
             $userName = $user->getName();
             $email = $user->getEmail();
 
-            /** @var \AppKernel $kernel */
-            $kernel = $this->get('kernel');
-            $projectDirectory = $kernel->getProjectDir();
             $filename = "$slug.md";
 
             $filesystem = $this->get('oneup_flysystem.my_filesystem_filesystem');
 
-//            dump($filesystem);
-
-//            touch("$projectDirectory/var/repositories/main/$username/$filename");
-
-            $result = $filesystem
+            $filesystem
                 ->write(
                     "$username/$filename",
                     ''
                 )
             ;
-//
-//            dump($result);die;
 
-            $navigationCommand = "cd $projectDirectory/var/repositories/main/$username";
+            $mainRepositoriesDirectory = $this->getParameter('repositories_main_directory');
+
+            $navigationCommand = "cd $mainRepositoriesDirectory/$username";
             $stageCommand = "git add $filename";
             $commitCommand = "git commit --author='$userName <$email>' -m 'Create text'";
 
