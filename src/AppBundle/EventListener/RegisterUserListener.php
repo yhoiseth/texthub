@@ -73,7 +73,9 @@ class RegisterUserListener implements EventSubscriberInterface
             )
         ;
 
-        exec("git init $userMainRepositoryDirectory");
+        $this->getVersionControlSystem()->initializeRepository($userMainRepositoryDirectory);
+
+//        exec("git init $userMainRepositoryDirectory");
     }
 
     /**

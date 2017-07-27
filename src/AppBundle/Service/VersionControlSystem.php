@@ -13,6 +13,11 @@ class VersionControlSystem
         $this->setCollectionsDirectory($collectionsDirectory);
     }
 
+    public function initializeRepository(string $directory)
+    {
+        exec("git init $directory");
+    }
+
     /**
      * @return string
      */
