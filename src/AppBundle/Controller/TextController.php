@@ -31,7 +31,7 @@ class TextController extends Controller
             /** @var User $user */
             $user = $this->getUser();
 
-            $text = $this->saveTextInDatabase($textNotSavedInDatabase, $user);
+            $text = $this->saveTextInDatabase($textNotSavedInDatabase);
 
             $username = $user->getUsername();
             $userName = $user->getName();
@@ -165,16 +165,17 @@ class TextController extends Controller
 
     /**
      * @param Text $text
-     * @param string $slug
-     * @param User $user
      * @return Text
      */
-    private function saveTextInDatabase(Text $text, User $user): Text
+    private function saveTextInDatabase(Text $text): Text
     {
-        $slug = $this->generateSlug($text);
+        $text->setCreatedBy(
+            $this->getUser()
+        );
 
-        $text->setSlug($slug);
-        $text->setCreatedBy($user);
+        $text->setSlug(
+            $this->generateSlug($text)
+        );
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($text);
