@@ -46,3 +46,7 @@ services:
             - '@oneup_flysystem.collections_filesystem'
         tags:
             - { name: kernel.event_subscriber }
+
+    AppBundle\Service\VersionControlSystem:
+        arguments:
+            $collectionsDirectory: '%collections_directory%'
