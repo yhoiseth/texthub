@@ -77,51 +77,6 @@ class TextController extends Controller
     }
 
     /**
-     * @param string $slug
-     * @return string
-     */
-    private function incrementSlugVersion(string $slug): string
-    {
-        /** @var Stringy[] $parts */
-        $parts = stringy($slug)->split('-');
-
-        $numberOfParts = count($parts);
-        $lastPartIndex = $numberOfParts - 1;
-        $lastPart = $parts[$lastPartIndex];
-
-        if (ctype_digit((string) $lastPart)) {
-            $oldVersionNumber = (integer) (string) $lastPart;
-            $incrementedVersionNumber = $oldVersionNumber + 1;
-
-            $newLastPart = stringy((string) $incrementedVersionNumber);
-            $parts[$lastPartIndex] = $newLastPart;
-
-            $slug = implode('-', $parts);
-
-            return $slug;
-        }
-
-        return $slug . '-2';
-    }
-
-    /**
-     * @param Text $text
-     * @return string
-     * @internal param User $user
-     */
-    private function generateSlug(Text $text): string
-    {
-        $slugify = $this->get('slugify');
-        $slug = $slugify->slugify($text->getTitle());
-
-        while ($this->slugIsUnavailable($slug)) {
-            $slug = $this->incrementSlugVersion($slug);
-        }
-
-        return $slug;
-    }
-
-    /**
      * @return Form
      */
     private function createNewTextForm(): Form
@@ -206,6 +161,49 @@ class TextController extends Controller
         $filename = "$slug.md";
 
         return $filename;
+    }
+
+    /**
+     * @param Text $text
+     * @return string
+     * @internal param User $user
+     */
+    private function generateSlug(Text $text): string
+    {
+        $slugify = $this->get('slugify');
+        $slug = $slugify->slugify($text->getTitle());
+
+        while ($this->slugIsUnavailable($slug)) {
+            $this->incrementSlugVersion($slug);
+        }
+
+        return $slug;
+    }
+
+    /**
+     * @param string &$slug
+     * @return void
+     */
+    private function incrementSlugVersion(string &$slug): void
+    {
+        /** @var Stringy[] $parts */
+        $parts = stringy($slug)->split('-');
+
+        $numberOfParts = count($parts);
+        $lastPartIndex = $numberOfParts - 1;
+        $lastPart = $parts[$lastPartIndex];
+
+        if (ctype_digit((string) $lastPart)) {
+            $oldVersionNumber = (integer) (string) $lastPart;
+            $incrementedVersionNumber = $oldVersionNumber + 1;
+
+            $newLastPart = stringy((string) $incrementedVersionNumber);
+            $parts[$lastPartIndex] = $newLastPart;
+
+            $slug = implode('-', $parts);
+        } else {
+            $slug.= '-2';
+        }
     }
 
     /**
