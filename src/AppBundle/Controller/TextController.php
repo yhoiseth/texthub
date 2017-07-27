@@ -52,14 +52,6 @@ class TextController extends Controller
                     'slug'
                 )
             );
-
-            return $this->redirectToRoute(
-                'app_text_edit',
-                [
-                    'username' => $username,
-                    'slug' => $slug,
-                ]
-            );
         }
 
         return $this->render(
