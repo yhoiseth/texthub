@@ -42,7 +42,7 @@ class TextController extends Controller
         }
 
         if ($form->isSubmitted()) {
-            return $this->render('default/index.html.twig');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render(
