@@ -7,6 +7,8 @@ build:
       - 'bin/console doctrine:database:create --if-not-exists'
       - 'bin/console server:start'
       - 'export SYMFONY_DEPRECATIONS_HELPER=weak'
+      - 'git config --global user.email "you@example.com"'
+      - 'git config --global user.name "Your Name"'
 
 filter:
   excluded_paths:

@@ -42,6 +42,15 @@ services:
     app.register_user_listener:
         class: AppBundle\EventListener\RegisterUserListener
         arguments:
-            - '@kernel'
+            - '@oneup_flysystem.collections_filesystem'
+            - '@app.version_control_system'
         tags:
             - { name: kernel.event_subscriber }
+
+    AppBundle\Service\VersionControlSystem:
+        arguments:
+            $collectionsDirectory: '%collections_directory%'
+
+    app.version_control_system:
+        alias: AppBundle\Service\VersionControlSystem
+        public: true

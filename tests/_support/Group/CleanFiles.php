@@ -18,7 +18,7 @@ class CleanFiles extends \Codeception\Platform\Group
 
     public function _before(TestEvent $e)
     {
-        exec('rm -rf var/repositories');
+        exec('rm -rf var/collections');
     }
 
     public function _after(TestEvent $e)

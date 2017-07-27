@@ -2,23 +2,34 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Service\VersionControlSystem;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
+use League\Flysystem\FilesystemInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class RegisterUserListener implements EventSubscriberInterface
 {
-    /** @var KernelInterface $kernel */
-    private $kernel;
+    /** @var FilesystemInterface $filesystem */
+    private $filesystem;
+
+    /** @var VersionControlSystem $versionControlSystem */
+    private $versionControlSystem;
 
     /**
      * RegisterUserListener constructor.
+     * @param FilesystemInterface $filesystem
+     * @param VersionControlSystem $versionControlSystem
      */
-    public function __construct(KernelInterface $kernel)
+    public function __construct(
+        FilesystemInterface $filesystem,
+        VersionControlSystem $versionControlSystem
+    )
     {
-        $this->setKernel($kernel);
+        $this->setFilesystem($filesystem);
+        $this->setVersionControlSystem($versionControlSystem);
     }
 
     /**
@@ -33,44 +44,50 @@ class RegisterUserListener implements EventSubscriberInterface
 
     public function onRegistrationCompleted(FilterUserResponseEvent $event)
     {
-        $user = $event->getUser();
+        $this
+            ->getFilesystem()
+            ->createDir(
+                $event->getUser()->getUsername()
+            )
+        ;
 
-        /** @var Kernel $kernel */
-        $kernel = $this->getKernel();
-
-        $projectDirectory = $kernel->getProjectDir();
-
-        $mainRepositoriesDirectory = $projectDirectory.'/var/repositories/main';
-
-        $userMainRepositoryDirectory = $mainRepositoriesDirectory.'/'.$user->getUsernameCanonical();
-
-        if (!file_exists($userMainRepositoryDirectory)) {
-            mkdir(
-                $userMainRepositoryDirectory,
-                0755,
-                true
-            );
-        }
-
-        exec("git init $userMainRepositoryDirectory");
+        $this
+            ->getVersionControlSystem()
+            ->initializeRepository(
+                $event->getUser()->getUsername()
+            )
+        ;
     }
 
     /**
-     * @return KernelInterface
+     * @return FilesystemInterface
      */
-    public function getKernel(): KernelInterface
+    public function getFilesystem(): FilesystemInterface
     {
-        return $this->kernel;
+        return $this->filesystem;
     }
 
     /**
-     * @param KernelInterface $kernel
-     * @return $this
+     * @param FilesystemInterface $filesystem
      */
-    public function setKernel(KernelInterface $kernel)
+    public function setFilesystem(FilesystemInterface $filesystem)
     {
-        $this->kernel = $kernel;
+        $this->filesystem = $filesystem;
+    }
 
-        return $this;
+    /**
+     * @return VersionControlSystem
+     */
+    public function getVersionControlSystem(): VersionControlSystem
+    {
+        return $this->versionControlSystem;
+    }
+
+    /**
+     * @param VersionControlSystem $versionControlSystem
+     */
+    public function setVersionControlSystem(VersionControlSystem $versionControlSystem)
+    {
+        $this->versionControlSystem = $versionControlSystem;
     }
 }

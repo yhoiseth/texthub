@@ -22,6 +22,8 @@
     },
     "require": {
         "php": "^7.1",
+        "cocur/slugify": "^2.5",
+        "danielstjules/stringy": "^3.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^1.2",
         "doctrine/orm": "^2.5",
@@ -29,6 +31,7 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "mopa/bootstrap-bundle": "^3.1",
+        "oneup/flysystem-bundle": "^2.0",
         "ornicar/gravatar-bundle": "^1.1",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
@@ -41,6 +44,7 @@
     "require-dev": {
         "codeception/codeception": "^2.3",
         "codeception/verify": "^0.3.3",
+        "remg/generator-bundle": "dev-master",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
     },

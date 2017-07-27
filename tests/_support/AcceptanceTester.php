@@ -3,6 +3,7 @@ use AppBundle\Entity\User;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Doctrine\UserManager;
+use function Stringy\create as stringy;
 
 
 /**
@@ -105,17 +106,17 @@ class AcceptanceTester extends \Codeception\Actor
 
         $projectDirectory = $kernel->getProjectDir();
 
-        $mainRepositoriesDirectory = $projectDirectory.'/var/repositories/main';
+        $collectionsDirectory = $projectDirectory.'/var/collections';
 
-        verify(file_exists($mainRepositoriesDirectory))->true();
+        verify(file_exists($collectionsDirectory))->true();
 
-        $userMainRepositoryDirectory = $mainRepositoriesDirectory.'/'.$username;
+        $collectionDirectory = $collectionsDirectory.'/'.$username;
 
-        verify(file_exists($userMainRepositoryDirectory))->true();
+        verify(file_exists($collectionDirectory))->true();
 
-        $userMainRepositoryGitDirectory = $userMainRepositoryDirectory.'/.git';
+        $gitDirectory = $collectionDirectory.'/.git';
 
-        verify(file_exists($userMainRepositoryGitDirectory))
+        verify(file_exists($gitDirectory))
             ->true();
 
         $namesOfStandardFilesInGitDirectory = [
@@ -129,7 +130,7 @@ class AcceptanceTester extends \Codeception\Actor
         ];
 
         foreach ($namesOfStandardFilesInGitDirectory as $filename) {
-            $file = $userMainRepositoryGitDirectory.DIRECTORY_SEPARATOR.$filename;
+            $file = $gitDirectory.DIRECTORY_SEPARATOR.$filename;
 
             verify(file_exists($file))->true();
         }
@@ -159,5 +160,138 @@ class AcceptanceTester extends \Codeception\Actor
     public function iSubmitTheForm()
     {
         $this->click('input[type=submit]');
+    }
+
+    /**
+     * @Then I should not see :text
+     * @param string $text
+     */
+    public function iShouldNotSee(string $text)
+    {
+        $this->cantSee($text);
+    }
+
+    /**
+     * @Then the :label field should contain :value
+     * @param string $label
+     * @param string $value
+     */
+    public function theFieldShouldContain(string $label, string $value)
+    {
+        sleep(2);
+
+        $this->canSeeInField($label, $value);
+    }
+
+    /**
+     * @Then :string should be selected
+     * @param string $string
+     */
+    public function shouldBeSelected(string $string)
+    {
+        sleep(2);
+    }
+
+    /**
+     * @Then the text with title :textTitle should be created in the main repository of :username
+     * @param string $textTitle
+     * @param string $username
+     */
+    public function theTextShouldBeCreatedInTheMainRepositoryOf(string $textTitle, string $username)
+    {
+        /** @var Registry $doctrine */
+        $doctrine = $this->grabService('doctrine');
+        $textRepository = $doctrine->getRepository('AppBundle:Text');
+
+        $text = $textRepository->findOneBy([
+            'title' => $textTitle
+        ]);
+
+        verify($text)->notNull();
+
+        /** @var AppKernel $kernel */
+        $kernel = $this->grabService('kernel');
+
+        $projectDirectory = $kernel->getProjectDir();
+
+        $slug = $text->getSlug();
+
+        verify_file(
+            "$projectDirectory/var/collections/$username/$slug.md"
+        )
+            ->exists()
+        ;
+    }
+
+    /**
+     * @Then the page title should contain :string
+     * @param string $string
+     */
+    public function thePageTitleShouldContain(string $string)
+    {
+        $this->canSeeInTitle($string);
+    }
+
+    /**
+     * @Given I wait :numberOfSeconds seconds
+     * @param string $numberOfSeconds
+     */
+    public function iWaitSeconds(string $numberOfSeconds)
+    {
+        sleep(
+            (int) $numberOfSeconds
+        );
+    }
+
+    /**
+     * @Then all the files in the main repository of :username should be committed
+     * @param string $username
+     */
+    public function allTheFilesInTheMainRepositoryOfShouldBeCommitted(string $username)
+    {
+        /** @var AppKernel $kernel */
+        $kernel = $this->grabService('kernel');
+        $projectDirectory = $kernel->getProjectDir();
+        $mainRepository = "$projectDirectory/var/collections/$username";
+
+        $navigationCommand = "cd $mainRepository";
+        $statusCommand = "git status";
+        $completeCommand = "$navigationCommand && $statusCommand";
+
+        $output = shell_exec($completeCommand);
+
+        verify($output)->contains('nothing to commit');
+    }
+
+    /**
+     * @Then the last commit should be authored by :username
+     * @param string $username
+     * @internal param string $author
+     */
+    public function theLastCommitShouldBeAuthoredBy(string $username)
+    {
+        /** @var UserManager $userManager */
+        $userManager = $this->grabService('fos_user.user_manager');
+
+        /** @var User $user */
+        $user = $userManager->findUserByUsername($username);
+        $name = $user->getName();
+        $email = $user->getEmail();
+        $author = "$name <$email>";
+
+        /** @var AppKernel $kernel */
+        $kernel = $this->grabService('kernel');
+        $projectDirectory = $kernel->getProjectDir();
+        $mainRepository = "$projectDirectory/var/collections/$username";
+
+        $navigationCommand = "cd $mainRepository";
+        $logCommand = "git --no-pager log";
+        $completeCommand = "$navigationCommand && $logCommand";
+
+        $output = shell_exec($completeCommand);
+
+        $lines = stringy($output)->lines();
+
+        verify($lines[1])->equals("Author: $author");
     }
 }

@@ -90,3 +90,13 @@ mopa_bootstrap:
         horizontal_label_class: ~
         horizontal_input_wrapper_class: ~
         show_legend: false
+
+oneup_flysystem:
+    adapters:
+        collections:
+            local:
+                directory: '%collections_directory%'
+
+    filesystems:
+        collections:
+            adapter: collections

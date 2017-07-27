@@ -9,3 +9,31 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"
 ></script>
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <script>
+        var TexthubApp = {
+          initialize: function($wrapper) {
+            this.$wrapper = $wrapper;
+
+            this.$wrapper
+              .find('#new-text-modal')
+              .on(
+                'shown.bs.modal',
+                this.handleNewTextModalOpen
+              );
+          },
+
+          handleNewTextModalOpen: function() {
+            $(this)
+              .find('#appbundle_text_title')
+              .select();
+          }
+        };
+
+        $(document).ready(function() {
+          var $body = $('body');
+          TexthubApp.initialize($body);
+        });
+    </script>
+{% endif %}
