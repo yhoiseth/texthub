@@ -1,4 +1,4 @@
-@prepare_database @clean_files
+@prepare_database @clean_files @watch
 Feature: New text
   In order to remember and share my thoughts
   As a logged in user
@@ -16,7 +16,6 @@ Feature: New text
     And I press ENTER
     Then I should see "New text"
 
-  @watch
   Scenario: Happy path
     Given I am on "/"
     Then I should not see "Title"
@@ -80,6 +79,3 @@ Feature: New text
     And I fill in "Title" with "Meditations Revisited"
     And I click "Let's go"
     Then I should be redirected to "/hadrianus/meditations-revisited/_edit"
-
-
-

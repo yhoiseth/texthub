@@ -52,9 +52,6 @@ class TextController extends Controller
             ;
 
             while (count($textsWithSameSlug) > 0) {
-//                $slug.= '-2';
-
-
                 $slug = $this->incrementSlug($slug);
 
                 $textsWithSameSlug = $textRepository
@@ -63,12 +60,6 @@ class TextController extends Controller
                     ])
                 ;
             }
-
-
-
-
-
-
 
             $text->setSlug($slug);
 
@@ -106,7 +97,6 @@ class TextController extends Controller
                 ]
             );
         }
-
 
         return $this->render(
             'AppBundle:Text:new.html.twig',
@@ -148,17 +138,23 @@ class TextController extends Controller
     {
         /** @var Stringy[] $parts */
         $parts = stringy($slug)->split('-');
+
         $numberOfParts = count($parts);
         $lastPartIndex = $numberOfParts - 1;
         $lastPart = $parts[$lastPartIndex];
+
         if (ctype_digit((string) $lastPart)) {
             $oldVersionNumber = (integer) (string) $lastPart;
             $incrementedVersionNumber = $oldVersionNumber + 1;
+
             $newLastPart = stringy((string) $incrementedVersionNumber);
             $parts[$lastPartIndex] = $newLastPart;
+
             $slug = implode('-', $parts);
+
             return $slug;
         }
+
         return $slug . '-2';
     }
 }

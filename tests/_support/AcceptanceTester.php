@@ -260,9 +260,6 @@ class AcceptanceTester extends \Codeception\Actor
 
         $output = shell_exec($completeCommand);
 
-//        dump($completeCommand);
-//        dump($output);
-
         verify($output)->contains('nothing to commit, working tree clean');
     }
 

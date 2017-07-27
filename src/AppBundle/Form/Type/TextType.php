@@ -39,6 +39,4 @@ class TextType extends AbstractType
     {
         return 'appbundle_text';
     }
-
-
 }
