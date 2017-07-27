@@ -47,25 +47,6 @@ class RegisterUserListener implements EventSubscriberInterface
 
     public function onRegistrationCompleted(FilterUserResponseEvent $event)
     {
-        $user = $event->getUser();
-
-        /** @var Kernel $kernel */
-        $kernel = $this->getKernel();
-
-        $projectDirectory = $kernel->getProjectDir();
-
-        $mainRepositoriesDirectory = $projectDirectory.'/var/collections';
-
-        $userMainRepositoryDirectory = $mainRepositoriesDirectory.'/'.$user->getUsernameCanonical();
-
-//        if (!file_exists($userMainRepositoryDirectory)) {
-//            mkdir(
-//                $userMainRepositoryDirectory,
-//                0755,
-//                true
-//            );
-//        }
-
         $this
             ->getFilesystem()
             ->createDir(
@@ -73,9 +54,12 @@ class RegisterUserListener implements EventSubscriberInterface
             )
         ;
 
-        $this->getVersionControlSystem()->initializeRepository($user->getUsername());
-
-//        exec("git init $userMainRepositoryDirectory");
+        $this
+            ->getVersionControlSystem()
+            ->initializeRepository(
+                $event->getUser()->getUsername()
+            )
+        ;
     }
 
     /**
