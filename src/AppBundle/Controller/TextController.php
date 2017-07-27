@@ -169,8 +169,6 @@ class TextController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($text);
         $entityManager->flush();
-
-//        return $text;
     }
 
     /**
