@@ -52,6 +52,7 @@ services:
 #        alias: app.version_control_system
         arguments:
             $collectionsDirectory: '%collections_directory%'
+            $tokenStorage: '@security.token_storage'
 
 
 #    app.register_user_listener:
