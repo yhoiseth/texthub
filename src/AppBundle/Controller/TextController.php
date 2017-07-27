@@ -41,7 +41,7 @@ class TextController extends Controller
 
             $filename = $this->getTextFilename($text);
 
-            $this->createEmptyTextFile($username, $filename);
+            $this->saveEmptyTextFile($text);
 
             $this->commitTextFile($username, $filename, $userName, $email);
 
@@ -165,7 +165,6 @@ class TextController extends Controller
 
     /**
      * @param Text $text
-     * @return Text
      */
     private function saveTextInDatabase(Text &$text)
     {
@@ -185,11 +184,16 @@ class TextController extends Controller
     }
 
     /**
-     * @param string $username
-     * @param string $filename
+     * @param Text $text
      */
-    private function createEmptyTextFile(string $username, string $filename): void
+    private function saveEmptyTextFile(Text $text): void
     {
+        /** @var User $user */
+        $user = $this->getUser();
+        $username = $user->getUsername();
+
+        $filename = $this->getTextFilename($text);
+
         $filesystem = $this->get('oneup_flysystem.main_repositories_filesystem');
 
         $filesystem
