@@ -28,29 +28,16 @@ class TextController extends Controller
             /** @var Text $text */
             $text = $form->getData();
 
-            /** @var User $user */
-            $user = $this->getUser();
-
             $this->saveTextInDatabase($text);
-
-            $username = $user->getUsername();
-            $userName = $user->getName();
-            $email = $user->getEmail();
-
-            $slug = $text->getSlug();
-
-            $filename = $this->getTextFilename($text);
-
             $this->saveEmptyTextFile($text);
-
             $this->commitTextFileToVersionControlSystem($text);
 
             return $this->redirectToRoute(
                 'app_text_edit',
-                compact(
-                    'username',
-                    'slug'
-                )
+                [
+                    'username' => $this->getUser()->getUsername(),
+                    'slug' => $text->getSlug(),
+                ]
             );
         }
 
