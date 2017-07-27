@@ -31,13 +31,15 @@ class TextController extends Controller
             /** @var User $user */
             $user = $this->getUser();
 
-            $slug = $this->generateSlug($unsavedText, $user);
+//            $slug = $this->generateSlug($unsavedText);
 
-            $text = $this->saveTextInDatabase($unsavedText, $slug, $user);
+            $text = $this->saveTextInDatabase($unsavedText, $user);
 
             $username = $user->getUsername();
             $userName = $user->getName();
             $email = $user->getEmail();
+
+            $slug = $text->getSlug();
 
             $filename = "$slug.md";
 
@@ -119,7 +121,7 @@ class TextController extends Controller
      * @param User $user
      * @return string
      */
-    private function generateSlug(Text $text, User $user): string
+    private function generateSlug(Text $text): string
     {
         $user = $this->getUser();
 
@@ -169,8 +171,10 @@ class TextController extends Controller
      * @param User $user
      * @return Text
      */
-    private function saveTextInDatabase(Text $text, string $slug, User $user): Text
+    private function saveTextInDatabase(Text $text, User $user): Text
     {
+        $slug = $this->generateSlug($text);
+
         $text->setSlug($slug);
         $text->setCreatedBy($user);
 
