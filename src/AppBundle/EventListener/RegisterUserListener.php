@@ -18,16 +18,21 @@ class RegisterUserListener implements EventSubscriberInterface
     /** @var FilesystemInterface $filesystem */
     private $filesystem;
 
+    /** @var VersionControlSystem $versionControlSystem */
+    private $versionControlSystem;
+
     /**
      * RegisterUserListener constructor.
      * @param KernelInterface $kernel
      * @param FilesystemInterface $filesystem
+     * @param VersionControlSystem $versionControlSystem
      */
 //    public function __construct(KernelInterface $kernel, FilesystemInterface $filesystem)
     public function __construct(KernelInterface $kernel, FilesystemInterface $filesystem, VersionControlSystem $versionControlSystem)
     {
         $this->setKernel($kernel);
         $this->setFilesystem($filesystem);
+        $this->setVersionControlSystem($versionControlSystem);
     }
 
     /**
@@ -104,5 +109,21 @@ class RegisterUserListener implements EventSubscriberInterface
     public function setFilesystem(FilesystemInterface $filesystem)
     {
         $this->filesystem = $filesystem;
+    }
+
+    /**
+     * @return VersionControlSystem
+     */
+    public function getVersionControlSystem(): VersionControlSystem
+    {
+        return $this->versionControlSystem;
+    }
+
+    /**
+     * @param VersionControlSystem $versionControlSystem
+     */
+    public function setVersionControlSystem(VersionControlSystem $versionControlSystem)
+    {
+        $this->versionControlSystem = $versionControlSystem;
     }
 }
