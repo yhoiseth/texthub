@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Ivory\OrderedFormBundle\IvoryOrderedFormBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
+            new Oneup\FlysystemBundle\OneupFlysystemBundle(),
             new AppBundle\AppBundle(),
         ];
 

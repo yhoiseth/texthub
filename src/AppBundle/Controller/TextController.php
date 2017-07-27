@@ -79,7 +79,20 @@ class TextController extends Controller
             $projectDirectory = $kernel->getProjectDir();
             $filename = "$slug.md";
 
-            touch("$projectDirectory/var/repositories/main/$username/$filename");
+            $filesystem = $this->get('oneup_flysystem.my_filesystem_filesystem');
+
+//            dump($filesystem);
+
+//            touch("$projectDirectory/var/repositories/main/$username/$filename");
+
+            $result = $filesystem
+                ->write(
+                    "$username/$filename",
+                    ''
+                )
+            ;
+//
+//            dump($result);die;
 
             $navigationCommand = "cd $projectDirectory/var/repositories/main/$username";
             $stageCommand = "git add $filename";
