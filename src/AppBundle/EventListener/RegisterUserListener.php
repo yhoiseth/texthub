@@ -12,9 +12,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class RegisterUserListener implements EventSubscriberInterface
 {
-    /** @var KernelInterface $kernel */
-    private $kernel;
-
     /** @var FilesystemInterface $filesystem */
     private $filesystem;
 
@@ -23,17 +20,14 @@ class RegisterUserListener implements EventSubscriberInterface
 
     /**
      * RegisterUserListener constructor.
-     * @param KernelInterface $kernel
      * @param FilesystemInterface $filesystem
      * @param VersionControlSystem $versionControlSystem
      */
     public function __construct(
-        KernelInterface $kernel,
         FilesystemInterface $filesystem,
         VersionControlSystem $versionControlSystem
     )
     {
-        $this->setKernel($kernel);
         $this->setFilesystem($filesystem);
         $this->setVersionControlSystem($versionControlSystem);
     }
@@ -63,25 +57,6 @@ class RegisterUserListener implements EventSubscriberInterface
                 $event->getUser()->getUsername()
             )
         ;
-    }
-
-    /**
-     * @return KernelInterface
-     */
-    public function getKernel(): KernelInterface
-    {
-        return $this->kernel;
-    }
-
-    /**
-     * @param KernelInterface $kernel
-     * @return $this
-     */
-    public function setKernel(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
-
-        return $this;
     }
 
     /**
