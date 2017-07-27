@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 use Stringy\Stringy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Stringy\create as stringy;
@@ -20,16 +21,7 @@ class TextController extends Controller
      */
     public function newAction(Request $request)
     {
-        $form = $this
-            ->createForm(
-                'AppBundle\Form\Type\TextType',
-                null,
-                [
-                    'action' => $this->generateUrl('app_text_new')
-                ]
-            )
-        ;
-
+        $form = $this->createNewTextForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -145,11 +137,11 @@ class TextController extends Controller
     }
 
     /**
-     * @param $text
-     * @param $user
+     * @param Text $text
+     * @param User $user
      * @return string
      */
-    private function generateSlug(Text $text, $user): string
+    private function generateSlug(Text $text, User $user): string
     {
         $slugify = $this->get('slugify');
         $slug = $slugify->slugify($text->getTitle());
@@ -172,5 +164,22 @@ class TextController extends Controller
         }
 
         return $slug;
+    }
+
+    /**
+     * @return Form
+     */
+    private function createNewTextForm(): Form
+    {
+        $form = $this
+            ->createForm(
+                'AppBundle\Form\Type\TextType',
+                null,
+                [
+                    'action' => $this->generateUrl('app_text_new')
+                ]
+            );
+        
+        return $form;
     }
 }
