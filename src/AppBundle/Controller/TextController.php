@@ -25,15 +25,15 @@ class TextController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Text $text */
-            $text = $form->getData();
+            /** @var Text $unsavedText */
+            $unsavedText = $form->getData();
 
             /** @var User $user */
             $user = $this->getUser();
 
-            $slug = $this->generateSlug($text, $user);
+            $slug = $this->generateSlug($unsavedText, $user);
 
-            $this->saveTextInDatabase($text, $slug, $user);
+            $text = $this->saveTextInDatabase($unsavedText, $slug, $user);
 
             $username = $user->getUsername();
             $userName = $user->getName();
@@ -162,20 +162,21 @@ class TextController extends Controller
     }
 
     /**
-     * @param $text
-     * @param $slug
-     * @param $user
+     * @param Text $text
+     * @param string $slug
+     * @param User $user
+     * @return Text
      */
-    private function saveTextInDatabase(Text $text, string $slug, User $user): void
+    private function saveTextInDatabase(Text $text, string $slug, User $user): Text
     {
         $text->setSlug($slug);
-
         $text->setCreatedBy($user);
 
         $entityManager = $this->getDoctrine()->getManager();
-
         $entityManager->persist($text);
         $entityManager->flush();
+
+        return $text;
     }
 
     /**
