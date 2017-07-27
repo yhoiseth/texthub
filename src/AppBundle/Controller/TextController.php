@@ -33,14 +33,7 @@ class TextController extends Controller
 
             $slug = $this->generateSlug($text, $user);
 
-            $text->setSlug($slug);
-
-            $text->setCreatedBy($user);
-
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->persist($text);
-            $entityManager->flush();
+            $this->saveTextInDatabase($text, $slug, $user);
 
             $username = $user->getUsername();
             $userName = $user->getName();
@@ -179,7 +172,24 @@ class TextController extends Controller
                     'action' => $this->generateUrl('app_text_new')
                 ]
             );
-        
+
         return $form;
+    }
+
+    /**
+     * @param $text
+     * @param $slug
+     * @param $user
+     */
+    private function saveTextInDatabase($text, $slug, $user): void
+    {
+        $text->setSlug($slug);
+
+        $text->setCreatedBy($user);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->persist($text);
+        $entityManager->flush();
     }
 }
