@@ -43,15 +43,7 @@ class TextController extends Controller
 
             $this->saveTextFile($username, $filename);
 
-            $mainRepositoriesDirectory = $this->getParameter('repositories_main_directory');
-
-            $navigationCommand = "cd $mainRepositoriesDirectory/$username";
-            $stageCommand = "git add $filename";
-            $commitCommand = "git commit --author='$userName <$email>' -m 'Create text'";
-
-            $completeCommand = "$navigationCommand && $stageCommand && $commitCommand";
-
-            shell_exec($completeCommand);
+            $this->commitTextFile($username, $filename, $userName, $email);
 
             return $this->redirectToRoute(
                 'app_text_edit',
@@ -199,5 +191,24 @@ class TextController extends Controller
                 "$username/$filename",
                 ''
             );
+    }
+
+    /**
+     * @param string $username
+     * @param string $filename
+     * @param string $userName
+     * @param string $email
+     */
+    private function commitTextFile(string $username, string $filename, string $userName, string $email): void
+    {
+        $mainRepositoriesDirectory = $this->getParameter('repositories_main_directory');
+
+        $navigationCommand = "cd $mainRepositoriesDirectory/$username";
+        $stageCommand = "git add $filename";
+        $commitCommand = "git commit --author='$userName <$email>' -m 'Create text'";
+
+        $completeCommand = "$navigationCommand && $stageCommand && $commitCommand";
+
+        shell_exec($completeCommand);
     }
 }
