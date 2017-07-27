@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Text
@@ -27,6 +28,7 @@ class Text
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="title", type="string", length=255, nullable=false, unique=false)
      */
     private $title;

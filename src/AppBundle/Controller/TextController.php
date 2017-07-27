@@ -41,6 +41,10 @@ class TextController extends Controller
             );
         }
 
+        if ($form->isSubmitted()) {
+            return $this->render('default/index.html.twig');
+        }
+
         return $this->render(
             'AppBundle:Text:new.html.twig',
             [
