@@ -41,14 +41,7 @@ class TextController extends Controller
 
             $filename = "$slug.md";
 
-            $filesystem = $this->get('oneup_flysystem.main_repositories_filesystem');
-
-            $filesystem
-                ->write(
-                    "$username/$filename",
-                    ''
-                )
-            ;
+            $this->saveTextFile($username, $filename);
 
             $mainRepositoriesDirectory = $this->getParameter('repositories_main_directory');
 
@@ -181,7 +174,7 @@ class TextController extends Controller
      * @param $slug
      * @param $user
      */
-    private function saveTextInDatabase($text, $slug, $user): void
+    private function saveTextInDatabase(Text $text, string $slug, User $user): void
     {
         $text->setSlug($slug);
 
@@ -191,5 +184,20 @@ class TextController extends Controller
 
         $entityManager->persist($text);
         $entityManager->flush();
+    }
+
+    /**
+     * @param string $username
+     * @param string $filename
+     */
+    private function saveTextFile(string $username, string $filename): void
+    {
+        $filesystem = $this->get('oneup_flysystem.main_repositories_filesystem');
+
+        $filesystem
+            ->write(
+                "$username/$filename",
+                ''
+            );
     }
 }
