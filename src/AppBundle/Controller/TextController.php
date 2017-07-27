@@ -121,6 +121,8 @@ class TextController extends Controller
      */
     private function generateSlug(Text $text, User $user): string
     {
+        $user = $this->getUser();
+
         $slugify = $this->get('slugify');
         $slug = $slugify->slugify($text->getTitle());
 
