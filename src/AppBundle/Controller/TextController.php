@@ -25,15 +25,13 @@ class TextController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Text $unsavedText */
-            $unsavedText = $form->getData();
+            /** @var Text $textNotSavedInDatabase */
+            $textNotSavedInDatabase = $form->getData();
 
             /** @var User $user */
             $user = $this->getUser();
 
-//            $slug = $this->generateSlug($unsavedText);
-
-            $text = $this->saveTextInDatabase($unsavedText, $user);
+            $text = $this->saveTextInDatabase($textNotSavedInDatabase, $user);
 
             $username = $user->getUsername();
             $userName = $user->getName();
