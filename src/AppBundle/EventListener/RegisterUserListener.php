@@ -4,6 +4,7 @@ namespace AppBundle\EventListener;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
+use League\Flysystem\FilesystemInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -13,12 +14,18 @@ class RegisterUserListener implements EventSubscriberInterface
     /** @var KernelInterface $kernel */
     private $kernel;
 
+    /** @var FilesystemInterface $filesystem */
+    private $filesystem;
+
     /**
      * RegisterUserListener constructor.
+     * @param KernelInterface $kernel
+     * @param FilesystemInterface $filesystem
      */
-    public function __construct(KernelInterface $kernel)
+    public function __construct(KernelInterface $kernel, FilesystemInterface $filesystem)
     {
         $this->setKernel($kernel);
+        $this->setFilesystem($filesystem);
     }
 
     /**
@@ -44,13 +51,20 @@ class RegisterUserListener implements EventSubscriberInterface
 
         $userMainRepositoryDirectory = $mainRepositoriesDirectory.'/'.$user->getUsernameCanonical();
 
-        if (!file_exists($userMainRepositoryDirectory)) {
-            mkdir(
-                $userMainRepositoryDirectory,
-                0755,
-                true
-            );
-        }
+//        if (!file_exists($userMainRepositoryDirectory)) {
+//            mkdir(
+//                $userMainRepositoryDirectory,
+//                0755,
+//                true
+//            );
+//        }
+
+        $this
+            ->getFilesystem()
+            ->createDir(
+                $event->getUser()->getUsername()
+            )
+        ;
 
         exec("git init $userMainRepositoryDirectory");
     }
@@ -72,5 +86,21 @@ class RegisterUserListener implements EventSubscriberInterface
         $this->kernel = $kernel;
 
         return $this;
+    }
+
+    /**
+     * @return FilesystemInterface
+     */
+    public function getFilesystem(): FilesystemInterface
+    {
+        return $this->filesystem;
+    }
+
+    /**
+     * @param FilesystemInterface $filesystem
+     */
+    public function setFilesystem(FilesystemInterface $filesystem)
+    {
+        $this->filesystem = $filesystem;
     }
 }

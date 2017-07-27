@@ -4,6 +4,7 @@ Feature: Register
   As a website visitor
   I need to be able to create a user account
 
+  @watch
   Scenario Outline: Happy path
     Given I am on "/"
     When I click "Register"
