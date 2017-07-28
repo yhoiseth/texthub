@@ -243,6 +243,9 @@ class TextController extends Controller
     private function getTextFilename(Text $text): string
     {
         $slug = $text->getLatestSlug()->getBody();
+
+//        dump($slug);die;
+
         $filename = "$slug.md";
 
         return $filename;
@@ -298,14 +301,31 @@ class TextController extends Controller
     private function slugIsUnavailable(string $slug): bool
     {
         $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+        $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
 
-        $textsWithSameSlug = $textRepository
-            ->findBy([
-                'slug' => $slug,
-                'createdBy' => $this->getUser(),
-            ])
+        $queryForSlugsWithSameBodyBySameUser = $slugRepository->createQueryBuilder('slug')
+            ->where('slug.body = :slugBody')
+            ->setParameter('slugBody', $slug)
+            ->join('slug.text', 'text')
+            ->where('text.createdBy = :user')
+            ->setParameter('user', $this->getUser())
+            ->getQuery()
         ;
 
-        return count($textsWithSameSlug) > 0;
+
+//        $query = $textRepository->createQueryBuilder('text')
+//            ->where('text.createdBy = :user')
+//            ->setParameter('user', $this->getUser())
+//            ->andWhere('text.latestSlug = :latestSlug')
+//        ;
+//        $textsWithSameSlug = $textRepository
+//            ->findBy([
+//                'slug' => $slug,
+//                'createdBy' => $this->getUser(),
+//            ])
+//        ;
+
+        return $queryForSlugsWithSameBodyBySameUser->getSingleScalarResult() > 0;
+//        return count($textsWithSameSlug) > 0;
     }
 }

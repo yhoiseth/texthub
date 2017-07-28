@@ -16,7 +16,6 @@ Feature: New text
     And I press ENTER
     Then I should see "New text"
 
-    @watch
   Scenario: Happy path
     Given I am on "/"
     Then I should not see "Title"
@@ -32,6 +31,7 @@ Feature: New text
     And all the files in the main repository of "marcus-aurelius" should be committed
     And the last commit should be authored by "marcus-aurelius"
 
+  @watch
   Scenario: Existing title
     Given I am on "/"
     And I click "New text"
