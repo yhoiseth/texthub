@@ -242,9 +242,6 @@ class TextController extends Controller
     private function getTextFilename(Text $text): string
     {
         $slug = $text->getLatestSlug()->getBody();
-
-//        dump($slug);die;
-
         $filename = "$slug.md";
 
         return $filename;
