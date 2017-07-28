@@ -5,6 +5,7 @@ use AppBundle\Entity\User;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Doctrine\UserManager;
+use League\Flysystem\FilesystemInterface;
 use function Stringy\create as stringy;
 
 
@@ -332,18 +333,40 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the slug should be updated from :arg1 to :arg2
+     * @Then the slug should be updated from :oldSlug to :newSlug
+     * @param string $oldSlug
+     * @param string $newSlug
      */
-    public function theSlugShouldBeUpdatedFromTo($arg1, $arg2)
+    public function theSlugShouldBeUpdatedFromTo(string $oldSlug, string $newSlug)
     {
-        throw new \Codeception\Exception\Incomplete("Step `the slug should be updated from :arg1 to :arg2` is not defined");
+        /** @var Registry $doctrine */
+        $doctrine = $this->grabService('doctrine');
+        $textRepository = $doctrine->getRepository('AppBundle:Text');
+
+        $oldText = $textRepository->findOneBy([
+            'slug' => $oldSlug
+        ]);
+
+        verify($oldText)->null();
+
+        $newText = $textRepository->findOneBy([
+            'slug' => $newSlug
+        ]);
+
+        verify($newText)->isInstanceOf(Text::class);
     }
 
     /**
-     * @Then the filename should be updated to :arg1
+     * @Then the filename should be updated from :oldFilename to :newFilename
+     * @param string $oldFilename
+     * @param string $newFilename
      */
-    public function theFilenameShouldBeUpdatedTo($arg1)
+    public function theFilenameShouldBeUpdatedTo(string $oldFilename, string $newFilename)
     {
-        throw new \Codeception\Exception\Incomplete("Step `the filename should be updated to :arg1` is not defined");
+        /** @var FilesystemInterface $filesystem */
+        $filesystem = $this->grabService('oneup_flysystem.collections_filesystem');
+
+        verify($filesystem->has("marcus-aurelius/$oldFilename"))->false();
+        verify($filesystem->has("marcus-aurelius/$newFilename"))->true();
     }
 }
