@@ -258,20 +258,20 @@ class TextController extends Controller
     private function generateSlugBody(Text $text): string
     {
         $slugify = $this->get('slugify');
-        $slug = $slugify->slugify($text->getTitle());
+        $slugBody = $slugify->slugify($text->getTitle());
 
-        while ($this->slugIsUnavailable($slug)) {
-            $this->incrementSlugVersion($slug);
+        while ($this->slugBodyIsUnavailable($slugBody)) {
+            $this->incrementSlugBodyVersion($slugBody);
         }
 
-        return $slug;
+        return $slugBody;
     }
 
     /**
      * @param string &$slug
      * @return void
      */
-    private function incrementSlugVersion(string &$slug): void
+    private function incrementSlugBodyVersion(string &$slug): void
     {
         /** @var Stringy[] $parts */
         $parts = stringy($slug)->split('-');
@@ -294,37 +294,22 @@ class TextController extends Controller
     }
 
     /**
-     * @param string $slug
+     * @param string $slugBody
      * @return bool
      */
-    private function slugIsUnavailable(string $slug): bool
+    private function slugBodyIsUnavailable(string $slugBody): bool
     {
-        $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
         $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
 
         $queryForSlugsWithSameBodyBySameUser = $slugRepository->createQueryBuilder('slug')
             ->where('slug.body = :slugBody')
-            ->setParameter('slugBody', $slug)
+            ->setParameter('slugBody', $slugBody)
             ->join('slug.text', 'text')
             ->andWhere('text.createdBy = :user')
             ->setParameter('user', $this->getUser())
             ->getQuery()
         ;
 
-
-//        $query = $textRepository->createQueryBuilder('text')
-//            ->where('text.createdBy = :user')
-//            ->setParameter('user', $this->getUser())
-//            ->andWhere('text.latestSlug = :latestSlug')
-//        ;
-//        $textsWithSameSlug = $textRepository
-//            ->findBy([
-//                'slug' => $slug,
-//                'createdBy' => $this->getUser(),
-//            ])
-//        ;
-
         return count($queryForSlugsWithSameBodyBySameUser->getResult()) > 0;
-//        return count($textsWithSameSlug) > 0;
     }
 }
