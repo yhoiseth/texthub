@@ -34,6 +34,8 @@ class TextController extends Controller
             $this->saveEmptyTextFile($text);
             $this->commitTextFileToVersionControlSystem($text);
 
+//            die;
+
             return $this->redirectToRoute(
                 'app_text_edit',
                 [
@@ -178,10 +180,10 @@ class TextController extends Controller
 
         $slug->setText($text);
 
-        $slugify = $this->get('slugify');
-        $slugBody = $slugify->slugify($text->getTitle());
+//        $slugify = $this->get('slugify');
+//        $slugBody = $slugify->slugify($text->getTitle());
 
-        $slug->setBody($slugBody);
+        $slug->setBody($this->generateSlug($text));
 
         $text->setLatestSlug($slug);
 
@@ -307,7 +309,7 @@ class TextController extends Controller
             ->where('slug.body = :slugBody')
             ->setParameter('slugBody', $slug)
             ->join('slug.text', 'text')
-            ->where('text.createdBy = :user')
+            ->andWhere('text.createdBy = :user')
             ->setParameter('user', $this->getUser())
             ->getQuery()
         ;
@@ -325,7 +327,7 @@ class TextController extends Controller
 //            ])
 //        ;
 
-        return $queryForSlugsWithSameBodyBySameUser->getSingleScalarResult() > 0;
+        return count($queryForSlugsWithSameBodyBySameUser->getResult()) > 0;
 //        return count($textsWithSameSlug) > 0;
     }
 }
