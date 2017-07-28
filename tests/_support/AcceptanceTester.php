@@ -304,4 +304,28 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $this->see($text, $element);
     }
+
+    /**
+     * @Then the text title should be updated from :arg1 to :arg2
+     */
+    public function theTextTitleShouldBeUpdatedFromTo($arg1, $arg2)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the text title should be updated from :arg1 to :arg2` is not defined");
+    }
+
+    /**
+     * @Then the slug should be updated from :arg1 to :arg2
+     */
+    public function theSlugShouldBeUpdatedFromTo($arg1, $arg2)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the slug should be updated from :arg1 to :arg2` is not defined");
+    }
+
+    /**
+     * @Then the filename should be updated to :arg1
+     */
+    public function theFilenameShouldBeUpdatedTo($arg1)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the filename should be updated to :arg1` is not defined");
+    }
 }
