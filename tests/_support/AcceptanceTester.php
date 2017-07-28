@@ -294,4 +294,14 @@ class AcceptanceTester extends \Codeception\Actor
 
         verify($lines[1])->equals("Author: $author");
     }
+
+    /**
+     * @Given :element should contain :text
+     * @param string $element
+     * @param string $text
+     */
+    public function shouldContain(string $element, string $text)
+    {
+        $this->see($text, $element);
+    }
 }

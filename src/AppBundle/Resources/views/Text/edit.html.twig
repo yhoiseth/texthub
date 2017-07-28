@@ -1,5 +1,11 @@
-{% extends '@FOSUser/layout.html.twig' %}
+{% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block title %}
     {{ text.title }}
+{% endblock %}
+
+{% block body %}
+    <h1>
+        {{ text.title }}
+    </h1>
 {% endblock %}
