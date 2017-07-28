@@ -1,4 +1,4 @@
-@prepare_database @clean_files
+@prepare_database @clean_files @watch
 Feature: New text
   In order to remember and share my thoughts
   As a logged in user

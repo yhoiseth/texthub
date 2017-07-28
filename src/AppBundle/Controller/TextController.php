@@ -34,8 +34,6 @@ class TextController extends Controller
             $this->saveEmptyTextFile($text);
             $this->commitTextFileToVersionControlSystem($text);
 
-//            die;
-
             return $this->redirectToRoute(
                 'app_text_edit',
                 [
@@ -105,7 +103,7 @@ class TextController extends Controller
 
             $slug->setText($text);
 
-            $slug->setBody($this->generateSlug($text));
+            $slug->setBody($this->generateSlugBody($text));
 
             $text->setLatestSlug($slug);
 
@@ -185,7 +183,9 @@ class TextController extends Controller
 
         $slug->setText($text);
 
-        $slug->setBody($this->generateSlug($text));
+        $slug->setBody(
+            $this->generateSlugBody($text)
+        );
 
         $text->setLatestSlug($slug);
 
@@ -255,7 +255,7 @@ class TextController extends Controller
      * @return string
      * @internal param User $user
      */
-    private function generateSlug(Text $text): string
+    private function generateSlugBody(Text $text): string
     {
         $slugify = $this->get('slugify');
         $slug = $slugify->slugify($text->getTitle());
