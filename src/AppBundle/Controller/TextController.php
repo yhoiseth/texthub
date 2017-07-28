@@ -101,31 +101,36 @@ class TextController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $text->setTitle($form->getData()->getTitle());
 
-            $text->setSlug(
-                $this->generateSlug($text)
-            );
+            $slug = new Slug();
+
+            $slug->setText($text);
+
+            $slug->setBody($this->generateSlug($text));
+
+            $text->setLatestSlug($slug);
 
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($slug);
             $entityManager->persist($text);
             $entityManager->flush();
 
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
             $filesystem->rename(
                 $this->getUser()->getUsername().'/'.$slug.'.md',
-                $this->getUser()->getUsername().'/'.$text->getSlug().'.md'
+                $this->getUser()->getUsername().'/'.$text->getLatestSlug()->getBody().'.md'
             );
 
             $versionControlSystem = $this->get('app.version_control_system');
             $versionControlSystem->commitNewFilename(
                 "$slug.md",
-                $text->getSlug().'.md'
+                $text->getLatestSlug()->getBody().'.md'
             );
 
             return $this->redirectToRoute(
                 'app_text_edit',
                 [
                     'username' => $this->getUser()->getUsername(),
-                    'slug' => $text->getSlug(),
+                    'slug' => $text->getLatestSlug()->getBody(),
                 ]
             );
         }
@@ -180,17 +185,9 @@ class TextController extends Controller
 
         $slug->setText($text);
 
-//        $slugify = $this->get('slugify');
-//        $slugBody = $slugify->slugify($text->getTitle());
-
         $slug->setBody($this->generateSlug($text));
 
         $text->setLatestSlug($slug);
-
-
-//        $text->setSlug(
-//            $this->generateSlug($text)
-//        );
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($text);

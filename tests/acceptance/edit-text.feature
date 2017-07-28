@@ -1,4 +1,4 @@
-@prepare_database @clean_files
+@prepare_database @clean_files @watch
 Feature: Edit text
   In order to improve my texts
   As a logged in user with one or more texts

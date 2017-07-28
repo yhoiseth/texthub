@@ -35,6 +35,11 @@ class Slug
      */
     private $text;
 
+    public function __toString()
+    {
+        return $this->getBody();
+    }
+
     /**
      * Get id
      *
