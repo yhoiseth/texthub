@@ -33,12 +33,12 @@ class Text
      */
     private $title;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=false)
-     */
-    private $slug;
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=false)
+//     */
+//    private $slug;
 
     /**
      * @var Slug
@@ -82,24 +82,24 @@ class Text
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     * @return Text
-     */
-    public function setSlug(string $slug): Text
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
+//    /**
+//     * @return null|string
+//     */
+//    public function getSlug(): ?string
+//    {
+//        return $this->slug;
+//    }
+//
+//    /**
+//     * @param string $slug
+//     * @return Text
+//     */
+//    public function setSlug(string $slug): Text
+//    {
+//        $this->slug = $slug;
+//
+//        return $this;
+//    }
 
     /**
      * @return User

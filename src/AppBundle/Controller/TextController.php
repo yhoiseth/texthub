@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Slug;
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
 use Stringy\Stringy;
@@ -37,7 +38,7 @@ class TextController extends Controller
                 'app_text_edit',
                 [
                     'username' => $this->getUser()->getUsername(),
-                    'slug' => $text->getSlug(),
+                    'slug' => $text->getLatestSlug()->getBody(),
                 ]
             );
         }
@@ -64,9 +65,14 @@ class TextController extends Controller
     public function editAction(Request $request, string $username, string $slug)
     {
         $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+        $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
+
+        $slug = $slugRepository->findOneBy([
+            'body' => $slug,
+        ]);
 
         $text = $textRepository->findOneBy([
-            'slug' => $slug,
+            'latestSlug' => $slug,
         ]);
 
         $form = $this
@@ -78,7 +84,7 @@ class TextController extends Controller
                         'app_text_edit',
                         [
                             'username' => $this->getUser()->getUsername(),
-                            'slug' => $text->getSlug(),
+                            'slug' => $text->getLatestSlug()->getBody(),
                         ]
                     ),
                     'attr' => [
@@ -168,12 +174,25 @@ class TextController extends Controller
             $this->getUser()
         );
 
-        $text->setSlug(
-            $this->generateSlug($text)
-        );
+        $slug = new Slug();
+
+        $slug->setText($text);
+
+        $slugify = $this->get('slugify');
+        $slugBody = $slugify->slugify($text->getTitle());
+
+        $slug->setBody($slugBody);
+
+        $text->setLatestSlug($slug);
+
+
+//        $text->setSlug(
+//            $this->generateSlug($text)
+//        );
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($text);
+        $entityManager->persist($slug);
         $entityManager->flush();
     }
 
@@ -223,7 +242,7 @@ class TextController extends Controller
      */
     private function getTextFilename(Text $text): string
     {
-        $slug = $text->getSlug();
+        $slug = $text->getLatestSlug()->getBody();
         $filename = "$slug.md";
 
         return $filename;
