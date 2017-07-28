@@ -68,10 +68,23 @@ class TextController extends Controller
             'slug' => $slug,
         ]);
 
+        $form = $this
+            ->createForm(
+                'AppBundle\Form\Type\TextType',
+                $text,
+                [
+                    'action' => $this->generateUrl('app_text_new')
+                ]
+            )
+        ;
+
+        $form->setData($text);
+
         return $this->render(
             '@App/Text/edit.html.twig',
             [
                 'text' => $text,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -81,10 +94,13 @@ class TextController extends Controller
      */
     private function createNewTextForm(): Form
     {
+        $text = new Text();
+        $text->setTitle('Untitled');
+
         $form = $this
             ->createForm(
                 'AppBundle\Form\Type\TextType',
-                null,
+                $text,
                 [
                     'action' => $this->generateUrl('app_text_new')
                 ]
