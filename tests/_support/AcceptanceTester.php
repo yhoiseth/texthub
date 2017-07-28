@@ -369,4 +369,16 @@ class AcceptanceTester extends \Codeception\Actor
         verify($filesystem->has("marcus-aurelius/$oldFilename"))->false();
         verify($filesystem->has("marcus-aurelius/$newFilename"))->true();
     }
+
+    /**
+     * @When I fill in the title field in the edit text form with :value
+     * @param string $value
+     */
+    public function iFillInInTheTitleFieldInTheEditTextFormWith(string $value)
+    {
+        $this->fillField(
+            ['css' => '#form-edit-text #appbundle_text_title'],
+            $value
+        );
+    }
 }

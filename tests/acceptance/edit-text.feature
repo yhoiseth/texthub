@@ -23,7 +23,7 @@ Feature: Edit text
     And "Meditations Revisited" should be selected
 
   Scenario: Happy path
-    When I fill in "Title" with "Something else"
+    When I fill in the title field in the edit text form with "Something else"
     And I click "Save"
     Then the text title should be updated from "Meditations Revisited" to "Something else"
     And the slug should be updated from "meditations-revisited" to "something-else"

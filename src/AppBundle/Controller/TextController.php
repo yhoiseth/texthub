@@ -81,6 +81,9 @@ class TextController extends Controller
                             'slug' => $text->getSlug(),
                         ]
                     ),
+                    'attr' => [
+                        'id' => 'form-edit-text'
+                    ]
                 ]
             )
         ;
