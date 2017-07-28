@@ -107,6 +107,12 @@ class TextController extends Controller
                 $this->getUser()->getUsername().'/'.$text->getSlug().'.md'
             );
 
+            $versionControlSystem = $this->get('app.version_control_system');
+            $versionControlSystem->commitNewFilename(
+                "$slug.md",
+                $text->getSlug().'.md'
+            );
+
             return $this->redirectToRoute(
                 'app_text_edit',
                 [

@@ -48,6 +48,26 @@ class VersionControlSystem
         shell_exec($completeCommand);
     }
 
+    public function commitNewFilename(string $old, string $new): void
+    {
+        /** @var User $user */
+        $user = $this->getTokenStorage()->getToken()->getUser();
+        $username = $user->getUsername();
+        $userName = $user->getName();
+        $email = $user->getEmail();
+
+        $collectionsDirectory = $this->getCollectionsDirectory();
+
+        $navigationCommand = "cd $collectionsDirectory/$username";
+        $removeOldCommand = "git add $old";
+        $addNewCommand = "git add $new";
+        $commitCommand = "git commit --author='$userName <$email>' -m 'Update filename'";
+
+        $completeCommand = "$navigationCommand && $removeOldCommand && $addNewCommand && $commitCommand";
+
+        shell_exec($completeCommand);
+    }
+
     /**
      * @return string
      */
