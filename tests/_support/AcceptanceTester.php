@@ -1,4 +1,6 @@
 <?php
+
+use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\Bundle\DoctrineBundle\Registry;
@@ -306,11 +308,27 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the text title should be updated from :arg1 to :arg2
+     * @Then the text title should be updated from :oldTitle to :newTitle
+     * @param string $oldTitle
+     * @param string $newTitle
      */
-    public function theTextTitleShouldBeUpdatedFromTo($arg1, $arg2)
+    public function theTextTitleShouldBeUpdatedFromTo(string $oldTitle, string $newTitle)
     {
-        throw new \Codeception\Exception\Incomplete("Step `the text title should be updated from :arg1 to :arg2` is not defined");
+        /** @var Registry $doctrine */
+        $doctrine = $this->grabService('doctrine');
+        $textRepository = $doctrine->getRepository('AppBundle:Text');
+
+        $oldText = $textRepository->findOneBy([
+            'title' => $oldTitle
+        ]);
+
+        verify($oldText)->null();
+
+        $newText = $textRepository->findOneBy([
+            'title' => $newTitle
+        ]);
+
+        verify($newText)->isInstanceOf(Text::class);
     }
 
     /**

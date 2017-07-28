@@ -8,6 +8,7 @@ use Stringy\Stringy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Stringy\create as stringy;
@@ -73,10 +74,44 @@ class TextController extends Controller
                 'AppBundle\Form\Type\TextType',
                 $text,
                 [
-                    'action' => $this->generateUrl('app_text_new')
+                    'action' => $this->generateUrl(
+                        'app_text_edit',
+                        [
+                            'username' => $this->getUser()->getUsername(),
+                            'slug' => $text->getSlug(),
+                        ]
+                    ),
                 ]
             )
         ;
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $text->setTitle($form->getData()->getTitle());
+
+            $text->setSlug(
+                $this->generateSlug($text)
+            );
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($text);
+            $entityManager->flush();
+
+            return $this->redirectToRoute(
+                'app_text_edit',
+                [
+                    'username' => $this->getUser()->getUsername(),
+                    'slug' => $text->getSlug(),
+                ]
+            );
+        }
+
+        if ($form->isSubmitted()) {
+            dump('form submitted');die;
+        }
+
+//        dump('form not submitted');die;
 
         $form->setData($text);
 
