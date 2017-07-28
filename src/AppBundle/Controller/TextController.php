@@ -98,6 +98,12 @@ class TextController extends Controller
             $entityManager->persist($text);
             $entityManager->flush();
 
+            $filesystem = $this->get('oneup_flysystem.collections_filesystem');
+            $filesystem->rename(
+                $this->getUser()->getUsername().'/'.$slug.'.md',
+                $this->getUser()->getUsername().'/'.$text->getSlug().'.md'
+            );
+
             return $this->redirectToRoute(
                 'app_text_edit',
                 [
