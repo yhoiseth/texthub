@@ -268,13 +268,13 @@ class TextController extends Controller
     }
 
     /**
-     * @param string &$slug
+     * @param string &$slugBody
      * @return void
      */
-    private function incrementSlugBodyVersion(string &$slug): void
+    private function incrementSlugBodyVersion(string &$slugBody): void
     {
         /** @var Stringy[] $parts */
-        $parts = stringy($slug)->split('-');
+        $parts = stringy($slugBody)->split('-');
 
         $numberOfParts = count($parts);
         $lastPartIndex = $numberOfParts - 1;
@@ -287,9 +287,9 @@ class TextController extends Controller
             $newLastPart = stringy((string) $incrementedVersionNumber);
             $parts[$lastPartIndex] = $newLastPart;
 
-            $slug = implode('-', $parts);
+            $slugBody = implode('-', $parts);
         } else {
-            $slug.= '-2';
+            $slugBody.= '-2';
         }
     }
 
