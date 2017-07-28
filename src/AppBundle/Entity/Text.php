@@ -41,6 +41,13 @@ class Text
     private $slug;
 
     /**
+     * @var Slug
+     *
+     * @ORM\OneToOne(targetEntity="Slug")
+     */
+    private $latestSlug;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -109,6 +116,25 @@ class Text
     public function setCreatedBy(User $createdBy): Text
     {
         $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * @return null|Slug
+     */
+    public function getLatestSlug(): ?Slug
+    {
+        return $this->latestSlug;
+    }
+
+    /**
+     * @param Slug $latestSlug
+     * @return Text
+     */
+    public function setLatestSlug(Slug $latestSlug): Text
+    {
+        $this->latestSlug = $latestSlug;
 
         return $this;
     }

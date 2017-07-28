@@ -16,6 +16,7 @@ Feature: New text
     And I press ENTER
     Then I should see "New text"
 
+    @watch
   Scenario: Happy path
     Given I am on "/"
     Then I should not see "Title"
