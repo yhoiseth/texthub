@@ -71,23 +71,9 @@ class TextController extends Controller
         $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
         $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
 
-        $slugQuery = $slugRepository->createQueryBuilder('slug')
-            ->where('slug.body = :slugBody')
-            ->setParameter('slugBody', $slugBody)
-            ->join(
-                'slug.text',
-                'text',
-                'WITH',
-                'text.createdBy = :user'
-            )
-            ->setParameter('user', $user)
-            ->getQuery()
-        ;
+        $slug = $slugRepository->findSlugByUserAndSlugBody($user, $slugBody);
 
-        try {
-            /** @var Slug $slug */
-            $slug = $slugQuery->getSingleResult();
-        } catch (NoResultException $exception) {
+        if (!$slug) {
             throw $this->createNotFoundException();
         }
 
