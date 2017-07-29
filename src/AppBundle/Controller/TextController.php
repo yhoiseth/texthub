@@ -86,10 +86,6 @@ class TextController extends Controller
         /** @var Slug $slug */
         $slug = $slugQuery->getSingleResult();
 
-//        dump($slug);
-//
-//        die;
-
         $text = $textRepository->findOneBy([
             'currentSlug' => $slug,
         ]);
@@ -106,9 +102,6 @@ class TextController extends Controller
             );
         }
 
-        dump($slug);
-        dump($text);
-
         $form = $this
             ->createForm(
                 'AppBundle\Form\Type\TextType',
@@ -118,7 +111,7 @@ class TextController extends Controller
                         'app_text_edit',
                         [
                             'username' => $this->getUser()->getUsername(),
-                            'slugBody' => $text->getCurrentSlug()->getBody(),
+                            'slugBody' => $slug->getBody(),
                         ]
                     ),
                     'attr' => [
@@ -149,29 +142,23 @@ class TextController extends Controller
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
             $filesystem->rename(
                 $this->getUser()->getUsername().'/'.$slugBody.'.md',
-                $this->getUser()->getUsername().'/'.$text->getCurrentSlug()->getBody().'.md'
+                $this->getUser()->getUsername().'/'.$slug->getBody().'.md'
             );
 
             $versionControlSystem = $this->get('app.version_control_system');
             $versionControlSystem->commitNewFilename(
                 "$slugBody.md",
-                $text->getCurrentSlug()->getBody().'.md'
+                $slug->getBody().'.md'
             );
 
             return $this->redirectToRoute(
                 'app_text_edit',
                 [
                     'username' => $this->getUser()->getUsername(),
-                    'slugBody' => $text->getCurrentSlug()->getBody(),
+                    'slugBody' => $slug->getBody(),
                 ]
             );
         }
-
-        if ($form->isSubmitted()) {
-            dump('form submitted');die;
-        }
-
-//        dump('form not submitted');die;
 
         $form->setData($text);
 
