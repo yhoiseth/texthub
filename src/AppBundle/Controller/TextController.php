@@ -139,8 +139,8 @@ class TextController extends Controller
 
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
 
-            $oldFilename = $slugBody . '.md';
-            $newFilename = $slug->getBody() . '.md';
+            $oldFilename = $this->appendFileExtension($slugBody);
+            $newFilename = $this->appendFileExtension($slug->getBody());
 
             $filesystem->rename(
                 $this->getPath($username, $oldFilename),
@@ -346,6 +346,20 @@ class TextController extends Controller
             $username,
             DIRECTORY_SEPARATOR,
             $filename
+        ]);
+    }
+
+    /**
+     * @param string $slugBody
+     * @param string $extension
+     * @return string
+     */
+    private function appendFileExtension(string $slugBody, string $extension = 'md'): string
+    {
+        return join('', [
+            $slugBody,
+            '.',
+            $extension
         ]);
     }
 }
