@@ -120,14 +120,10 @@ class TextController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
             $text->setTitle($form->getData()->getTitle());
 
             $slug = new Slug();
-
             $slug->setText($text);
-
             $slug->setBody($this->generateSlugBody($text));
 
             $text->setCurrentSlug($slug);
@@ -137,21 +133,7 @@ class TextController extends Controller
             $entityManager->persist($text);
             $entityManager->flush();
 
-            $filesystem = $this->get('oneup_flysystem.collections_filesystem');
-
-            $oldFilename = $this->appendFileExtension($slugBody);
-            $newFilename = $this->appendFileExtension($slug->getBody());
-
-            $filesystem->rename(
-                $this->getPath($username, $oldFilename),
-                $this->getPath($username, $newFilename)
-            );
-
-            $versionControlSystem = $this->get('app.version_control_system');
-            $versionControlSystem->commitNewFilename(
-                $oldFilename,
-                $newFilename
-            );
+            $this->renameFile($slugBody, $slug->getBody());
 
             return $this->redirectToRoute(
                 'app_text_edit',
@@ -360,5 +342,32 @@ class TextController extends Controller
             '.',
             $extension
         ]);
+    }
+
+    /**
+     * @param string $username
+     * @param string $oldSlugBody
+     * @param string $newSlugBody
+     * @internal param string $slugBody
+     * @internal param $slug
+     */
+    private function renameFile(string $oldSlugBody, string $newSlugBody): void
+    {
+        $username = $this->getUser()->getUsername();
+
+        $oldFilename = $this->appendFileExtension($oldSlugBody);
+        $newFilename = $this->appendFileExtension($newSlugBody);
+
+        $filesystem = $this->get('oneup_flysystem.collections_filesystem');
+        $filesystem->rename(
+            $this->getPath($username, $oldFilename),
+            $this->getPath($username, $newFilename)
+        );
+
+        $versionControlSystem = $this->get('app.version_control_system');
+        $versionControlSystem->commitNewFilename(
+            $oldFilename,
+            $newFilename
+        );
     }
 }
