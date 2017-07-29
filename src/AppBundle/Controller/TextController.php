@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Slug;
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Doctrine\ORM\NoResultException;
 use Stringy\Stringy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -83,8 +84,12 @@ class TextController extends Controller
             ->getQuery()
         ;
 
-        /** @var Slug $slug */
-        $slug = $slugQuery->getSingleResult();
+        try {
+            /** @var Slug $slug */
+            $slug = $slugQuery->getSingleResult();
+        } catch (NoResultException $exception) {
+            throw $this->createNotFoundException();
+        }
 
         $text = $textRepository->findOneBy([
             'currentSlug' => $slug,

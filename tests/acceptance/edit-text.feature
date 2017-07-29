@@ -33,6 +33,11 @@ Feature: Edit text
     When I visit "/marcus-aurelius/meditations-revisited/_edit"
     Then I should be redirected to "/marcus-aurelius/something-else/_edit"
 
+    @watch
+  Scenario: Not found in own repository
+    When I visit "/marcus-aurelius/does-not-exist/_edit"
+    Then I should see "Not found"
+
   Scenario: Other user's text
     Given I visit "/logout"
     And I click "Register"
