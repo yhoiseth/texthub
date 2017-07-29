@@ -26,6 +26,14 @@
                 <source>app.text.new</source>
                 <target>New text</target>
             </trans-unit>
+            <trans-unit id="app.edit_title">
+                <source>app.edit_title</source>
+                <target>Edit title</target>
+            </trans-unit>
+            <trans-unit id="app.save">
+                <source>app.save</source>
+                <target>Save</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

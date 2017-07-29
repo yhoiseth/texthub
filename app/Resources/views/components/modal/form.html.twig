@@ -1,9 +1,11 @@
+{% set modal_label = modal_id ~ '-label' %}
+
 <div
         class="modal fade"
         id="{{ modal_id }}"
         tabindex="-1"
         role="dialog"
-        aria-labelledby="edit-text-title-modal-label"
+        aria-labelledby="{{ modal_label }}"
 >
     <div
             class="modal-dialog"
@@ -29,9 +31,9 @@
                 </button>
                 <h4
                         class="modal-title"
-                        id="edit-text-title-modal-label"
+                        id="{{ modal_label }}"
                 >
-                    Edit title
+                    {{ modal_title }}
                 </h4>
             </div>
             {{ form_start(form) }}
@@ -57,7 +59,7 @@
                 <input
                         type="submit"
                         class="btn btn-success"
-                        value="Save"
+                        value="{{ submit_button_value }}"
                 >
             </div>
             {{ form_end(form) }}

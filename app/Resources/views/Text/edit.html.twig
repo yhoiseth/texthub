@@ -21,7 +21,7 @@
                         data-target="#edit-text-title-modal"
                         id="js-edit-text-title-modal"
                 >
-                    Edit title
+                    {{ 'app.edit_title'|trans }}
                 </button>
             </div>
         </div>
@@ -32,6 +32,8 @@
 
     {% include ':components/modal:form.html.twig' with {
         'modal_id': 'edit-text-title-modal',
+        'modal_title': 'app.edit_title'|trans,
+        'submit_button_value': 'app.save'|trans,
     } %}
 
     {#<div#}
