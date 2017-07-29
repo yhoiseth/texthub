@@ -345,9 +345,9 @@ class TextController extends Controller
     }
 
     /**
-     * @param string $username
      * @param string $oldSlugBody
      * @param string $newSlugBody
+     * @internal param string $username
      * @internal param string $slugBody
      * @internal param $slug
      */
