@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Base\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,16 +15,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     repositoryClass="AppBundle\Repository\TextRepository"
  * )
  */
-class Text
+class Text extends Entity
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+//    /**
+//     * @var integer
+//     *
+//     * @ORM\Column(name="id", type="integer")
+//     * @ORM\Id
+//     * @ORM\GeneratedValue(strategy="AUTO")
+//     */
+//    private $id;
 
     /**
      * @var string
@@ -32,13 +33,6 @@ class Text
      * @ORM\Column(name="title", type="string", length=255, nullable=false, unique=false)
      */
     private $title;
-
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=false)
-//     */
-//    private $slug;
 
     /**
      * @var Slug
@@ -54,13 +48,13 @@ class Text
      */
     private $createdBy;
 
-    /**
-     * @return integer
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+//    /**
+//     * @return integer
+//     */
+//    public function getId(): ?int
+//    {
+//        return $this->id;
+//    }
 
     /**
      * @return null|string
@@ -81,25 +75,6 @@ class Text
 
         return $this;
     }
-
-//    /**
-//     * @return null|string
-//     */
-//    public function getSlug(): ?string
-//    {
-//        return $this->slug;
-//    }
-//
-//    /**
-//     * @param string $slug
-//     * @return Text
-//     */
-//    public function setSlug(string $slug): Text
-//    {
-//        $this->slug = $slug;
-//
-//        return $this;
-//    }
 
     /**
      * @return User
