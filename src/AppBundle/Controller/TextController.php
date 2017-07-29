@@ -102,10 +102,10 @@ class TextController extends Controller
             );
         }
 
-//        $this->denyAccessUnlessGranted(
-//            'edit',
-//            $text
-//        );
+        $this->denyAccessUnlessGranted(
+            'edit',
+            $text
+        );
 
         $form = $this
             ->createForm(

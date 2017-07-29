@@ -1,4 +1,4 @@
-@prepare_database @clean_files
+@prepare_database @clean_files @text
 Feature: Edit text
   In order to improve my texts
   As a logged in user with one or more texts
@@ -33,7 +33,6 @@ Feature: Edit text
     When I visit "/marcus-aurelius/meditations-revisited/_edit"
     Then I should be redirected to "/marcus-aurelius/something-else/_edit"
 
-    @watch
   Scenario: Other user's text
     Given I visit "/logout"
     And I click "Register"
