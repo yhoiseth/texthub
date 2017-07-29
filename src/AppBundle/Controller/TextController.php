@@ -138,8 +138,13 @@ class TextController extends Controller
             $entityManager->flush();
 
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
-            $oldPath = $username . '/' . $slugBody . '.md';
-            $newPath = $username . '/' . $slug->getBody() . '.md';
+
+            $newFilename = $slugBody . '.md';
+            $oldFilename = $slug->getBody() . '.md';
+
+            $oldPath = $username . '/' . $newFilename;
+            $newPath = $username . '/' . $oldFilename;
+
             $filesystem->rename(
                 $oldPath,
                 $newPath
