@@ -116,6 +116,4 @@
     </div>
 </nav>
 
-{#{% if app.request.get('_route') != 'app_text_edit' %}#}
-    {{ render(controller('AppBundle:Text:new')) }}
-{#{% endif %}#}
+{{ render(controller('AppBundle:Text:new')) }}

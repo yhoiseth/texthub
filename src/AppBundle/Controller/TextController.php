@@ -191,7 +191,7 @@ class TextController extends Controller
 
         $form = $this
             ->createForm(
-                'AppBundle\Form\Type\TextType',
+                'AppBundle\Form\Type\Text\NewType',
                 $text,
                 [
                     'action' => $this->generateUrl('app_text_new')
