@@ -102,6 +102,11 @@ class TextController extends Controller
             );
         }
 
+//        $this->denyAccessUnlessGranted(
+//            'edit',
+//            $text
+//        );
+
         $form = $this
             ->createForm(
                 'AppBundle\Form\Type\TextType',

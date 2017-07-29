@@ -381,4 +381,12 @@ class AcceptanceTester extends \Codeception\Actor
             $value
         );
     }
+
+    /**
+     * @Then I should be denied access
+     */
+    public function iShouldBeDeniedAccess()
+    {
+        $this->canSee('Access denied');
+    }
 }
