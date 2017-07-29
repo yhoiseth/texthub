@@ -59,7 +59,7 @@ class VersionControlSystem
         $collectionsDirectory = $this->getCollectionsDirectory();
 
         $navigationCommand = "cd $collectionsDirectory/$username";
-        $removeOldCommand = "git add $old";
+        $removeOldCommand = "git add --all $old";
         $addNewCommand = "git add $new";
         $commitCommand = "git commit --author='$userName <$email>' -m 'Update filename'";
 
