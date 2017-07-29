@@ -114,7 +114,7 @@ class TextController extends Controller
 
         $form = $this
             ->createForm(
-                'AppBundle\Form\Type\TextType',
+                'AppBundle\Form\Type\Text\TitleType',
                 $text,
                 [
                     'action' => $this->generateUrl(
@@ -125,7 +125,7 @@ class TextController extends Controller
                         ]
                     ),
                     'attr' => [
-                        'id' => 'form-edit-text'
+                        'id' => 'form-edit-text-title'
                     ]
                 ]
             )

@@ -377,7 +377,7 @@ class AcceptanceTester extends \Codeception\Actor
     public function iFillInInTheTitleFieldInTheEditTextFormWith(string $value)
     {
         $this->fillField(
-            ['css' => '#form-edit-text #appbundle_text_title'],
+            ['css' => '#form-edit-text-title #appbundle_text_title'],
             $value
         );
     }
