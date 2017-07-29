@@ -34,6 +34,10 @@
                 <source>app.save</source>
                 <target>Save</target>
             </trans-unit>
+            <trans-unit id="app.lets_go">
+                <source>app.lets_go</source>
+                <target>Let's go!</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
