@@ -1,8 +1,14 @@
 @prepare_database @clean_files @text
-Feature: Edit text
-  In order to improve my texts
+Feature: Edit text title
+  In order to better describe my text
   As a logged in user with one or more texts
-  I need to be able to edit my texts
+  I need to be able to edit text titles
+
+  In order for URLs to be descriptive as the title changes
+  The links need to be updated
+
+  In order for old URLs to keep working
+  The old URLs need to redirect to the new ones
 
   Background:
     Given I am on "/"
@@ -33,7 +39,6 @@ Feature: Edit text
     When I visit "/marcus-aurelius/meditations-revisited/_edit"
     Then I should be redirected to "/marcus-aurelius/something-else/_edit"
 
-    @watch
   Scenario: Not found in own repository
     When I visit "/marcus-aurelius/does-not-exist/_edit"
     Then I should see "Not found"
