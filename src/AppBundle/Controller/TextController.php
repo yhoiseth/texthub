@@ -38,7 +38,7 @@ class TextController extends Controller
                 'app_text_edit',
                 [
                     'username' => $this->getUser()->getUsername(),
-                    'slug' => $text->getCurrentSlug()->getBody(),
+                    'slugBody' => $text->getCurrentSlug()->getBody(),
                 ]
             );
         }
@@ -56,19 +56,19 @@ class TextController extends Controller
     }
 
     /**
-     * @Route("/{username}/{slug}/_edit")
+     * @Route("/{username}/{slugBody}/_edit")
      * @param Request $request
      * @param string $username
-     * @param string $slug
+     * @param string $slugBody
      * @return Response
      */
-    public function editAction(Request $request, string $username, string $slug)
+    public function editAction(Request $request, string $username, string $slugBody)
     {
         $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
         $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
 
         $slug = $slugRepository->findOneBy([
-            'body' => $slug,
+            'body' => $slugBody,
         ]);
 
         $text = $textRepository->findOneBy([
@@ -84,7 +84,7 @@ class TextController extends Controller
                         'app_text_edit',
                         [
                             'username' => $this->getUser()->getUsername(),
-                            'slug' => $text->getCurrentSlug()->getBody(),
+                            'slugBody' => $text->getCurrentSlug()->getBody(),
                         ]
                     ),
                     'attr' => [
@@ -99,28 +99,28 @@ class TextController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $text->setTitle($form->getData()->getTitle());
 
-            $slug = new Slug();
+            $slugBody = new Slug();
 
-            $slug->setText($text);
+            $slugBody->setText($text);
 
-            $slug->setBody($this->generateSlugBody($text));
+            $slugBody->setBody($this->generateSlugBody($text));
 
-            $text->setCurrentSlug($slug);
+            $text->setCurrentSlug($slugBody);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($slug);
+            $entityManager->persist($slugBody);
             $entityManager->persist($text);
             $entityManager->flush();
 
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
             $filesystem->rename(
-                $this->getUser()->getUsername().'/'.$slug.'.md',
+                $this->getUser()->getUsername().'/'.$slugBody.'.md',
                 $this->getUser()->getUsername().'/'.$text->getCurrentSlug()->getBody().'.md'
             );
 
             $versionControlSystem = $this->get('app.version_control_system');
             $versionControlSystem->commitNewFilename(
-                "$slug.md",
+                "$slugBody.md",
                 $text->getCurrentSlug()->getBody().'.md'
             );
 
