@@ -120,6 +120,8 @@ class TextController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
             $text->setTitle($form->getData()->getTitle());
 
             $slug = new Slug();
@@ -136,9 +138,11 @@ class TextController extends Controller
             $entityManager->flush();
 
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
+            $oldPath = $username . '/' . $slugBody . '.md';
+            $newPath = $username . '/' . $slug->getBody() . '.md';
             $filesystem->rename(
-                $username.'/'.$slugBody.'.md',
-                $this->getUser()->getUsername().'/'.$slug->getBody().'.md'
+                $oldPath,
+                $newPath
             );
 
             $versionControlSystem = $this->get('app.version_control_system');
