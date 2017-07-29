@@ -137,7 +137,7 @@ class TextController extends Controller
 
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
             $filesystem->rename(
-                $this->getUser()->getUsername().'/'.$slugBody.'.md',
+                $username.'/'.$slugBody.'.md',
                 $this->getUser()->getUsername().'/'.$slug->getBody().'.md'
             );
 
