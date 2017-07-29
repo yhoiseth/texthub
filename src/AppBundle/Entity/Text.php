@@ -17,15 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Text extends Entity
 {
-//    /**
-//     * @var integer
-//     *
-//     * @ORM\Column(name="id", type="integer")
-//     * @ORM\Id
-//     * @ORM\GeneratedValue(strategy="AUTO")
-//     */
-//    private $id;
-
     /**
      * @var string
      *
@@ -47,14 +38,6 @@ class Text extends Entity
      * @ORM\ManyToOne(targetEntity="User")
      */
     private $createdBy;
-
-//    /**
-//     * @return integer
-//     */
-//    public function getId(): ?int
-//    {
-//        return $this->id;
-//    }
 
     /**
      * @return null|string

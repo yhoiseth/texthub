@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Base\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,17 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="slug")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SlugRepository")
  */
-class Slug
+class Slug extends Entity
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var string
      *
@@ -38,16 +30,6 @@ class Slug
     public function __toString()
     {
         return $this->getBody();
-    }
-
-    /**
-     * Get id
-     *
-     * @return null|int
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
