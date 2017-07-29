@@ -19,3 +19,4 @@ Feature: Edit text body
     And I click "Let's go"
 
   Scenario: Happy path
+    Given I am on "/marcus-aurelius/meditations-revisited/_edit"
