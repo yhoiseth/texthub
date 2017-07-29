@@ -89,7 +89,8 @@ class TextController extends Controller
                 [
                     'username' => $username,
                     'slugBody' => $text->getCurrentSlug()->getBody(),
-                ]
+                ],
+                301
             );
         }
 
