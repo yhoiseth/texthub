@@ -45,7 +45,7 @@ class Text
      *
      * @ORM\OneToOne(targetEntity="Slug")
      */
-    private $latestSlug;
+    private $currentSlug;
 
     /**
      * @var User
@@ -123,18 +123,18 @@ class Text
     /**
      * @return null|Slug
      */
-    public function getLatestSlug(): ?Slug
+    public function getCurrentSlug(): ?Slug
     {
-        return $this->latestSlug;
+        return $this->currentSlug;
     }
 
     /**
-     * @param Slug $latestSlug
+     * @param Slug $currentSlug
      * @return Text
      */
-    public function setLatestSlug(Slug $latestSlug): Text
+    public function setCurrentSlug(Slug $currentSlug): Text
     {
-        $this->latestSlug = $latestSlug;
+        $this->currentSlug = $currentSlug;
 
         return $this;
     }

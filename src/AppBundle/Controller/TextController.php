@@ -38,7 +38,7 @@ class TextController extends Controller
                 'app_text_edit',
                 [
                     'username' => $this->getUser()->getUsername(),
-                    'slug' => $text->getLatestSlug()->getBody(),
+                    'slug' => $text->getCurrentSlug()->getBody(),
                 ]
             );
         }
@@ -72,7 +72,7 @@ class TextController extends Controller
         ]);
 
         $text = $textRepository->findOneBy([
-            'latestSlug' => $slug,
+            'currentSlug' => $slug,
         ]);
 
         $form = $this
@@ -84,7 +84,7 @@ class TextController extends Controller
                         'app_text_edit',
                         [
                             'username' => $this->getUser()->getUsername(),
-                            'slug' => $text->getLatestSlug()->getBody(),
+                            'slug' => $text->getCurrentSlug()->getBody(),
                         ]
                     ),
                     'attr' => [
@@ -105,7 +105,7 @@ class TextController extends Controller
 
             $slug->setBody($this->generateSlugBody($text));
 
-            $text->setLatestSlug($slug);
+            $text->setCurrentSlug($slug);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($slug);
@@ -115,20 +115,20 @@ class TextController extends Controller
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
             $filesystem->rename(
                 $this->getUser()->getUsername().'/'.$slug.'.md',
-                $this->getUser()->getUsername().'/'.$text->getLatestSlug()->getBody().'.md'
+                $this->getUser()->getUsername().'/'.$text->getCurrentSlug()->getBody().'.md'
             );
 
             $versionControlSystem = $this->get('app.version_control_system');
             $versionControlSystem->commitNewFilename(
                 "$slug.md",
-                $text->getLatestSlug()->getBody().'.md'
+                $text->getCurrentSlug()->getBody().'.md'
             );
 
             return $this->redirectToRoute(
                 'app_text_edit',
                 [
                     'username' => $this->getUser()->getUsername(),
-                    'slug' => $text->getLatestSlug()->getBody(),
+                    'slug' => $text->getCurrentSlug()->getBody(),
                 ]
             );
         }
@@ -187,7 +187,7 @@ class TextController extends Controller
             $this->generateSlugBody($text)
         );
 
-        $text->setLatestSlug($slug);
+        $text->setCurrentSlug($slug);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($text);
@@ -241,7 +241,7 @@ class TextController extends Controller
      */
     private function getTextFilename(Text $text): string
     {
-        $slug = $text->getLatestSlug()->getBody();
+        $slug = $text->getCurrentSlug()->getBody();
         $filename = "$slug.md";
 
         return $filename;

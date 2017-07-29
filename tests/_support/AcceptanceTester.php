@@ -217,7 +217,7 @@ class AcceptanceTester extends \Codeception\Actor
 
         $projectDirectory = $kernel->getProjectDir();
 
-        $slug = $text->getLatestSlug()->getBody();
+        $slug = $text->getCurrentSlug()->getBody();
 
         verify_file(
             "$projectDirectory/var/collections/$username/$slug.md"
