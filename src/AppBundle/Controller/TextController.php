@@ -99,16 +99,16 @@ class TextController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $text->setTitle($form->getData()->getTitle());
 
-            $slugBody = new Slug();
+            $slug = new Slug();
 
-            $slugBody->setText($text);
+            $slug->setText($text);
 
-            $slugBody->setBody($this->generateSlugBody($text));
+            $slug->setBody($this->generateSlugBody($text));
 
-            $text->setCurrentSlug($slugBody);
+            $text->setCurrentSlug($slug);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($slugBody);
+            $entityManager->persist($slug);
             $entityManager->persist($text);
             $entityManager->flush();
 
@@ -128,7 +128,7 @@ class TextController extends Controller
                 'app_text_edit',
                 [
                     'username' => $this->getUser()->getUsername(),
-                    'slug' => $text->getCurrentSlug()->getBody(),
+                    'slugBody' => $text->getCurrentSlug()->getBody(),
                 ]
             );
         }
