@@ -139,21 +139,18 @@ class TextController extends Controller
 
             $filesystem = $this->get('oneup_flysystem.collections_filesystem');
 
-            $newFilename = $slugBody . '.md';
-            $oldFilename = $slug->getBody() . '.md';
-
-            $oldPath = $username . '/' . $newFilename;
-            $newPath = $username . '/' . $oldFilename;
+            $oldFilename = $slugBody . '.md';
+            $newFilename = $slug->getBody() . '.md';
 
             $filesystem->rename(
-                $oldPath,
-                $newPath
+                $this->getPath($username, $oldFilename),
+                $this->getPath($username, $newFilename)
             );
 
             $versionControlSystem = $this->get('app.version_control_system');
             $versionControlSystem->commitNewFilename(
-                "$slugBody.md",
-                $slug->getBody().'.md'
+                $oldFilename,
+                $newFilename
             );
 
             return $this->redirectToRoute(
@@ -336,5 +333,19 @@ class TextController extends Controller
         ;
 
         return count($queryForSlugsWithSameBodyBySameUser->getResult()) > 0;
+    }
+
+    /**
+     * @param string $username
+     * @param string $filename
+     * @return string
+     */
+    private function getPath(string $username, string $filename): string
+    {
+        return join('', [
+            $username,
+            DIRECTORY_SEPARATOR,
+            $filename
+        ]);
     }
 }
