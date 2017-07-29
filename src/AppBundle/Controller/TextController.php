@@ -49,7 +49,7 @@ class TextController extends Controller
         }
 
         return $this->render(
-            'AppBundle:Text:new.html.twig',
+            ':Text:new.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -148,7 +148,7 @@ class TextController extends Controller
         $form->setData($text);
 
         return $this->render(
-            '@App/Text/edit.html.twig',
+            ':Text:edit.html.twig',
             [
                 'text' => $text,
                 'form' => $form->createView(),
