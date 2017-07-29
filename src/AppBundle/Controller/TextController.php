@@ -64,16 +64,50 @@ class TextController extends Controller
      */
     public function editAction(Request $request, string $username, string $slugBody)
     {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsername($username);
+
         $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
         $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
 
-        $slug = $slugRepository->findOneBy([
-            'body' => $slugBody,
-        ]);
+        $slugQuery = $slugRepository->createQueryBuilder('slug')
+            ->where('slug.body = :slugBody')
+            ->setParameter('slugBody', $slugBody)
+            ->join(
+                'slug.text',
+                'text',
+                'WITH',
+                'text.createdBy = :user'
+            )
+            ->setParameter('user', $user)
+            ->getQuery()
+        ;
+
+        /** @var Slug $slug */
+        $slug = $slugQuery->getSingleResult();
+
+//        dump($slug);
+//
+//        die;
 
         $text = $textRepository->findOneBy([
             'currentSlug' => $slug,
         ]);
+
+        if (!$text) {
+            $text = $slug->getText();
+
+            return $this->redirectToRoute(
+                'app_text_edit',
+                [
+                    'username' => $username,
+                    'slugBody' => $text->getCurrentSlug()->getBody(),
+                ]
+            );
+        }
+
+        dump($slug);
+        dump($text);
 
         $form = $this
             ->createForm(
