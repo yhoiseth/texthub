@@ -234,9 +234,11 @@ class TextController extends Controller
 
         $filesystem = $this->get('oneup_flysystem.collections_filesystem');
 
+        $directorySeparator = DIRECTORY_SEPARATOR;
+
         $filesystem
             ->write(
-                "$username/$filename",
+                "$username$directorySeparator$filename",
                 ''
             );
     }
