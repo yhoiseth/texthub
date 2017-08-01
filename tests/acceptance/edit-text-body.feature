@@ -24,7 +24,7 @@ Feature: Edit text body
     And I should not see "Saving draft…"
     And I should not see "Save text"
 
-    When I fill in "Body" with "# This is my level 1 heading"
+    When I fill in the body field with "# This is my level 1 heading"
     Then I should not see "Save text"
     And I should see "Saving draft…"
 

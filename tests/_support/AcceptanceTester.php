@@ -419,6 +419,18 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
+     * @When I fill in the body field with :value
+     * @param string $value
+     */
+    public function iFillInTheBodyFieldWith(string $value)
+    {
+        $this->fillField(
+            '#form_body',
+            $value
+        );
+    }
+
+    /**
      * @param string $text
      */
     private function verifyThatTextIsSelected(string $text): void
