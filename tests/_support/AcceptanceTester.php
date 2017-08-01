@@ -377,11 +377,9 @@ class AcceptanceTester extends \Codeception\Actor
             )
         )->true();
 
-        verify(
-            $this->executeJS(
-                'return window.getSelection().toString() === "Meditations Revisited"'
-            )
-        )->true();
+        $this->verifyThatTextIsSelected(
+            'Meditations Revisited'
+        );
     }
 
     /**
@@ -395,9 +393,19 @@ class AcceptanceTester extends \Codeception\Actor
             )
         )->true();
 
+        $this->verifyThatTextIsSelected(
+            'Untitled'
+        );
+    }
+
+    /**
+     * @param string $text
+     */
+    private function verifyThatTextIsSelected(string $text): void
+    {
         verify(
             $this->executeJS(
-                'return window.getSelection().toString() === "Untitled"'
+                "return window.getSelection().toString() === '$text'"
             )
         )->true();
     }
