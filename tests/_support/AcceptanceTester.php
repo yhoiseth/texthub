@@ -1,8 +1,11 @@
 <?php
+
+use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Doctrine\UserManager;
+use League\Flysystem\FilesystemInterface;
 use function Stringy\create as stringy;
 
 
@@ -214,7 +217,7 @@ class AcceptanceTester extends \Codeception\Actor
 
         $projectDirectory = $kernel->getProjectDir();
 
-        $slug = $text->getSlug();
+        $slug = $text->getCurrentSlug()->getBody();
 
         verify_file(
             "$projectDirectory/var/collections/$username/$slug.md"
@@ -293,5 +296,122 @@ class AcceptanceTester extends \Codeception\Actor
         $lines = stringy($output)->lines();
 
         verify($lines[1])->equals("Author: $author");
+    }
+
+    /**
+     * @Given :element should contain :text
+     * @param string $element
+     * @param string $text
+     */
+    public function shouldContain(string $element, string $text)
+    {
+        $this->see($text, $element);
+    }
+
+    /**
+     * @Then the text title should be updated from :oldTitle to :newTitle
+     * @param string $oldTitle
+     * @param string $newTitle
+     */
+    public function theTextTitleShouldBeUpdatedFromTo(string $oldTitle, string $newTitle)
+    {
+        /** @var Registry $doctrine */
+        $doctrine = $this->grabService('doctrine');
+        $textRepository = $doctrine->getRepository('AppBundle:Text');
+
+        $oldText = $textRepository->findOneBy([
+            'title' => $oldTitle
+        ]);
+
+        verify($oldText)->null();
+
+        $newText = $textRepository->findOneBy([
+            'title' => $newTitle
+        ]);
+
+        verify($newText)->isInstanceOf(Text::class);
+    }
+
+    /**
+     * @Then the filename should be updated from :oldFilename to :newFilename
+     * @param string $oldFilename
+     * @param string $newFilename
+     */
+    public function theFilenameShouldBeUpdatedTo(string $oldFilename, string $newFilename)
+    {
+        /** @var FilesystemInterface $filesystem */
+        $filesystem = $this->grabService('oneup_flysystem.collections_filesystem');
+
+        verify($filesystem->has("marcus-aurelius/$oldFilename"))->false();
+        verify($filesystem->has("marcus-aurelius/$newFilename"))->true();
+    }
+
+    /**
+     * @When I fill in the title field in the edit text form with :value
+     * @param string $value
+     */
+    public function iFillInInTheTitleFieldInTheEditTextFormWith(string $value)
+    {
+        $this->fillField(
+            ['css' => '#form-edit-text-title #appbundle_text_title'],
+            $value
+        );
+    }
+
+    /**
+     * @Then I should be denied access
+     */
+    public function iShouldBeDeniedAccess()
+    {
+        $this->canSee('Access Denied');
+    }
+
+    /**
+     * @When the title field in the edit title form should be selected
+     */
+    public function theTitleFieldInTheEditTitleFormShouldBeSelected()
+    {
+        $this->verifyThatElementHasFocus(
+            '#appbundle_text_title'
+        );
+
+        $this->verifyThatTextIsSelected(
+            'Meditations Revisited'
+        );
+    }
+
+    /**
+     * @Then the title field in the new text form should be selected
+     */
+    public function theTitleFieldInTheNewTextFormShouldBeSelected()
+    {
+        $this->verifyThatElementHasFocus(
+            '#appbundle_text_new_title'
+        );
+
+        $this->verifyThatTextIsSelected(
+            'Untitled'
+        );
+    }
+
+    /**
+     * @param string $text
+     */
+    private function verifyThatTextIsSelected(string $text): void
+    {
+        verify(
+            $this->executeJS(
+                "return window.getSelection().toString() === '$text'"
+            )
+        )->true();
+    }
+
+    private function verifyThatElementHasFocus(string $selector): void
+    {
+        verify(
+            $this->executeJS(
+                "return $('$selector').is(':focus')"
+            )
+        )->true();
     }
 }

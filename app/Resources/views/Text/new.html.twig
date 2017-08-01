@@ -1,0 +1,7 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% include ':components/modal:form.html.twig' with {
+        'modal_id': 'new-text-modal',
+        'modal_title': 'app.text.new'|trans,
+        'submit_button_value': 'app.lets_go'|trans,
+    } %}
+{% endif %}

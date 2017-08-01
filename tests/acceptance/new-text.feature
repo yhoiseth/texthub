@@ -1,4 +1,4 @@
-@prepare_database @clean_files
+@prepare_database @clean_files @text
 Feature: New text
   In order to remember and share my thoughts
   As a logged in user
@@ -22,7 +22,7 @@ Feature: New text
     And I should not see "Let's go!"
     When I click "New text"
     Then the "Title" field should contain "Untitled"
-    And "Untitled" should be selected
+    And the title field in the new text form should be selected
     When I fill in "Title" with "Meditations Revisited"
     And I click "Let's go"
     Then the text with title "Meditations Revisited" should be created in the main repository of "marcus-aurelius"
