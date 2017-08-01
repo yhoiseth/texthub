@@ -377,4 +377,16 @@ class AcceptanceTester extends \Codeception\Actor
             )
         )->true();
     }
+
+    /**
+     * @Then the title field in the new text form should be selected
+     */
+    public function theTitleFieldInTheNewTextFormShouldBeSelected()
+    {
+        verify(
+            $this->executeJS(
+                'return $("#appbundle_text_new_title").is(":focus")'
+            )
+        )->true();
+    }
 }

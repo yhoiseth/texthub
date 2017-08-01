@@ -25,7 +25,6 @@ Feature: Edit text title
     And I click "Let's go"
     And "h1" should contain "Meditations Revisited"
 
-    @watch
   Scenario: Happy path
     When I click "Edit title"
     And the "Title" field should contain "Meditations Revisited"
