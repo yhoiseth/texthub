@@ -365,4 +365,16 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $this->canSee('Access Denied');
     }
+
+    /**
+     * @When the title field in the edit title form should be selected
+     */
+    public function theTitleFieldInTheEditTitleFormShouldBeSelected()
+    {
+        verify(
+            $this->executeJS(
+                'return $("#appbundle_text_title").is(":focus")'
+            )
+        )->true();
+    }
 }

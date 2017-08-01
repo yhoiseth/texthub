@@ -25,10 +25,11 @@ Feature: Edit text title
     And I click "Let's go"
     And "h1" should contain "Meditations Revisited"
 
+    @watch
   Scenario: Happy path
     When I click "Edit title"
     And the "Title" field should contain "Meditations Revisited"
-    And "Meditations Revisited" should be selected
+    And the title field in the edit title form should be selected
     And I fill in the title field in the edit text form with "Something else"
     And I click "Save"
     Then the text title should be updated from "Meditations Revisited" to "Something else"
