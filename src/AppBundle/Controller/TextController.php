@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Slug;
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Doctrine\ORM\NoResultException;
 use Stringy\Stringy;
@@ -152,7 +153,10 @@ class TextController extends Controller
             ->createFormBuilder()
             ->add(
                 'body',
-                TextType::class
+                TextareaType::class,
+                [
+                    'label' => false,
+                ]
             )
             ->getForm()
         ;
