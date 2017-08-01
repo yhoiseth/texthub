@@ -1,4 +1,4 @@
-@prepare_database @clean_files @text
+@prepare_database @clean_files @text @watch
 Feature: Edit text body
   In order to improve my texts
   As a logged in user
@@ -20,3 +20,20 @@ Feature: Edit text body
 
   Scenario: Happy path
     Given I am on "/marcus-aurelius/meditations-revisited/_edit"
+    Then I should see "All changes saved"
+
+    When I fill in "Body" with "# This is my level 1 heading"
+    Then I should see "Saving…"
+
+    When I wait "1" seconds
+    Then I should see "Draft saved"
+    And the text should be saved
+
+    When I click "Save text"
+    Then I should see "Text saved. Available on /marcus-aurelius/meditations-revisited."
+    And the text should be committed
+
+    When I click "/marcus-aurelius/meditations-revisited"
+    Then the "h1" element should contain "Meditations Revisited"
+    And the page title should contain "Meditations Revisited"
+    And the "h2" element should contain "This is my level 1 heading"

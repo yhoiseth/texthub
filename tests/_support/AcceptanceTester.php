@@ -294,4 +294,28 @@ class AcceptanceTester extends \Codeception\Actor
 
         verify($lines[1])->equals("Author: $author");
     }
+
+    /**
+     * @Then the text should be saved
+     */
+    public function theTextShouldBeSaved()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the text should be saved` is not defined");
+    }
+
+    /**
+     * @Then the text should be committed
+     */
+    public function theTextShouldBeCommitted()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the text should be committed` is not defined");
+    }
+
+    /**
+     * @Then the :arg1 element should contain :arg2
+     */
+    public function theElementShouldContain($arg1, $arg2)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the :arg1 element should contain :arg2` is not defined");
+    }
 }
