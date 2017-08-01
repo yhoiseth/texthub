@@ -27,8 +27,13 @@
         </div>
         <h1>
             {{ text.title }}
+            <small>
+                All changes saved
+            </small>
         </h1>
     </div>
+
+
 
     {% include ':components/modal:form.html.twig' with {
         'modal_id': 'edit-text-title-modal',

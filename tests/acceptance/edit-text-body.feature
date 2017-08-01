@@ -21,13 +21,16 @@ Feature: Edit text body
   Scenario: Happy path
     Given I am on "/marcus-aurelius/meditations-revisited/_edit"
     Then I should see "All changes saved"
+    And I should not see "Saving draft…"
+    And I should not see "Save text"
 
     When I fill in "Body" with "# This is my level 1 heading"
-    Then I should see "Saving…"
+    Then I should not see "Save text"
+    And I should see "Saving draft…"
 
     When I wait "1" seconds
     Then I should see "Draft saved"
-    And the text should be saved
+    And the text file should be saved
 
     When I click "Save text"
     Then I should see "Text saved. Available on /marcus-aurelius/meditations-revisited."

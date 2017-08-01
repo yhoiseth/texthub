@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Slug;
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Doctrine\ORM\NoResultException;
 use Stringy\Stringy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -147,11 +148,21 @@ class TextController extends Controller
 
         $form->setData($text);
 
+        $bodyForm = $this
+            ->createFormBuilder()
+            ->add(
+                'body',
+                TextType::class
+            )
+            ->getForm()
+        ;
+
         return $this->render(
             ':Text:edit.html.twig',
             [
                 'text' => $text,
                 'form' => $form->createView(),
+                'bodyForm' => $bodyForm->createView(),
             ]
         );
     }

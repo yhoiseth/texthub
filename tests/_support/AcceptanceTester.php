@@ -299,9 +299,9 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the text should be saved
+     * @Then the text file should be saved
      */
-    public function theTextShouldBeSaved()
+    public function theTextFileShouldBeSaved()
     {
         throw new \Codeception\Exception\Incomplete("Step `the text should be saved` is not defined");
     }
