@@ -29,6 +29,11 @@ class AcceptanceTester extends \Codeception\Actor
     use _generated\AcceptanceTesterActions;
 
     /**
+     * @var array
+     */
+    private $examples = [];
+
+    /**
      * @Given I am on :arg1
      * @Given I visit :arg1
      */
@@ -303,7 +308,18 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function theTextFileShouldBeSaved()
     {
-        throw new \Codeception\Exception\Incomplete("Step `the text should be saved` is not defined");
+        /** @var FilesystemInterface $filesystem */
+        $filesystem = $this->grabService('oneup_flysystem.collections_filesystem');
+
+        $file = $filesystem->get('marcus-aurelius/meditations-revisited');
+
+        dump($file);
+
+        verify_file($file)
+            ->contains(
+                $this->getExample('textBody')
+            )
+        ;
     }
 
     /**
@@ -428,6 +444,8 @@ class AcceptanceTester extends \Codeception\Actor
             '#form_body',
             $value
         );
+
+        $this->addExample('textBody', $value);
     }
 
     /**
@@ -449,5 +467,44 @@ class AcceptanceTester extends \Codeception\Actor
                 "return $('$selector').is(':focus')"
             )
         )->true();
+    }
+
+    /**
+     * @return array
+     */
+    private function getExamples(): array
+    {
+        return $this->examples;
+    }
+
+    /**
+     * @param array $examples
+     * @return AcceptanceTester
+     */
+    private function setExamples(array $examples): AcceptanceTester
+    {
+        $this->examples = $examples;
+
+        return $this;
+    }
+
+    private function addExample(string $key, $value = null): AcceptanceTester
+    {
+        $examples = $this->getExamples();
+
+        $examples[$key] = $value;
+
+        $this->setExamples($examples);
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    private function getExample(string $key)
+    {
+        return $this->getExamples()[$key];
     }
 }
