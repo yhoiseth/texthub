@@ -376,6 +376,12 @@ class AcceptanceTester extends \Codeception\Actor
                 'return $("#appbundle_text_title").is(":focus")'
             )
         )->true();
+
+        verify(
+            $this->executeJS(
+                'return window.getSelection().toString() === "Meditations Revisited"'
+            )
+        )->true();
     }
 
     /**
@@ -386,6 +392,12 @@ class AcceptanceTester extends \Codeception\Actor
         verify(
             $this->executeJS(
                 'return $("#appbundle_text_new_title").is(":focus")'
+            )
+        )->true();
+
+        verify(
+            $this->executeJS(
+                'return window.getSelection().toString() === "Untitled"'
             )
         )->true();
     }
