@@ -2,12 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Slug;
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Doctrine\ORM\NoResultException;
 use Stringy\Stringy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Stringy\create as stringy;
@@ -36,7 +39,7 @@ class TextController extends Controller
                 'app_text_edit',
                 [
                     'username' => $this->getUser()->getUsername(),
-                    'slug' => $text->getSlug(),
+                    'slugBody' => $text->getCurrentSlug()->getBody(),
                 ]
             );
         }
@@ -46,7 +49,7 @@ class TextController extends Controller
         }
 
         return $this->render(
-            'AppBundle:Text:new.html.twig',
+            ':Text:new.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -54,24 +57,101 @@ class TextController extends Controller
     }
 
     /**
-     * @Route("/{username}/{slug}/_edit")
+     * @Route("/{username}/{slugBody}/_edit")
      * @param Request $request
      * @param string $username
-     * @param string $slug
+     * @param string $slugBody
      * @return Response
      */
-    public function editAction(Request $request, string $username, string $slug)
+    public function editAction(Request $request, string $username, string $slugBody)
     {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsername($username);
+
         $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+        $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
+
+        $slug = $slugRepository->findSlugByUserAndSlugBody($user, $slugBody);
+
+        if (!$slug) {
+            throw $this->createNotFoundException();
+        }
 
         $text = $textRepository->findOneBy([
-            'slug' => $slug,
+            'currentSlug' => $slug,
         ]);
 
+        if (!$text) {
+            $text = $slug->getText();
+
+            return $this->redirectToRoute(
+                'app_text_edit',
+                [
+                    'username' => $username,
+                    'slugBody' => $text->getCurrentSlug()->getBody(),
+                ],
+                301
+            );
+        }
+
+        $this->denyAccessUnlessGranted(
+            'edit',
+            $text
+        );
+
+        $form = $this
+            ->createForm(
+                'AppBundle\Form\Type\Text\TitleType',
+                $text,
+                [
+                    'action' => $this->generateUrl(
+                        'app_text_edit',
+                        [
+                            'username' => $this->getUser()->getUsername(),
+                            'slugBody' => $slug->getBody(),
+                        ]
+                    ),
+                    'attr' => [
+                        'id' => 'form-edit-text-title'
+                    ]
+                ]
+            )
+        ;
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $text->setTitle($form->getData()->getTitle());
+
+            $slug = new Slug();
+            $slug->setText($text);
+            $slug->setBody($this->generateSlugBody($text));
+
+            $text->setCurrentSlug($slug);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($slug);
+            $entityManager->persist($text);
+            $entityManager->flush();
+
+            $this->renameFile($slugBody, $slug->getBody());
+
+            return $this->redirectToRoute(
+                'app_text_edit',
+                [
+                    'username' => $this->getUser()->getUsername(),
+                    'slugBody' => $slug->getBody(),
+                ]
+            );
+        }
+
+        $form->setData($text);
+
         return $this->render(
-            '@App/Text/edit.html.twig',
+            ':Text:edit.html.twig',
             [
                 'text' => $text,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -81,10 +161,13 @@ class TextController extends Controller
      */
     private function createNewTextForm(): Form
     {
+        $text = new Text();
+        $text->setTitle('Untitled');
+
         $form = $this
             ->createForm(
-                'AppBundle\Form\Type\TextType',
-                null,
+                'AppBundle\Form\Type\Text\NewType',
+                $text,
                 [
                     'action' => $this->generateUrl('app_text_new')
                 ]
@@ -102,12 +185,19 @@ class TextController extends Controller
             $this->getUser()
         );
 
-        $text->setSlug(
-            $this->generateSlug($text)
+        $slug = new Slug();
+
+        $slug->setText($text);
+
+        $slug->setBody(
+            $this->generateSlugBody($text)
         );
+
+        $text->setCurrentSlug($slug);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($text);
+        $entityManager->persist($slug);
         $entityManager->flush();
     }
 
@@ -126,7 +216,7 @@ class TextController extends Controller
 
         $filesystem
             ->write(
-                "$username/$filename",
+                $this->getPath($username, $filename),
                 ''
             );
     }
@@ -157,10 +247,9 @@ class TextController extends Controller
      */
     private function getTextFilename(Text $text): string
     {
-        $slug = $text->getSlug();
-        $filename = "$slug.md";
-
-        return $filename;
+        return $this->appendFileExtension(
+            $text->getCurrentSlug()->getBody()
+        );
     }
 
     /**
@@ -168,26 +257,26 @@ class TextController extends Controller
      * @return string
      * @internal param User $user
      */
-    private function generateSlug(Text $text): string
+    private function generateSlugBody(Text $text): string
     {
         $slugify = $this->get('slugify');
-        $slug = $slugify->slugify($text->getTitle());
+        $slugBody = $slugify->slugify($text->getTitle());
 
-        while ($this->slugIsUnavailable($slug)) {
-            $this->incrementSlugVersion($slug);
+        while ($this->slugBodyIsUnavailable($slugBody)) {
+            $this->incrementSlugBodyVersion($slugBody);
         }
 
-        return $slug;
+        return $slugBody;
     }
 
     /**
-     * @param string &$slug
+     * @param string &$slugBody
      * @return void
      */
-    private function incrementSlugVersion(string &$slug): void
+    private function incrementSlugBodyVersion(string &$slugBody): void
     {
         /** @var Stringy[] $parts */
-        $parts = stringy($slug)->split('-');
+        $parts = stringy($slugBody)->split('-');
 
         $numberOfParts = count($parts);
         $lastPartIndex = $numberOfParts - 1;
@@ -200,27 +289,84 @@ class TextController extends Controller
             $newLastPart = stringy((string) $incrementedVersionNumber);
             $parts[$lastPartIndex] = $newLastPart;
 
-            $slug = implode('-', $parts);
+            $slugBody = implode('-', $parts);
         } else {
-            $slug.= '-2';
+            $slugBody.= '-2';
         }
     }
 
     /**
-     * @param string $slug
+     * @param string $slugBody
      * @return bool
      */
-    private function slugIsUnavailable(string $slug): bool
+    private function slugBodyIsUnavailable(string $slugBody): bool
     {
-        $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+        $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
 
-        $textsWithSameSlug = $textRepository
-            ->findBy([
-                'slug' => $slug,
-                'createdBy' => $this->getUser(),
-            ])
+        $queryForSlugsWithSameBodyBySameUser = $slugRepository->createQueryBuilder('slug')
+            ->where('slug.body = :slugBody')
+            ->setParameter('slugBody', $slugBody)
+            ->join('slug.text', 'text')
+            ->andWhere('text.createdBy = :user')
+            ->setParameter('user', $this->getUser())
+            ->getQuery()
         ;
 
-        return count($textsWithSameSlug) > 0;
+        return count($queryForSlugsWithSameBodyBySameUser->getResult()) > 0;
+    }
+
+    /**
+     * @param string $username
+     * @param string $filename
+     * @return string
+     */
+    private function getPath(string $username, string $filename): string
+    {
+        return join('', [
+            $username,
+            DIRECTORY_SEPARATOR,
+            $filename
+        ]);
+    }
+
+    /**
+     * @param string $slugBody
+     * @param string $extension
+     * @return string
+     */
+    private function appendFileExtension(string $slugBody, string $extension = 'md'): string
+    {
+        return join('', [
+            $slugBody,
+            '.',
+            $extension
+        ]);
+    }
+
+    /**
+     * @param string $oldSlugBody
+     * @param string $newSlugBody
+     * @internal param string $username
+     * @internal param string $slugBody
+     * @internal param $slug
+     */
+    private function renameFile(string $oldSlugBody, string $newSlugBody): void
+    {
+        $username = $this->getUser()->getUsername();
+
+        $oldFilename = $this->appendFileExtension($oldSlugBody);
+        $newFilename = $this->appendFileExtension($newSlugBody);
+
+        $filesystem = $this->get('oneup_flysystem.collections_filesystem');
+        $filesystem->rename(
+            $this->getPath($username, $oldFilename),
+            $this->getPath($username, $newFilename)
+        );
+
+        $versionControlSystem = $this->get('app.version_control_system');
+        $versionControlSystem->commitNewFilename(
+            $oldFilename,
+            $newFilename
+        );
     }
 }
