@@ -62,82 +62,36 @@
     {{ parent() }}
 
     <script>
-//        var Editor = {
-//          initialize: function($wrapper) {
-//            this.$wrapper = $wrapper;
-//            this.$form = this.$wrapper.find('form');
-//            this.$textarea = this.$form.find('textarea');
-//
-//            this.$textarea.on(
-//              'input selectionchange propertychange',
-//              this.saveDraft
-//            )
-//          },
-//
-//          saveDraft: function(event) {
-//            var $form = Editor.$form;
-//            var path = window.location.pathname;
-//            var serializedForm = $form.serialize();
-//
-//            var $statusText = $('#js-status-text-container');
-//
-//            console.log($statusText);
-//
-//            $statusText.html('Saving draft…');
-//
-//
-////            console.log(serializedForm);
-//
-//            $.ajax({
-//              type: $form.attr('method'),
-//              url: $form.attr('action'),
-//              data: $form.serialize()
-//            })
-//              .done(function(response) {
-//                $statusText.html('Draft saved');
-//              });
-//          }
-//        };
+      $(document).ready(function() {
+        var $wrapper = $('#js-editor');
+        var $form = $wrapper.find('form');
+        var $statusText = $('#js-status-text-container');
+        var $textarea = $wrapper.find('textarea');
+        var timeoutId;
 
+        $textarea
+          .on(
+            'input propertychange change selectionchange',
+            function() {
+              $statusText.html('Saving draft…');
 
+              clearTimeout(timeoutId);
+              timeoutId = setTimeout(function() {
 
-
-
-
-
-
-
-
-        $(document).ready(function() {
-          var $wrapper = $('#js-editor');
-          var $form = $wrapper.find('form');
-          var $statusText = $('#js-status-text-container');
-          var $textarea = $wrapper.find('textarea');
-          var timeoutId;
-
-          $textarea
-            .on(
-              'input propertychange change selectionchange',
-              function() {
-                $statusText.html('Saving draft…');
-
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(function() {
-
-                  $.ajax({
-                    type: $form.attr('method'),
-                    url: $form.attr('action'),
-                    data: $form.serialize()
+                $.ajax({
+                  type: $form.attr('method'),
+                  url: $form.attr('action'),
+                  data: $form.serialize()
+                })
+                  .done(function(response) {
+                    $statusText.html('Draft saved');
                   })
-                    .done(function(response) {
-                      $statusText.html('Draft saved');
-                    })
-                  ;
-                }, 1000);
-              }
-            )
-          ;
-        });
+                ;
+              }, 1000);
+            }
+          )
+        ;
+      });
     </script>
 
 {% endblock %}
