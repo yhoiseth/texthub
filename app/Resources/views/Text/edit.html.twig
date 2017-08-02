@@ -110,23 +110,19 @@
 
         $(document).ready(function() {
           var $wrapper = $('#js-editor');
-//          Editor.initialize($wrapper);
-
           var $form = $wrapper.find('form');
           var $statusText = $('#js-status-text-container');
-
+          var $textarea = $wrapper.find('textarea');
           var timeoutId;
 
-          $wrapper
-            .find('textarea')
+          $textarea
             .on(
               'input propertychange change selectionchange',
               function() {
-                console.log('Textarea Change');
+                $statusText.html('Saving draft…');
 
                 clearTimeout(timeoutId);
                 timeoutId = setTimeout(function() {
-
 
                   $.ajax({
                     type: $form.attr('method'),
@@ -137,46 +133,11 @@
                       $statusText.html('Draft saved');
                     })
                   ;
-
-
-
-
-
                 }, 1000);
-              });
-
-
+              }
+            )
+          ;
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 
 {% endblock %}
