@@ -40,7 +40,8 @@
                 col-xs-12
                 col-md-8
                 col-md-offset-2
-            "
+             "
+             id="js-editor"
         >
             {{ form_start(bodyForm) }}
             {{ form_widget(bodyForm) }}
@@ -53,4 +54,61 @@
         'modal_title': 'app.edit_title'|trans,
         'submit_button_value': 'app.save'|trans,
     } %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        var Editor = {
+          initialize: function($wrapper) {
+            
+          }
+        };
+
+
+
+
+
+
+
+
+
+
+        $(document).ready(function() {
+          var $wrapper = $('#js-editor');
+          Editor.initialize($wrapper);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
 {% endblock %}
