@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Slug;
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Group\PrepareDatabase;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Doctrine\ORM\NoResultException;
@@ -12,6 +13,7 @@ use Stringy\Stringy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -101,6 +103,27 @@ class TextController extends Controller
             $text
         );
 
+        $bodyForm = $this
+            ->createFormBuilder()
+            ->add(
+                'body',
+                TextareaType::class,
+                [
+                    'label' => false,
+                ]
+            )
+            ->getForm()
+        ;
+
+        if ($request->isXmlHttpRequest()) {
+
+            $bodyForm->handleRequest($request);
+
+            if ($bodyForm->isSubmitted() && $bodyForm->isValid()) {
+                return new Response('success');
+            }
+        }
+
         $form = $this
             ->createForm(
                 'AppBundle\Form\Type\Text\TitleType',
@@ -148,18 +171,6 @@ class TextController extends Controller
         }
 
         $form->setData($text);
-
-        $bodyForm = $this
-            ->createFormBuilder()
-            ->add(
-                'body',
-                TextareaType::class,
-                [
-                    'label' => false,
-                ]
-            )
-            ->getForm()
-        ;
 
         return $this->render(
             ':Text:edit.html.twig',

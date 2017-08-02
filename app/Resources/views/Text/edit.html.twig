@@ -27,7 +27,9 @@
         </div>
         <h1>
             {{ text.title }}
-            <small>
+            <small
+                    id="js-status-text-container"
+            >
                 All changes saved
             </small>
         </h1>
@@ -60,11 +62,42 @@
     {{ parent() }}
 
     <script>
-        var Editor = {
-          initialize: function($wrapper) {
-            
-          }
-        };
+//        var Editor = {
+//          initialize: function($wrapper) {
+//            this.$wrapper = $wrapper;
+//            this.$form = this.$wrapper.find('form');
+//            this.$textarea = this.$form.find('textarea');
+//
+//            this.$textarea.on(
+//              'input selectionchange propertychange',
+//              this.saveDraft
+//            )
+//          },
+//
+//          saveDraft: function(event) {
+//            var $form = Editor.$form;
+//            var path = window.location.pathname;
+//            var serializedForm = $form.serialize();
+//
+//            var $statusText = $('#js-status-text-container');
+//
+//            console.log($statusText);
+//
+//            $statusText.html('Saving draft…');
+//
+//
+////            console.log(serializedForm);
+//
+//            $.ajax({
+//              type: $form.attr('method'),
+//              url: $form.attr('action'),
+//              data: $form.serialize()
+//            })
+//              .done(function(response) {
+//                $statusText.html('Draft saved');
+//              });
+//          }
+//        };
 
 
 
@@ -77,7 +110,42 @@
 
         $(document).ready(function() {
           var $wrapper = $('#js-editor');
-          Editor.initialize($wrapper);
+//          Editor.initialize($wrapper);
+
+          var $form = $wrapper.find('form');
+          var $statusText = $('#js-status-text-container');
+
+          var timeoutId;
+
+          $wrapper
+            .find('textarea')
+            .on(
+              'input propertychange change selectionchange',
+              function() {
+                console.log('Textarea Change');
+
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(function() {
+
+
+                  $.ajax({
+                    type: $form.attr('method'),
+                    url: $form.attr('action'),
+                    data: $form.serialize()
+                  })
+                    .done(function(response) {
+                      $statusText.html('Draft saved');
+                    })
+                  ;
+
+
+
+
+
+                }, 1000);
+              });
+
+
         });
 
 
