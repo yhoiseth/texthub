@@ -28,7 +28,7 @@ Feature: Edit text body
     Then I should not see "Save text"
     And I should see "Saving draft…"
 
-    When I wait "1" seconds
+    When I wait "2" seconds
     Then I should see "Draft saved"
     And the text file should be saved
 
