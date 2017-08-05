@@ -33,10 +33,9 @@ Feature: Edit text body
     And the text file should be saved
 
     When I click "Save text"
-    Then I should see "Text saved. Available on /marcus-aurelius/meditations-revisited."
+    Then I should be redirected to "/marcus-aurelius/meditations-revisited"
+    And I should see "Text saved"
     And the text should be committed
-
-    When I click "/marcus-aurelius/meditations-revisited"
-    Then the "h1" element should contain "Meditations Revisited"
+    And the "h1" element should contain "Meditations Revisited"
     And the page title should contain "Meditations Revisited"
     And the "h2" element should contain "This is my level 1 heading"

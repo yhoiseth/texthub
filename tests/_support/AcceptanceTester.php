@@ -93,7 +93,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldBeRedirectedTo($arg1)
     {
-        $this->canSeeInCurrentUrl($arg1);
+        $this->seeCurrentUrlEquals($arg1);
     }
 
     /**
