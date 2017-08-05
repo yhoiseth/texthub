@@ -26,6 +26,7 @@
                 <button
                         type="button"
                         class="btn btn-primary"
+                        id="js-save-text-body-button"
                 >
                     Save text
                 </button>
@@ -97,7 +98,23 @@
             }
           )
         ;
+
+        var $saveTextBodyButton = $('#js-save-text-body-button');
+
+        $saveTextBodyButton
+          .on(
+            'click',
+            function() {
+              $saveTextBodyButton.disable();
+              
+            }
+          )
+
+
+
       });
     </script>
+
+
 
 {% endblock %}
