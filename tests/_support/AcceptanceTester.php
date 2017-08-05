@@ -311,12 +311,9 @@ class AcceptanceTester extends \Codeception\Actor
         /** @var FilesystemInterface $filesystem */
         $filesystem = $this->grabService('oneup_flysystem.collections_filesystem');
 
-        $file = $filesystem->get('marcus-aurelius/meditations-revisited.md');
+        $fileContents = $filesystem->read('marcus-aurelius/meditations-revisited.md');
 
-        dump($file);
-        dump($this->getExample('textBody'));
-
-        verify_file($file)
+        verify_file($fileContents)
             ->contains(
                 $this->getExample('textBody')
             )
