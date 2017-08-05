@@ -36,7 +36,7 @@ class TextController extends Controller
             $text = $form->getData();
 
             $this->saveTextInDatabase($text);
-            $this->saveEmptyTextFile($text);
+            $this->saveFile($text);
             $this->commitTextFileToVersionControlSystem($text);
 
             return $this->redirectToRoute(
@@ -120,6 +120,15 @@ class TextController extends Controller
             $bodyForm->handleRequest($request);
 
             if ($bodyForm->isSubmitted() && $bodyForm->isValid()) {
+                $this->get('logger')->debug('$bodyForm->getData()');
+                $this->get('logger')->debug(
+                    var_export($bodyForm->getData(), true)
+                );
+
+                $body = $bodyForm->getData()['body'];
+
+                $this->saveFile($text, $body);
+
                 return new Response('success');
             }
         }
@@ -229,8 +238,9 @@ class TextController extends Controller
 
     /**
      * @param Text $text
+     * @param string $body
      */
-    private function saveEmptyTextFile(Text $text): void
+    private function saveFile(Text $text, string $body = ''): void
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -241,10 +251,11 @@ class TextController extends Controller
         $filesystem = $this->get('oneup_flysystem.collections_filesystem');
 
         $filesystem
-            ->write(
+            ->put(
                 $this->getPath($username, $filename),
-                ''
-            );
+                $body
+            )
+        ;
     }
 
     /**
