@@ -34,3 +34,9 @@
       apt:
         name: php7.1-cli
         state: latest
+
+    - name: Install Nginx web server
+      become: true
+      apt:
+        name: nginx
+        state: latest
