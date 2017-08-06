@@ -19,4 +19,3 @@ Git writing app.
 
 1. Install Ansible
 2. Run `ansible-playbook ansible/production/deploy.yml -i ansible/hosts.ini --ask-become-pass`
-
