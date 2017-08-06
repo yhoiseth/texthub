@@ -59,9 +59,45 @@ class TextController extends Controller
             );
         }
 
+        $commonMarkConverter = $this->get('webuni_commonmark.default_converter');
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $username = $user->getUsername();
+
+        $filename = $this->getTextFilename($text);
+
+        $filesystem = $this->get('oneup_flysystem.collections_filesystem');
+
+        $textBodyAsMarkdown = $filesystem
+            ->read(
+                $this->getPath($username, $filename)
+            )
+        ;
+
+        $textBodyAsHtml = stringy(
+            $commonMarkConverter->convertToHtml($textBodyAsMarkdown)
+        );
+
+
+        for (
+            $currentLevel = 5;
+            $currentLevel > 0;
+            $currentLevel--
+        ) {
+            $nextLevel = $currentLevel + 1;
+            $textBodyAsHtml = $textBodyAsHtml->replace("<h$currentLevel", "<h$nextLevel");
+            $textBodyAsHtml = $textBodyAsHtml->replace("</h$currentLevel", "</h$nextLevel");
+        }
+
+        $textBodyAsHtml = $textBodyAsHtml->__toString();
+
         return $this->render(
             ':Text:show.html.twig',
-            compact('text')
+            compact(
+                'text',
+                'textBodyAsHtml'
+            )
         );
     }
 
