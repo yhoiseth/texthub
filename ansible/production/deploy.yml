@@ -2,7 +2,17 @@
 - hosts: production
 
   tasks:
-    - name: Update all packages to the latest version
+    - name: Update APT package manager repositories cache
+      apt:
+        update_cache: yes
       become: true
+
+    - name: Upgrade existing packages
       apt:
         upgrade: dist
+      become: true
+
+    - name: Install the Git version control system
+      apt:
+        name: git
+      become: true
