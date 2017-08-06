@@ -15,3 +15,8 @@ Git writing app.
 4. Start development web server: `bin/console server:start`
 3. Make sure that existing tests pass: `codecept run`
 
+## Deployment
+
+1. Install Ansible
+2. Run `ansible-playbook ansible/production/deploy.yml -i ansible/hosts.ini --ask-become-pass`
+
