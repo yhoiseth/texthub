@@ -22,6 +22,47 @@ use function Stringy\create as stringy;
 class TextController extends Controller
 {
     /**
+     * @Route("/{username}/{slugBody}")
+     * @param Request $request
+     * @param string $username
+     * @param string $slugBody
+     * @return RedirectResponse|Response
+     */
+    public function showAction(Request $request, string $username, string $slugBody)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsername($username);
+
+        $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+        $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
+
+        $slug = $slugRepository->findSlugByUserAndSlugBody($user, $slugBody);
+
+        if (!$slug) {
+            throw $this->createNotFoundException();
+        }
+
+        $text = $textRepository->findOneBy([
+            'currentSlug' => $slug,
+        ]);
+
+        if (!$text) {
+            $text = $slug->getText();
+
+            return $this->redirectToRoute(
+                'app_text_show',
+                [
+                    'username' => $username,
+                    'slugBody' => $text->getCurrentSlug()->getBody(),
+                ],
+                301
+            );
+        }
+
+        return $this->render(':Text:show.html.twig');
+    }
+
+    /**
      * @Route("/new")
      * @param Request $request
      * @return Response
@@ -114,6 +155,12 @@ class TextController extends Controller
             )
             ->getForm()
         ;
+
+        if ($request->isXmlHttpRequest() && $request->request->get('save') == 'true') {
+            $this->commitTextFileToVersionControlSystem($text);
+
+            return new Response('text successfully saved');
+        }
 
         if ($request->isXmlHttpRequest()) {
 

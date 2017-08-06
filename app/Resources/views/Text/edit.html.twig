@@ -27,6 +27,12 @@
                         type="button"
                         class="btn btn-primary"
                         id="js-save-text-body-button"
+                        data-url="{{ path(
+                            'app_text_show', {
+                                'username': app.user.username,
+                                'slugBody': text.currentSlug.body,
+                            }
+                        ) }}"
                 >
                     Save text
                 </button>
@@ -105,8 +111,22 @@
           .on(
             'click',
             function() {
-              $saveTextBodyButton.disable();
-              
+              $(this).prop('disabled',true);
+
+              $.ajax({
+                type: 'POST',
+                url: window.location.href,
+                data: {
+                  'save': true
+                }
+              })
+                .done(function(response) {
+                  if (response === 'text successfully saved') {
+                    window.location.href = $saveTextBodyButton.data('url');
+                  }
+                })
+              ;
+
             }
           )
 

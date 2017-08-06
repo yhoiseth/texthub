@@ -33,6 +33,7 @@ Feature: Edit text body
     And the text file should be saved
 
     When I click "Save text"
+    And I wait "2" seconds
     Then I should be redirected to "/marcus-aurelius/meditations-revisited"
     And I should see "Text saved"
     And the text should be committed
