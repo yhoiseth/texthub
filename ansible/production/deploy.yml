@@ -7,9 +7,14 @@
         update_cache: yes
       become: true
 
+    - name: Install Aptitude
+      apt:
+        name: aptitude
+      become: true
+
     - name: Upgrade existing packages
       apt:
-        upgrade: dist
+        upgrade: safe
       become: true
 
     - name: Install the Git version control system
