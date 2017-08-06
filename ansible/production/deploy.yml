@@ -40,3 +40,9 @@
       apt:
         name: nginx
         state: latest
+
+    - name: Install MySQL database server
+      become: true
+      apt:
+        name: mysql-server
+        state: latest
