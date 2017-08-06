@@ -198,6 +198,11 @@ class TextController extends Controller
         if ($request->isXmlHttpRequest() && $request->request->get('save') == 'true') {
             $this->commitTextFileToVersionControlSystem($text);
 
+            $this->addFlash(
+                'success',
+                'Text saved'
+            );
+
             return new Response('text successfully saved');
         }
 

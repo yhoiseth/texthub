@@ -22,10 +22,8 @@ Feature: Edit text body
     Given I am on "/marcus-aurelius/meditations-revisited/_edit"
     Then I should see "All changes saved"
     And I should not see "Saving draft…"
-    And I should not see "Save text"
 
     When I fill in the body field with "# This is my level 1 heading"
-    Then I should not see "Save text"
     And I should see "Saving draft…"
 
     When I wait "2" seconds
