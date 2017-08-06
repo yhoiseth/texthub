@@ -36,7 +36,7 @@ Feature: Edit text body
     And I wait "2" seconds
     Then I should be redirected to "/marcus-aurelius/meditations-revisited"
     And I should see "Text saved"
-    And the text should be committed
-    And the "h1" element should contain "Meditations Revisited"
+    And all the files in the main repository of "marcus-aurelius" should be committed
+    And "h1" should contain "Meditations Revisited"
     And the page title should contain "Meditations Revisited"
-    And the "h2" element should contain "This is my level 1 heading"
+    And "h2" should contain "This is my level 1 heading"
