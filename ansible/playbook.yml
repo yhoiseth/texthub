@@ -1,5 +1,0 @@
----
-- hosts: production
-
-  tasks:
-    - ping: ~
