@@ -52,3 +52,10 @@
       apt:
         name: mysql-server
         state: latest
+
+    - name: Set timezone for PHP command-line interface
+      become: true
+      lineinfile:
+        path: /etc/php/7.1/cli/php.ini
+        regexp: date.timezone =
+        line: date.timezone = UTC
