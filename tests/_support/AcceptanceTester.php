@@ -321,22 +321,6 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then the text should be committed
-     */
-    public function theTextShouldBeCommitted()
-    {
-        throw new \Codeception\Exception\Incomplete("Step `the text should be committed` is not defined");
-    }
-
-    /**
-     * @Then the :arg1 element should contain :arg2
-     */
-    public function theElementShouldContain($arg1, $arg2)
-    {
-        throw new \Codeception\Exception\Incomplete("Step `the :arg1 element should contain :arg2` is not defined");
-    }
-
-    /**
      * @Given :element should contain :text
      * @param string $element
      * @param string $text
