@@ -1,6 +1,10 @@
 ---
 - hosts: production
 
+  vars:
+    project_directory: ~/production
+    composer_path: /usr/local/bin/composer
+
   tasks:
     - name: Update APT package manager repositories cache
       apt:
@@ -17,6 +21,14 @@
       apt:
         upgrade: safe
       become: true
+
+    - name: Install low-level utilities
+      become: true
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - zip
+        - unzip
 
     - name: Install the Git version control system
       apt:
@@ -59,3 +71,34 @@
         path: /etc/php/7.1/cli/php.ini
         regexp: date.timezone =
         line: date.timezone = UTC
+
+    - name: Set timezone for PHP FastCGI Process Manager
+      become: true
+      lineinfile:
+        path: /etc/php/7.1/fpm/php.ini
+        regexp: date.timezone =
+        line: date.timezone = UTC
+
+    - name: Create project directory
+      file:
+        path: "{{ project_directory }}"
+        state: directory
+        recurse: true
+
+    - name: Clone Git repository
+      git:
+        repo: https://github.com/yhoiseth/texthub.git
+        dest: "{{ project_directory }}"
+
+    - name: Download Composer
+      script: scripts/install-composer.sh
+
+    - name: Move Composer globally
+      become: true
+      command: mv composer.phar "{{ composer_path }}"
+
+    - name: Set permissions on Composer
+      become: true
+      file:
+        path: "{{ composer_path }}"
+        mode: a+x
