@@ -32,8 +32,14 @@
     - name: Install PHP
       become: true
       apt:
-        name: php7.1-cli
+        name: "{{ item }}"
         state: latest
+      with_items:
+        - php7.1-cli
+        - php7.1-curl
+        - php7.1-fpm
+        - php7.1-mysql
+        - php7.1-intl
 
     - name: Install Nginx web server
       become: true
