@@ -23,3 +23,14 @@
         name: git
         state: latest
       become: true
+
+    - name: Add PHP 7 personal package archive repository
+      become: true
+      apt_repository:
+        repo: ppa:ondrej/php
+
+    - name: Install PHP
+      become: true
+      apt:
+        name: php7.1-cli
+        state: latest
