@@ -59,7 +59,10 @@ class TextController extends Controller
             );
         }
 
-        return $this->render(':Text:show.html.twig');
+        return $this->render(
+            ':Text:show.html.twig',
+            compact('text')
+        );
     }
 
     /**
