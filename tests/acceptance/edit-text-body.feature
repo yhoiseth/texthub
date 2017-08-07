@@ -30,7 +30,11 @@ Feature: Edit text body
     Then I should see "Draft saved"
     And the text file should be saved
 
-    When I click "Save text"
+    When I visit "/marcus-aurelius/meditations-revisited"
+    Then I should not see "This is my level 1 heading"
+
+    When I visit "/marcus-aurelius/meditations-revisited/_edit"
+    And I click "Save text"
     And I wait "2" seconds
     Then I should be redirected to "/marcus-aurelius/meditations-revisited"
     And I should see "Text saved"
