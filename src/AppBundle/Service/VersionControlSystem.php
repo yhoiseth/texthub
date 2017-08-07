@@ -73,7 +73,7 @@ class VersionControlSystem
      * @param string $filename
      * @return bool
      */
-    public function isCommitted(string $filename): bool
+    public function fileIsCommitted(string $filename): bool
     {
         /** @var User $user */
         $user = $this->getTokenStorage()->getToken()->getUser();

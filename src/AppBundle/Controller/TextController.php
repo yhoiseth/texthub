@@ -275,9 +275,9 @@ class TextController extends Controller
 
         $form->setData($text);
 
-        $isCommitted = $this
+        $fileIsCommitted = $this
             ->get('app.version_control_system')
-            ->isCommitted($filename)
+            ->fileIsCommitted($filename)
         ;
 
         return $this->render(
@@ -286,7 +286,7 @@ class TextController extends Controller
                 'text' => $text,
                 'form' => $form->createView(),
                 'bodyForm' => $bodyForm->createView(),
-                'isCommitted' => $isCommitted,
+                'fileIsCommitted' => $fileIsCommitted,
             ]
         );
     }
