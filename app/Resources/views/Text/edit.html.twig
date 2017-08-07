@@ -43,7 +43,11 @@
             <small
                     id="js-status-text-container"
             >
-                All changes saved
+                {% if isCommitted %}
+                    All changes saved
+                {% else %}
+                    Draft saved
+                {% endif %}
             </small>
         </h1>
     </div>

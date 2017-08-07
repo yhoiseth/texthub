@@ -4,6 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use function Stringy\create as stringy;
 
 class VersionControlSystem
 {
@@ -66,6 +67,28 @@ class VersionControlSystem
         $completeCommand = "$navigationCommand && $removeOldCommand && $addNewCommand && $commitCommand";
 
         shell_exec($completeCommand);
+    }
+
+    /**
+     * @param string $filename
+     * @return bool
+     */
+    public function isCommitted(string $filename): bool
+    {
+        /** @var User $user */
+        $user = $this->getTokenStorage()->getToken()->getUser();
+        $username = $user->getUsername();
+
+        $collectionsDirectory = $this->getCollectionsDirectory();
+
+        $navigationCommand = "cd $collectionsDirectory/$username";
+        $statusCommand = 'git status';
+
+        $completeCommand = "$navigationCommand && $statusCommand";
+
+        $output = stringy(shell_exec($completeCommand));
+
+        return !$output->contains($filename);
     }
 
     /**

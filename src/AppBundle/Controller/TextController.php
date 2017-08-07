@@ -59,39 +59,6 @@ class TextController extends Controller
             );
         }
 
-//        $commonMarkConverter = $this->get('webuni_commonmark.default_converter');
-//
-//        /** @var User $user */
-//        $user = $this->getUser();
-//        $username = $user->getUsername();
-//
-//        $filename = $this->getTextFilename($text);
-//
-//        $filesystem = $this->get('oneup_flysystem.collections_filesystem');
-//
-//        $textBodyAsMarkdown = $filesystem
-//            ->read(
-//                $this->getPath($username, $filename)
-//            )
-//        ;
-//
-//        $textBodyAsHtml = stringy(
-//            $commonMarkConverter->convertToHtml($textBodyAsMarkdown)
-//        );
-//
-//
-//        for (
-//            $currentLevel = 5;
-//            $currentLevel > 0;
-//            $currentLevel--
-//        ) {
-//            $nextLevel = $currentLevel + 1;
-//            $textBodyAsHtml = $textBodyAsHtml->replace("<h$currentLevel", "<h$nextLevel");
-//            $textBodyAsHtml = $textBodyAsHtml->replace("</h$currentLevel", "</h$nextLevel");
-//        }
-//
-//        $textBodyAsHtml = $textBodyAsHtml->__toString();
-
         return $this->render(
             ':Text:show.html.twig',
             compact(
@@ -182,6 +149,16 @@ class TextController extends Controller
             $text
         );
 
+        $filesystem = $this->get('oneup_flysystem.collections_filesystem');
+        $filename = $this->getTextFilename($text);
+
+        $markdownBody = $filesystem
+            ->read(
+                $this->getPath($username, $filename)
+            )
+        ;
+
+
         $bodyForm = $this
             ->createFormBuilder()
             ->add(
@@ -189,6 +166,7 @@ class TextController extends Controller
                 TextareaType::class,
                 [
                     'label' => false,
+                    'data' => $markdownBody,
                 ]
             )
             ->getForm()
@@ -198,16 +176,6 @@ class TextController extends Controller
             $this->commitTextFileToVersionControlSystem($text);
 
             $commonMarkConverter = $this->get('webuni_commonmark.default_converter');
-
-            $filename = $this->getTextFilename($text);
-
-            $filesystem = $this->get('oneup_flysystem.collections_filesystem');
-
-            $markdownBody = $filesystem
-                ->read(
-                    $this->getPath($username, $filename)
-                )
-            ;
 
             $htmlBody = stringy(
                 $commonMarkConverter->convertToHtml($markdownBody)
@@ -307,12 +275,18 @@ class TextController extends Controller
 
         $form->setData($text);
 
+        $isCommitted = $this
+            ->get('app.version_control_system')
+            ->isCommitted($filename)
+        ;
+
         return $this->render(
             ':Text:edit.html.twig',
             [
                 'text' => $text,
                 'form' => $form->createView(),
                 'bodyForm' => $bodyForm->createView(),
+                'isCommitted' => $isCommitted,
             ]
         );
     }

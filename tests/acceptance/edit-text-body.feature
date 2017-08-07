@@ -34,6 +34,9 @@ Feature: Edit text body
     Then I should not see "This is my level 1 heading"
 
     When I visit "/marcus-aurelius/meditations-revisited/_edit"
+    Then I should see "Draft saved"
+    And I should not see "All changes saved"
+    And "textarea" should contain "# This is my level 1 heading"
     And I click "Save text"
     And I wait "2" seconds
     Then I should be redirected to "/marcus-aurelius/meditations-revisited"
