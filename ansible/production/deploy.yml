@@ -91,7 +91,7 @@
         dest: "{{ project_directory }}"
 
     - name: Download Composer
-      script: scripts/install-composer.sh
+      script: ../scripts/install-composer.sh
 
     - name: Move Composer globally
       become: true
