@@ -2,8 +2,17 @@
 - hosts: production
 
   vars:
-    project_directory: ~/production
+    server_name: www.texthub.io
+    project_directory: /home/texthub/production
+    project_public_directory: "{{ project_directory }}/web"
+    project_var_directory: "{{ project_directory }}/var"
+    project_console_path: "{{ project_directory }}/bin/console"
     composer_path: /usr/local/bin/composer
+
+  vars_prompt:
+    - name: mysql_root_password
+      prompt: Enter the desired MySQL root password
+      private: true
 
   environment:
     SYMFONY_ENV: prod
@@ -56,12 +65,14 @@
         - php7.1-mysql
         - php7.1-intl
         - php7.1-xml
+      notify: Restart PHP-FPM
 
     - name: Install Nginx web server
       become: true
       apt:
         name: nginx
         state: latest
+      notify: Restart Nginx
 
     - name: Install MySQL database server
       become: true
@@ -82,6 +93,7 @@
         path: /etc/php/7.1/fpm/php.ini
         regexp: date.timezone =
         line: date.timezone = UTC
+      notify: Restart PHP-FPM
 
     - name: Create project directory
       file:
@@ -89,10 +101,10 @@
         state: directory
         recurse: true
 
-    - name: Clone Git repository
-      git:
-        repo: https://github.com/yhoiseth/texthub.git
-        dest: "{{ project_directory }}"
+#    - name: Clone Git repository
+#      git:
+#        repo: https://github.com/yhoiseth/texthub.git
+#        dest: "{{ project_directory }}"
 
     - name: Download Composer
       script: ../scripts/install-composer.sh
@@ -107,6 +119,64 @@
         path: "{{ composer_path }}"
         mode: a+x
 
+    - name: Fix var directory permissions
+      become: true
+      file:
+        path: "{{ project_var_directory }}"
+        state: directory
+        mode: 0777
+        recurse: true
+
     - name: Install project dependencies
       composer:
         working_dir: "{{ project_directory }}"
+
+    - name: Add Nginx configuration to available sites
+      become: true
+      template:
+        src: ../templates/nginx.conf
+        dest: "/etc/nginx/sites-available/{{ server_name }}.conf"
+      notify: Restart Nginx
+
+    - name: Enable site
+      become: true
+      file:
+        src: "/etc/nginx/sites-available/{{ server_name }}.conf"
+        dest: "/etc/nginx/sites-enabled/{{ server_name }}.conf"
+        state: link
+      notify: Restart Nginx
+
+    - name: Update mysql root password for all root accounts
+      become: true
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ mysql_root_password }}"
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        check_implicit_admin: yes
+        priv: "*.*:ALL,GRANT"
+      with_items:
+        - 127.0.0.1
+        - ::1
+        - localhost
+
+    - name: Create database if it doesn't exist
+      become: true
+      command: "{{ project_console_path }} doctrine:database:create --if-not-exists"
+
+    - name: Migrate database
+      command: "{{ project_console_path }} doctrine:migrations:migrate --no-interaction"
+
+  handlers:
+    - name: Restart Nginx
+      become: true
+      service:
+        name: nginx
+        state: restarted
+
+    - name: Restart PHP-FPM
+      become: true
+      service:
+        name: php7.1-fpm
+        state: restarted
