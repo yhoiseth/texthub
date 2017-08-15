@@ -12,6 +12,7 @@ modules:
         - Doctrine2:
             depends: Symfony
         - WebDriver:
-            url: http://localhost:8000
+            url: http://texthub.dev
             browser: chrome
         - \Helper\Acceptance
+
