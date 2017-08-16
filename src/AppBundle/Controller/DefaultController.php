@@ -14,12 +14,13 @@ class DefaultController extends Controller
     {
         $finder = $this->container->get('fos_elastica.finder.app.text');
 
-        $results = $finder->find('Seneca');
-
-        dump($results);die;
+        $texts = $finder->find('');
 
 
 
-        return $this->render('default/index.html.twig');
+        return $this->render(
+            'default/index.html.twig',
+            compact('texts')
+        );
     }
 }
