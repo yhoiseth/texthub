@@ -446,8 +446,9 @@ class AcceptanceTester extends \Codeception\Actor
     {
         dump($users->getHash());
 
-        /** @var array $user */
+        /** @var string[] $user */
         foreach ($users->getHash() as $user) {
+
             $name = $user['name'];
             $username = $user['username'];
 
@@ -491,10 +492,56 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @Given the texts
+     * @param TableNode $texts
      */
-    public function theTexts()
+    public function theTexts(TableNode $texts)
     {
-        throw new \Codeception\Exception\Incomplete("Step `the texts` is not defined");
+        /** @var string[] $text */
+        foreach ($texts->getHash() as $text) {
+            $username = $text['owner'];
+            $title = $text['title'];
+            $body = $text['body'];
+
+            $this->amOnPage('/login');
+            $this->fillField(
+                'Email or username',
+                $username
+            );
+
+            $this->fillField(
+                'Password',
+                $username
+            );
+
+            $this->submitForm(
+                'form[action="/login_check"]',
+                []
+            );
+
+            $this->click('New text');
+
+            sleep(1);
+
+            $this->fillField(
+                'Title',
+                $title
+            );
+
+            $this->click("Let's go!");
+
+            $this->shouldContain(
+                'h1',
+                $title
+            );
+
+            $this->iFillInTheBodyFieldWith($body);
+
+            sleep(3);
+
+            $this->click('Save text');
+
+            $this->amOnPage('/logout');
+        }
     }
 
     /**
