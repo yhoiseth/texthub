@@ -40,6 +40,16 @@ class Text extends Entity
     private $createdBy;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(
+     *     type="text",
+     *     nullable=true
+     * )
+     */
+    private $htmlBody;
+
+    /**
      * @return null|string
      */
     public function getTitle(): ?string
@@ -93,6 +103,25 @@ class Text extends Entity
     public function setCurrentSlug(Slug $currentSlug): Text
     {
         $this->currentSlug = $currentSlug;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getHtmlBody(): ?string
+    {
+        return $this->htmlBody;
+    }
+
+    /**
+     * @param null|string $htmlBody
+     * @return Text
+     */
+    public function setHtmlBody(?string $htmlBody): Text
+    {
+        $this->htmlBody = $htmlBody;
 
         return $this;
     }

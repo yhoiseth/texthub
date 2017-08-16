@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
             new Oneup\FlysystemBundle\OneupFlysystemBundle(),
+            new Webuni\Bundle\CommonMarkBundle\WebuniCommonMarkBundle(),
+            new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
             new AppBundle\AppBundle(),
         ];
 

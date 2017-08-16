@@ -5,11 +5,15 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Slug;
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Group\PrepareDatabase;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Doctrine\ORM\NoResultException;
 use Stringy\Stringy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +21,52 @@ use function Stringy\create as stringy;
 
 class TextController extends Controller
 {
+    /**
+     * @Route("/{username}/{slugBody}")
+     * @param Request $request
+     * @param string $username
+     * @param string $slugBody
+     * @return RedirectResponse|Response
+     */
+    public function showAction(Request $request, string $username, string $slugBody)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsername($username);
+
+        $textRepository = $this->getDoctrine()->getRepository('AppBundle:Text');
+        $slugRepository = $this->getDoctrine()->getRepository('AppBundle:Slug');
+
+        $slug = $slugRepository->findSlugByUserAndSlugBody($user, $slugBody);
+
+        if (!$slug) {
+            throw $this->createNotFoundException();
+        }
+
+        $text = $textRepository->findOneBy([
+            'currentSlug' => $slug,
+        ]);
+
+        if (!$text) {
+            $text = $slug->getText();
+
+            return $this->redirectToRoute(
+                'app_text_show',
+                [
+                    'username' => $username,
+                    'slugBody' => $text->getCurrentSlug()->getBody(),
+                ],
+                301
+            );
+        }
+
+        return $this->render(
+            ':Text:show.html.twig',
+            compact(
+                'text'
+            )
+        );
+    }
+
     /**
      * @Route("/new")
      * @param Request $request
@@ -32,7 +82,7 @@ class TextController extends Controller
             $text = $form->getData();
 
             $this->saveTextInDatabase($text);
-            $this->saveEmptyTextFile($text);
+            $this->saveFile($text);
             $this->commitTextFileToVersionControlSystem($text);
 
             return $this->redirectToRoute(
@@ -99,6 +149,84 @@ class TextController extends Controller
             $text
         );
 
+        $filesystem = $this->get('oneup_flysystem.collections_filesystem');
+        $filename = $this->getTextFilename($text);
+
+        $markdownBody = $filesystem
+            ->read(
+                $this->getPath($username, $filename)
+            )
+        ;
+
+
+        $bodyForm = $this
+            ->createFormBuilder()
+            ->add(
+                'body',
+                TextareaType::class,
+                [
+                    'label' => false,
+                    'data' => $markdownBody,
+                ]
+            )
+            ->getForm()
+        ;
+
+        if ($request->isXmlHttpRequest() && $request->request->get('save') == 'true') {
+            $this->commitTextFileToVersionControlSystem($text);
+
+            $commonMarkConverter = $this->get('webuni_commonmark.default_converter');
+
+            $htmlBody = stringy(
+                $commonMarkConverter->convertToHtml($markdownBody)
+            );
+
+
+            for (
+                $currentLevel = 5;
+                $currentLevel > 0;
+                $currentLevel--
+            ) {
+                $nextLevel = $currentLevel + 1;
+                $htmlBody = $htmlBody->replace("<h$currentLevel", "<h$nextLevel");
+                $htmlBody = $htmlBody->replace("</h$currentLevel", "</h$nextLevel");
+            }
+
+            $htmlBody = $htmlBody->__toString();
+
+            $text->setHtmlBody($htmlBody);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($text);
+            $entityManager->flush();
+
+
+            $this->addFlash(
+                'success',
+                'Text saved'
+            );
+
+            return new Response('text successfully saved');
+        }
+
+        if ($request->isXmlHttpRequest()) {
+
+            $bodyForm->handleRequest($request);
+
+            if ($bodyForm->isSubmitted() && $bodyForm->isValid()) {
+                $this->get('logger')->debug('$bodyForm->getData()');
+                $this->get('logger')->debug(
+                    var_export($bodyForm->getData(), true)
+                );
+
+                $body = $bodyForm->getData()['body'];
+
+                $this->saveFile($text, $body);
+
+                return new Response('success');
+            }
+        }
+
         $form = $this
             ->createForm(
                 'AppBundle\Form\Type\Text\TitleType',
@@ -147,11 +275,18 @@ class TextController extends Controller
 
         $form->setData($text);
 
+        $fileIsCommitted = $this
+            ->get('app.version_control_system')
+            ->fileIsCommitted($filename)
+        ;
+
         return $this->render(
             ':Text:edit.html.twig',
             [
                 'text' => $text,
                 'form' => $form->createView(),
+                'bodyForm' => $bodyForm->createView(),
+                'fileIsCommitted' => $fileIsCommitted,
             ]
         );
     }
@@ -203,8 +338,9 @@ class TextController extends Controller
 
     /**
      * @param Text $text
+     * @param string $body
      */
-    private function saveEmptyTextFile(Text $text): void
+    private function saveFile(Text $text, string $body = ''): void
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -215,10 +351,11 @@ class TextController extends Controller
         $filesystem = $this->get('oneup_flysystem.collections_filesystem');
 
         $filesystem
-            ->write(
+            ->put(
                 $this->getPath($username, $filename),
-                ''
-            );
+                $body
+            )
+        ;
     }
 
     /**

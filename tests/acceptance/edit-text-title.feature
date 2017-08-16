@@ -34,7 +34,7 @@ Feature: Edit text title
     Then the text title should be updated from "Meditations Revisited" to "Something else"
     And the filename should be updated from "meditations-revisited.md" to "something-else.md"
     And all the files in the main repository of "marcus-aurelius" should be committed
-    And I should be redirected to "/marcus-aurelius/something-else"
+    And I should be redirected to "/marcus-aurelius/something-else/_edit"
 
     When I visit "/marcus-aurelius/meditations-revisited/_edit"
     Then I should be redirected to "/marcus-aurelius/something-else/_edit"

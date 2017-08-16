@@ -20,6 +20,8 @@
         class="container-fluid"
 >
 
+    {% include ':components/flash:messages.html.twig' %}
+
     {% block fos_user_content %}
     {% endblock fos_user_content %}
     {% block body %}{% endblock %}

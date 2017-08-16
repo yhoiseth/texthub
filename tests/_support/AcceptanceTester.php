@@ -29,6 +29,11 @@ class AcceptanceTester extends \Codeception\Actor
     use _generated\AcceptanceTesterActions;
 
     /**
+     * @var array
+     */
+    private $examples = [];
+
+    /**
      * @Given I am on :arg1
      * @Given I visit :arg1
      */
@@ -88,7 +93,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function iShouldBeRedirectedTo($arg1)
     {
-        $this->canSeeInCurrentUrl($arg1);
+        $this->seeCurrentUrlEquals($arg1);
     }
 
     /**
@@ -299,6 +304,23 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
+     * @Then the text file should be saved
+     */
+    public function theTextFileShouldBeSaved()
+    {
+        /** @var FilesystemInterface $filesystem */
+        $filesystem = $this->grabService('oneup_flysystem.collections_filesystem');
+
+        $fileContents = $filesystem->read('marcus-aurelius/meditations-revisited.md');
+
+        verify_file($fileContents)
+            ->contains(
+                $this->getExample('textBody')
+            )
+        ;
+    }
+
+    /**
      * @Given :element should contain :text
      * @param string $element
      * @param string $text
@@ -395,6 +417,20 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
+     * @When I fill in the body field with :value
+     * @param string $value
+     */
+    public function iFillInTheBodyFieldWith(string $value)
+    {
+        $this->fillField(
+            '#form_body',
+            $value
+        );
+
+        $this->addExample('textBody', $value);
+    }
+
+    /**
      * @param string $text
      */
     private function verifyThatTextIsSelected(string $text): void
@@ -413,5 +449,44 @@ class AcceptanceTester extends \Codeception\Actor
                 "return $('$selector').is(':focus')"
             )
         )->true();
+    }
+
+    /**
+     * @return array
+     */
+    private function getExamples(): array
+    {
+        return $this->examples;
+    }
+
+    /**
+     * @param array $examples
+     * @return AcceptanceTester
+     */
+    private function setExamples(array $examples): AcceptanceTester
+    {
+        $this->examples = $examples;
+
+        return $this;
+    }
+
+    private function addExample(string $key, $value = null): AcceptanceTester
+    {
+        $examples = $this->getExamples();
+
+        $examples[$key] = $value;
+
+        $this->setExamples($examples);
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    private function getExample(string $key)
+    {
+        return $this->getExamples()[$key];
     }
 }
