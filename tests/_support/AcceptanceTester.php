@@ -444,13 +444,13 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function theUsers(TableNode $users)
     {
-        dump($users->getHash());
-
         /** @var string[] $user */
         foreach ($users->getHash() as $user) {
-
-            $name = $user['name'];
-            $username = $user['username'];
+            /**
+             * @var string $name
+             * @var string $username
+             */
+            extract($user);
 
             $this->amOnPage('/register');
 
@@ -498,9 +498,12 @@ class AcceptanceTester extends \Codeception\Actor
     {
         /** @var string[] $text */
         foreach ($texts->getHash() as $text) {
-            $username = $text['owner'];
-            $title = $text['title'];
-            $body = $text['body'];
+            /**
+             * @var string $username
+             * @var string $title
+             * @var string $body
+             */
+            extract($text);
 
             $this->amOnPage('/login');
             $this->fillField(

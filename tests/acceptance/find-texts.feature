@@ -12,7 +12,7 @@ Feature: Find texts
       | Seneca          | seneca          |
 
     And the texts
-      | title                    | body                                                 | owner           |
+      | title                    | body                                                 | username        |
       | The first text by Marcus | I'm Marcus. This is my first text.                   | marcus-aurelius |
       | The first text by Zeno   | I like writing.                                      | zeno            |
       | I'm last                 | I wrote this after the other guys wrote their texts. | seneca          |
@@ -20,7 +20,7 @@ Feature: Find texts
     And I visit "/logout"
     And I visit "/"
 
-    @watch
+  @watch
   Scenario: No search
     Then I should see "The first text by Marcus"
     Then I should see "The first text by Zeno"
