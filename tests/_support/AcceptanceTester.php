@@ -431,6 +431,30 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
+     * @Then I see :arg1 before the other texts
+     */
+    public function iSeeBeforeTheOtherTexts($arg1)
+    {
+        throw new \Codeception\Exception\Incomplete("Step `I see :arg1 before the other texts` is not defined");
+    }
+
+    /**
+     * @Given the users
+     */
+    public function theUsers()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the users` is not defined");
+    }
+
+    /**
+     * @Given the texts
+     */
+    public function theTexts()
+    {
+        throw new \Codeception\Exception\Incomplete("Step `the texts` is not defined");
+    }
+
+    /**
      * @param string $text
      */
     private function verifyThatTextIsSelected(string $text): void
