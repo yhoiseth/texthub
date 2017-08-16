@@ -12,6 +12,14 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        $finder = $this->container->get('fos_elastica.finder.app.text');
+
+        $results = $finder->find('Seneca');
+
+        dump($results);die;
+
+
+
         return $this->render('default/index.html.twig');
     }
 }
