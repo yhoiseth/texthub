@@ -28,6 +28,7 @@
         "doctrine/doctrine-migrations-bundle": "^1.2",
         "doctrine/orm": "^2.5",
         "egeloen/ordered-form-bundle": "^3.0",
+        "exercise/htmlpurifier-bundle": "^0.2.4",
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "mopa/bootstrap-bundle": "^3.1",

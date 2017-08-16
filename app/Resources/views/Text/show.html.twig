@@ -9,5 +9,5 @@
         {{ text.title }}
     </h1>
 
-    {{ text.htmlBody|raw }}
+    {{ text.htmlBody|raw|purify }}
 {% endblock %}
