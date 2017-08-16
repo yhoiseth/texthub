@@ -1,4 +1,4 @@
-@prepare_database @clean_files @text @watch
+@prepare_database @clean_files @text
 Feature: Find texts
   In order to find texts
   As a web visitor
@@ -20,6 +20,7 @@ Feature: Find texts
     And I visit "/logout"
     And I visit "/"
 
+    @watch
   Scenario: No search
     Then I should see "The first text by Marcus"
     Then I should see "The first text by Zeno"

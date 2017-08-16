@@ -440,10 +440,53 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @Given the users
+     * @param TableNode $users
      */
-    public function theUsers()
+    public function theUsers(TableNode $users)
     {
-        throw new \Codeception\Exception\Incomplete("Step `the users` is not defined");
+        dump($users->getHash());
+
+        /** @var array $user */
+        foreach ($users->getHash() as $user) {
+            $name = $user['name'];
+            $username = $user['username'];
+
+            $this->amOnPage('/register');
+
+            $this->fillField(
+                'Name',
+                $name
+            );
+
+            $this->fillField(
+                'Email',
+                "$username@example.com"
+            );
+
+            $this->fillField(
+                'Username',
+                $username
+            );
+
+            $this->fillField(
+                'Password',
+                $username
+            );
+
+            $this->fillField(
+                'Repeat password',
+                $username
+            );
+
+            $this->submitForm(
+                'form[name="fos_user_registration_form"]',
+                []
+            );
+
+            $this->cantSee('Register');
+
+            $this->amOnPage('/logout');
+        }
     }
 
     /**
