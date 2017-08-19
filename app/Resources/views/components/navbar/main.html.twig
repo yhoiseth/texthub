@@ -43,16 +43,7 @@
                                 role="button"
                                 aria-haspopup="true"
                                 aria-expanded="false">
-                            <img
-                                    src="{{ gravatar(
-                                    app.user.emailCanonical,
-                                    60,
-                                    'g',
-                                    'mm',
-                                    true
-                                    ) }}"
-                                    class="img-circle"
-                            >
+                            {% include ':components:gravatar.html.twig' %}
                             {{ app.user.name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">

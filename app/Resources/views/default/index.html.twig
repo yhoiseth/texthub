@@ -23,16 +23,10 @@
                     <div
                             class="panel-body"
                     >
-                        <img
-                                src="{{ gravatar(
-                                text.createdBy.emailCanonical,
-                                20,
-                                'g',
-                                'mm',
-                                true
-                                ) }}"
-                                class="img-circle"
-                        >
+                        {% include ':components:gravatar.html.twig' with {
+                            'email': text.createdBy.email,
+                            'size': 20
+                        } %}
                         &nbsp;
                         {{ text.createdBy.name }}
                     </div>

@@ -1,0 +1,20 @@
+{% if email is not defined %}
+    {% set email = app.user.email %}
+{% endif %}
+
+{% if size is not defined %}
+    {% set size = 60 %}
+{% endif %}
+
+{% set url = gravatar(
+    email,
+    size,
+    'g',
+    'mm',
+    true
+) %}
+
+<img
+        src="{{ url }}"
+        class="img-circle"
+>
