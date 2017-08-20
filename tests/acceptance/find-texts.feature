@@ -20,7 +20,6 @@ Feature: Find texts
     And I visit "/logout"
     And I visit "/"
 
-  @watch
   Scenario: No search
     Then I should see "The first text by Marcus"
     Then I should see "The first text by Zeno"
@@ -30,6 +29,7 @@ Feature: Find texts
     Then I should see "Seneca"
     And I see "I am last" before the other texts
 
+  @watch
   Scenario: Visit text
     When I click "The first text by Marcus"
     Then I should be redirected to "/marcus-aurelius/the-first-text-by-marcus"

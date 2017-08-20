@@ -8,29 +8,59 @@
             <div
                     class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
             >
-                <div
-                        class="panel panel-default"
+                <a
+                        href="{{ path('app_text_show', {
+                            'username': text.createdBy.username,
+                            'slugBody': text.currentSlug,
+                        }) }}"
                 >
                     <div
-                            class="panel-heading"
+                            class="panel panel-default"
                     >
-                        <h3
-                                class="panel-title"
+                        <div
+                                class="panel-heading"
                         >
-                            {{ text.title }}
-                        </h3>
-                    </div>
-                    <div
-                            class="panel-body"
-                    >
-                        {% include ':components:gravatar.html.twig' with {
+                            <h3
+                                    class="panel-title"
+                            >
+                                {{ text.title }}
+                            </h3>
+                        </div>
+                        <div
+                                class="panel-body"
+                        >
+                            {% include ':components:gravatar.html.twig' with {
                             'email': text.createdBy.email,
                             'size': 20
-                        } %}
-                        &nbsp;
-                        {{ text.createdBy.name }}
+                            } %}
+                            &nbsp;
+                            {{ text.createdBy.name }}
+                        </div>
                     </div>
-                </div>
+                </a>
+                {#<div#}
+                        {#class="panel panel-default"#}
+                {#>#}
+                    {#<div#}
+                            {#class="panel-heading"#}
+                    {#>#}
+                        {#<h3#}
+                                {#class="panel-title"#}
+                        {#>#}
+                            {#{{ text.title }}#}
+                        {#</h3>#}
+                    {#</div>#}
+                    {#<div#}
+                            {#class="panel-body"#}
+                    {#>#}
+                        {#{% include ':components:gravatar.html.twig' with {#}
+                            {#'email': text.createdBy.email,#}
+                            {#'size': 20#}
+                        {#} %}#}
+                        {#&nbsp;#}
+                        {#{{ text.createdBy.name }}#}
+                    {#</div>#}
+                {#</div>#}
             </div>
         </div>
     {% endfor %}
