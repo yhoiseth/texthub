@@ -15,7 +15,7 @@ Feature: Find texts
       | title                    | body                                                 | username        |
       | The first text by Marcus | I'm Marcus. This is my first text.                   | marcus-aurelius |
       | The first text by Zeno   | I like writing.                                      | zeno            |
-      | I'm last                 | I wrote this after the other guys wrote their texts. | seneca          |
+      | I am last                 | I wrote this after the other guys wrote their texts. | seneca          |
 
     And I visit "/logout"
     And I visit "/"
@@ -24,11 +24,11 @@ Feature: Find texts
   Scenario: No search
     Then I should see "The first text by Marcus"
     Then I should see "The first text by Zeno"
-    Then I should see "I'm last"
+    Then I should see "I am last"
     Then I should see "Marcus Aurelius"
     Then I should see "Zeno of Citium"
     Then I should see "Seneca"
-    And I see "I'm last" before the other texts
+    And I see "I am last" before the other texts
 
   Scenario: Visit text
     When I click "The first text by Marcus"
@@ -41,7 +41,7 @@ Feature: Find texts
   Scenario: Search for user
     When I fill in "Search" with "sen"
     Then I should see "The first text by Zeno"
-    Then I should see "I'm last"
+    Then I should see "I am last"
     Then I should see "Zeno of Citium"
     Then I should see "Seneca"
     But I should not see "The first text by Marcus"
@@ -51,10 +51,10 @@ Feature: Find texts
     When I fill in "Search" with "first"
     Then I should see "The first text by Zeno"
     Then I should see "The first text by Marcus"
-    But I should not see "I'm last"
+    But I should not see "I am last"
 
   Scenario: Search in body
     When I fill in "Search" with "writing"
     Then I should see "The first text by Zeno"
-    But I should not see "I'm last"
+    But I should not see "I am last"
     But I should not see "The first text by Marcus"

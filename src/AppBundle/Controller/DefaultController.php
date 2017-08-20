@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Elastica\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -14,9 +15,14 @@ class DefaultController extends Controller
     {
         $finder = $this->container->get('fos_elastica.finder.app.text');
 
-        $texts = $finder->find('');
+        $query = new Query();
+        $query->addSort([
+            'id' => [
+                'order' => 'desc',
+            ],
+        ]);
 
-
+        $texts = $finder->find($query);
 
         return $this->render(
             'default/index.html.twig',

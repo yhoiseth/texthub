@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Doctrine\UserManager;
 use League\Flysystem\FilesystemInterface;
 use function Stringy\create as stringy;
+use Codeception\Util\Locator;
 
 
 /**
@@ -431,11 +432,13 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
-     * @Then I see :arg1 before the other texts
+     * @Then I see :title before the other texts
+     * @param string $title
      */
-    public function iSeeBeforeTheOtherTexts($arg1)
+    public function iSeeBeforeTheOtherTexts(string $title)
     {
-        throw new \Codeception\Exception\Incomplete("Step `I see :arg1 before the other texts` is not defined");
+        $this->canSee($title, Locator::firstElement('h3'));
+//        $this->canSee(Locator::firstElement('h3'), $title);
     }
 
     /**

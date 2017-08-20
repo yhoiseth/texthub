@@ -118,6 +118,8 @@ fos_elastica:
                         finder: ~
                 text:
                     properties:
+                        id:
+                            fielddata: true
                         title: ~
                         htmlBody: ~
                         createdBy: ~
