@@ -29,11 +29,11 @@ Feature: Find texts
     Then I should see "Seneca"
     And I see "I am last" before the other texts
 
-  @watch
   Scenario: Visit text
     When I click "The first text by Marcus"
     Then I should be redirected to "/marcus-aurelius/the-first-text-by-marcus"
 
+  @watch
   Scenario: Visit user
     When I click "Zeno of Citium"
     Then I should be redirected to "/zeno"

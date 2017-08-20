@@ -292,6 +292,18 @@ class TextController extends Controller
     }
 
     /**
+     * @param string $username
+     * @Route(
+     *     "/{username}",
+     *     name="app_user_show"
+     * )
+     */
+    public function userAction(string $username)
+    {
+
+    }
+
+    /**
      * @return Form
      */
     private function createNewTextForm(): Form
