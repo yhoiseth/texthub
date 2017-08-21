@@ -37,6 +37,7 @@ Feature: Find texts
   Scenario: Visit user
     When I click "Zeno of Citium"
     Then I should be redirected to "/zeno"
+    And I should see "Zeno of Citium"
 
   Scenario: Search for user
     When I fill in "Search" with "sen"

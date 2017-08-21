@@ -297,10 +297,21 @@ class TextController extends Controller
      *     "/{username}",
      *     name="app_user_show"
      * )
+     * @return Response
      */
     public function userAction(string $username)
     {
+        /** @var User $user */
+        $user = $this
+            ->get('fos_user.user_manager')
+            ->findUserByUsername($username)
+        ;
 
+        return $this
+            ->render(':User:show.html.twig', [
+                'user' => $user,
+            ])
+        ;
     }
 
     /**
