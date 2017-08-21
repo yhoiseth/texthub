@@ -15,19 +15,22 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $searchForm = $this
-            ->createFormBuilder(
+        $searchForm = $this->get('form.factory')
+            ->createNamedBuilder(
+                '',
+                'Symfony\Component\Form\Extension\Core\Type\FormType',
                 null, [
-                'csrf_protection' => false,
-            ])
+                    'csrf_protection' => false,
+                ]
+            )
             ->add(
                 'query',
                 TextType::class, [
-                    'label' => 'Search',
-                    'attr' => [
-                        'autofocus' => true,
-                    ],
-                    'block_name' => '',
+                'label' => 'Search',
+                'attr' => [
+                    'autofocus' => true,
+                ],
+                'block_name' => '',
             ])
             ->setMethod('GET')
             ->getForm()
