@@ -38,7 +38,7 @@ Feature: Find texts
     Then I should be redirected to "/zeno"
     And I should see "Zeno of Citium"
 
-
+  @watch
   Scenario: Search for user
     When I fill in "Search" with "sen"
     Then I should see "The first text by Zeno"
@@ -48,7 +48,6 @@ Feature: Find texts
     But I should not see "The first text by Marcus"
     But I should not see "Marcus Aurelius"
 
-  @watch
   Scenario: Search autofocus
     Then the search field should have focus
 

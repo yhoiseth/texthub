@@ -6,16 +6,20 @@ use Elastica\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $searchForm = $this
-            ->createFormBuilder()
+            ->createFormBuilder(
+                null, [
+                'csrf_protection' => false,
+            ])
             ->add(
                 'query',
                 TextType::class, [
@@ -23,13 +27,20 @@ class DefaultController extends Controller
                     'attr' => [
                         'autofocus' => true,
                     ],
+                    'block_name' => '',
             ])
+            ->setMethod('GET')
             ->getForm()
         ;
 
         $finder = $this->container->get('fos_elastica.finder.app.text');
 
-        $query = new Query();
+        $searchForm->handleRequest($request);
+
+        $providedSearchTerm = $searchForm->getData()['query'];
+
+        $query = new Query($providedSearchTerm);
+
         $query->addSort([
             'id' => [
                 'order' => 'desc',
@@ -37,6 +48,8 @@ class DefaultController extends Controller
         ]);
 
         $texts = $finder->find($query);
+
+
 
         $searchForm = $searchForm->createView();
 
