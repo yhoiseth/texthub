@@ -33,11 +33,11 @@ Feature: Find texts
     When I click "The first text by Marcus"
     Then I should be redirected to "/marcus-aurelius/the-first-text-by-marcus"
 
-  @watch
   Scenario: Visit user
     When I click "Zeno of Citium"
     Then I should be redirected to "/zeno"
     And I should see "Zeno of Citium"
+
 
   Scenario: Search for user
     When I fill in "Search" with "sen"
@@ -47,6 +47,10 @@ Feature: Find texts
     Then I should see "Seneca"
     But I should not see "The first text by Marcus"
     But I should not see "Marcus Aurelius"
+
+  @watch
+  Scenario: Search autofocus
+    Then the search field should have focus
 
   Scenario: Search for title
     When I fill in "Search" with "first"

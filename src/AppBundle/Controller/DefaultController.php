@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Elastica\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class DefaultController extends Controller
 {
@@ -13,6 +14,19 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        $searchForm = $this
+            ->createFormBuilder()
+            ->add(
+                'query',
+                TextType::class, [
+                    'label' => 'Search',
+                    'attr' => [
+                        'autofocus' => true,
+                    ],
+            ])
+            ->getForm()
+        ;
+
         $finder = $this->container->get('fos_elastica.finder.app.text');
 
         $query = new Query();
@@ -24,9 +38,14 @@ class DefaultController extends Controller
 
         $texts = $finder->find($query);
 
+        $searchForm = $searchForm->createView();
+
         return $this->render(
             'default/index.html.twig',
-            compact('texts')
+            compact(
+                'texts',
+                'searchForm'
+            )
         );
     }
 }

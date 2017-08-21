@@ -551,6 +551,14 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
+     * @Then the search field should have focus
+     */
+    public function theSearchFieldShouldHaveFocus()
+    {
+        $this->verifyThatElementHasFocus('#form_query');
+    }
+
+    /**
      * @param string $text
      */
     private function verifyThatTextIsSelected(string $text): void
