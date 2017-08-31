@@ -7,7 +7,11 @@
         <div
                 class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
         >
-            {{ form_start(searchForm) }}
+            {{ form_start(searchForm, {
+                'attr': {
+                    'id': 'js-search-form'
+                }
+            }) }}
             {{ form_widget(searchForm) }}
             {{ form_end(searchForm) }}
 
@@ -55,4 +59,51 @@
             {% endfor %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+      $(document).ready(function() {
+        var $body = $('body');
+        var $form = $body.find('#js-search-form');
+        var $textInput = $form.find('input');
+        var request = null;
+
+        $textInput.on(
+          'input propertychange change selectionchange',
+          function() {
+            console.log($textInput.val());
+
+            if (request !== null) {
+              request.abort();
+              request = null;
+            }
+
+            request = $.ajax({
+              type: $form.attr('method'),
+              url: $form.attr('action'),
+              data: $textInput.val()
+            }).done(function(response) {
+              console.log(response);
+            });
+
+
+
+
+
+
+
+          }
+        );
+
+
+
+
+
+      });
+
+
+    </script>
 {% endblock %}

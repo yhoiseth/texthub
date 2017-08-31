@@ -119,7 +119,7 @@ fos_elastica:
                 text:
                     properties:
                         id:
-                            fielddata: true
+#                            fielddata: true
                         title: ~
                         htmlBody: ~
                         createdBy: ~

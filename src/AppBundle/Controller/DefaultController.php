@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -33,6 +34,11 @@ class DefaultController extends Controller
                 'block_name' => '',
             ])
             ->setMethod('GET')
+            ->setAction(
+                $this->generateUrl(
+                    'app_text_search'
+                )
+            )
             ->getForm()
         ;
 
@@ -63,5 +69,14 @@ class DefaultController extends Controller
                 'searchForm'
             )
         );
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/_search", name="app_text_search")
+     */
+    public function searchAction(Request $request)
+    {
+        return new Response('search');
     }
 }
