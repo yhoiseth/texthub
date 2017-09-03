@@ -2,7 +2,7 @@
 //
 // require('bootstrap-sass');
 
-require('./../main');
+// require('./../main');
 
 $(document).ready(function() {
   var $wrapper = $('#js-editor');
