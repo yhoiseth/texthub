@@ -6,11 +6,7 @@ Encore
   .cleanupOutputBeforeBuild()
   .addEntry(
     'app',
-    './web/assets/js/main.js'
-  )
-  .addEntry(
-    'app_text_edit',
-    './web/assets/js/text/edit.js'
+    './web/assets/js/app.js'
   )
   .addStyleEntry(
     'global',
