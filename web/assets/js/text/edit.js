@@ -1,9 +1,3 @@
-// var $ = require('jquery');
-//
-// require('bootstrap-sass');
-
-// require('./../main');
-
 $(document).ready(function() {
   var $wrapper = $('#js-editor');
   var $form = $wrapper.find('form');

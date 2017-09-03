@@ -446,7 +446,6 @@ class AcceptanceTester extends \Codeception\Actor
     {
         verify(
             $this->executeJS(
-//                "return $('$selector').is(':focus')"
                 "return document.getElementById('$id') === document.activeElement"
             )
         )->true();
