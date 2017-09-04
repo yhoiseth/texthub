@@ -59,12 +59,12 @@ class FormHelper {
         url: $editTextForm.attr('action'),
         data: $editTextForm.serialize()
       })
-        .done(function(response) {
+        .done(
           FormHelper.updateTextStatus(
             $statusTextContainer,
             'Draft saved'
-          );
-        })
+          )
+        )
       ;
     }, 1000);
   }
