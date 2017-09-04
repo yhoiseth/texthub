@@ -2,11 +2,12 @@ const $ = require('jquery');
 
 require('bootstrap-sass');
 
-const TexthubApp = require('./TexthubApp');
+const FormHelper = require('./FormHelper');
+const formHelper = new FormHelper();
 
 $(document).ready(function() {
   var $body = $('body');
-  TexthubApp.initialize($body);
+  formHelper.initialize($body);
 });
 
 $(document).ready(function() {

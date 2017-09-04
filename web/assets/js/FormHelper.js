@@ -1,5 +1,5 @@
-var TexthubApp = {
-  initialize: function($wrapper) {
+class FormHelper {
+  initialize($wrapper) {
     this.$wrapper = $wrapper;
 
     this.$wrapper
@@ -15,19 +15,19 @@ var TexthubApp = {
         'shown.bs.modal',
         this.handleEditTextTitleModalOpen
       );
-  },
+  }
 
-  handleEditTextTitleModalOpen: function() {
+  handleEditTextTitleModalOpen() {
     $(this)
       .find('#appbundle_text_title')
       .select();
-  },
+  }
 
-  handleNewTextModalOpen: function() {
+  handleNewTextModalOpen() {
     $(this)
       .find('#appbundle_text_new_title')
       .select();
   }
-};
+}
 
-module.exports = TexthubApp;
+module.exports = FormHelper;
