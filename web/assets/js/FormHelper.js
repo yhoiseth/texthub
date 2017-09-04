@@ -4,10 +4,10 @@ class FormHelper {
 
     this.timeoutId = undefined;
 
-    
+    this.$editTextForm = this.$body
+      .find('#js-edit-text-form');
 
-    this.$body
-      .find('#js-edit-text-form')
+    this.$editTextForm
       .on(
         'input propertychange change selectionchange',
         this.saveTextBodyDraft.bind(this)
@@ -41,7 +41,7 @@ class FormHelper {
   }
 
   saveTextBodyDraft() {
-    let $editTextForm = this.$body.find('#js-edit-text-form');
+    let $editTextForm = this.$editTextForm;
     let $statusTextContainer = this.$body.find('#js-status-text-container');
 
     $statusTextContainer
