@@ -10,7 +10,7 @@ $(document).ready(function() {
   const $wrapper = $('#js-editor');
   const $form = $wrapper.find('form');
   const $statusText = $('#js-status-text-container');
-  const $textarea = $wrapper.find('textarea');
+  const $textarea = $form.find('textarea');
   let timeoutId;
 
   $textarea
