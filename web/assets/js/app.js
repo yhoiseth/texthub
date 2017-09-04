@@ -8,15 +8,15 @@ $(document).ready(function() {
   new FormHelper();
 
   const $editTextForm = $('#js-edit-text-form');
-  const $statusText = $('#js-status-text-container');
-  const $textarea = $editTextForm.find('textarea');
+  const $statusTextContainer = $('#js-status-text-container');
+  const $bodyInput = $editTextForm.find('textarea');
   let timeoutId;
 
-  $textarea
+  $bodyInput
     .on(
       'input propertychange change selectionchange',
       function() {
-        $statusText.html('Saving draft…');
+        $statusTextContainer.html('Saving draft…');
 
         clearTimeout(timeoutId);
         timeoutId = setTimeout(function() {
@@ -27,7 +27,7 @@ $(document).ready(function() {
             data: $editTextForm.serialize()
           })
             .done(function(response) {
-              $statusText.html('Draft saved');
+              $statusTextContainer.html('Draft saved');
             })
           ;
         }, 1000);
