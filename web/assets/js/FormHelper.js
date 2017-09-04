@@ -79,6 +79,7 @@ class FormHelper {
 
   saveText() {
     const $saveTextBodyButton = this.$saveTextBodyButton;
+
     $saveTextBodyButton.prop('disabled', true);
 
     $.ajax({
