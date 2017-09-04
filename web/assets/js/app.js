@@ -7,9 +7,9 @@ const FormHelper = require('./FormHelper');
 $(document).ready(function() {
   new FormHelper();
 
-  const $form = $('#js-edit-text-form');
+  const $editTextForm = $('#js-edit-text-form');
   const $statusText = $('#js-status-text-container');
-  const $textarea = $form.find('textarea');
+  const $textarea = $editTextForm.find('textarea');
   let timeoutId;
 
   $textarea
@@ -22,9 +22,9 @@ $(document).ready(function() {
         timeoutId = setTimeout(function() {
 
           $.ajax({
-            type: $form.attr('method'),
-            url: $form.attr('action'),
-            data: $form.serialize()
+            type: $editTextForm.attr('method'),
+            url: $editTextForm.attr('action'),
+            data: $editTextForm.serialize()
           })
             .done(function(response) {
               $statusText.html('Draft saved');
