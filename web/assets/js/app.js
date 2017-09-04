@@ -3,11 +3,10 @@ const $ = require('jquery');
 require('bootstrap-sass');
 
 const FormHelper = require('./FormHelper');
-const formHelper = new FormHelper();
 
 $(document).ready(function() {
-  var $body = $('body');
-  formHelper.initialize($body);
+  const $body = $('body');
+  const formHelper = new FormHelper($body);
 });
 
 $(document).ready(function() {

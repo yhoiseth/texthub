@@ -1,5 +1,5 @@
 class FormHelper {
-  initialize($wrapper) {
+  constructor($wrapper) {
     this.$wrapper = $wrapper;
 
     this.$wrapper
