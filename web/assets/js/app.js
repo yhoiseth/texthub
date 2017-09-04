@@ -5,8 +5,7 @@ require('bootstrap-sass');
 const FormHelper = require('./FormHelper');
 
 $(document).ready(function() {
-  const $body = $('body');
-  const formHelper = new FormHelper($body);
+  new FormHelper();
 });
 
 $(document).ready(function() {

@@ -1,15 +1,15 @@
 class FormHelper {
-  constructor($wrapper) {
-    this.$wrapper = $wrapper;
+  constructor() {
+    this.$body = $('body');
 
-    this.$wrapper
+    this.$body
       .find('#new-text-modal')
       .on(
         'shown.bs.modal',
         this.handleNewTextModalOpen
       );
 
-    this.$wrapper
+    this.$body
       .find('#edit-text-title-modal')
       .on(
         'shown.bs.modal',
