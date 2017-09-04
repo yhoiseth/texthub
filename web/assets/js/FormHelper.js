@@ -13,6 +13,15 @@ class FormHelper {
         this.saveTextBodyDraft.bind(this)
       );
 
+    this.$saveTextBodyButton = this.$body
+      .find('#js-save-text-body-button');
+
+    this.$saveTextBodyButton
+      .on(
+        'click',
+        this.saveText.bind(this)
+      );
+
     this.$body
       .find('#new-text-modal')
       .on(
@@ -42,7 +51,6 @@ class FormHelper {
 
   saveTextBodyDraft() {
     const $editTextForm = this.$editTextForm;
-    const updateTextStatus = FormHelper.updateTextStatus;
     const $statusTextContainer = this.$body
       .find('#js-status-text-container');
 
@@ -67,6 +75,25 @@ class FormHelper {
         )
       ;
     }, 1000);
+  }
+
+  saveText() {
+    const $saveTextBodyButton = this.$saveTextBodyButton;
+    $saveTextBodyButton.prop('disabled', true);
+
+    $.ajax({
+      type: 'POST',
+      url: window.location.href,
+      data: {
+        'save': true
+      }
+    })
+      .done(function(response) {
+        if (response === 'text successfully saved') {
+          window.location.href = $saveTextBodyButton.data('url');
+        }
+      })
+    ;
   }
 
   static updateTextStatus($statusTextContainer, status) {
