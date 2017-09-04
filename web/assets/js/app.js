@@ -9,11 +9,11 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-  var $wrapper = $('#js-editor');
-  var $form = $wrapper.find('form');
-  var $statusText = $('#js-status-text-container');
-  var $textarea = $wrapper.find('textarea');
-  var timeoutId;
+  const $wrapper = $('#js-editor');
+  const $form = $wrapper.find('form');
+  const $statusText = $('#js-status-text-container');
+  const $textarea = $wrapper.find('textarea');
+  let timeoutId;
 
   $textarea
     .on(
@@ -38,7 +38,7 @@ $(document).ready(function() {
     )
   ;
 
-  var $saveTextBodyButton = $('#js-save-text-body-button');
+  const $saveTextBodyButton = $('#js-save-text-body-button');
 
   $saveTextBodyButton
     .on(
