@@ -6,9 +6,7 @@ const FormHelper = require('./FormHelper');
 
 $(document).ready(function() {
   new FormHelper();
-});
 
-$(document).ready(function() {
   const $wrapper = $('#js-editor');
   const $form = $wrapper.find('form');
   const $statusText = $('#js-status-text-container');
@@ -44,7 +42,7 @@ $(document).ready(function() {
     .on(
       'click',
       function() {
-        $(this).prop('disabled',true);
+        $(this).prop('disabled', true);
 
         $.ajax({
           type: 'POST',
@@ -61,5 +59,6 @@ $(document).ready(function() {
         ;
 
       }
-    )
+    );
 });
+
