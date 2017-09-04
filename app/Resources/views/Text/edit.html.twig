@@ -60,9 +60,13 @@
                 col-md-8
                 col-md-offset-2
              "
-             id="js-editor"
+             {#id="js-editor"#}
         >
-            {{ form_start(bodyForm) }}
+            {{ form_start(bodyForm, {
+                'attr': {
+                    'id': 'js-edit-text-form'
+                }
+            }) }}
             {{ form_widget(bodyForm) }}
             {{ form_end(bodyForm) }}
         </div>
