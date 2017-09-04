@@ -41,11 +41,15 @@ class FormHelper {
   }
 
   saveTextBodyDraft() {
-    let $editTextForm = this.$editTextForm;
-    let $statusTextContainer = this.$body.find('#js-status-text-container');
+    const $editTextForm = this.$editTextForm;
+    const updateTextStatus = FormHelper.updateTextStatus;
+    const $statusTextContainer = this.$body
+      .find('#js-status-text-container');
 
-    $statusTextContainer
-      .html('Saving draft…');
+    FormHelper.updateTextStatus(
+      $statusTextContainer,
+      'Saving draft…'
+    );
 
     clearTimeout(this.timeoutId);
 
@@ -56,10 +60,17 @@ class FormHelper {
         data: $editTextForm.serialize()
       })
         .done(function(response) {
-          $statusTextContainer.html('Draft saved');
+          FormHelper.updateTextStatus(
+            $statusTextContainer,
+            'Draft saved'
+          );
         })
       ;
     }, 1000);
+  }
+
+  static updateTextStatus($statusTextContainer, status) {
+    $statusTextContainer.html(status);
   }
 }
 
