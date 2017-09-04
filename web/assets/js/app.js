@@ -5,7 +5,7 @@ require('bootstrap-sass');
 const FormHelper = require('./FormHelper');
 
 $(document).ready(function() {
-  new FormHelper();
+  new FormHelper($('body'));
 
   const $editTextForm = $('#js-edit-text-form');
   const $statusTextContainer = $('#js-status-text-container');
@@ -16,21 +16,21 @@ $(document).ready(function() {
     .on(
       'input propertychange change selectionchange',
       function() {
-        $statusTextContainer.html('Saving draft…');
-
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(function() {
-
-          $.ajax({
-            type: $editTextForm.attr('method'),
-            url: $editTextForm.attr('action'),
-            data: $editTextForm.serialize()
-          })
-            .done(function(response) {
-              $statusTextContainer.html('Draft saved');
-            })
-          ;
-        }, 1000);
+        // $statusTextContainer.html('Saving draft…');
+        //
+        // clearTimeout(timeoutId);
+        // timeoutId = setTimeout(function() {
+        //
+        //   $.ajax({
+        //     type: $editTextForm.attr('method'),
+        //     url: $editTextForm.attr('action'),
+        //     data: $editTextForm.serialize()
+        //   })
+        //     .done(function(response) {
+        //       $statusTextContainer.html('Draft saved');
+        //     })
+        //   ;
+        // }, 1000);
       }
     )
   ;
