@@ -2,6 +2,7 @@
 
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Doctrine\UserManager;
@@ -24,7 +25,7 @@ use function Stringy\create as stringy;
  *
  * @SuppressWarnings(PHPMD)
 */
-class AcceptanceTester extends \Codeception\Actor
+class AcceptanceTester extends \Codeception\Actor implements Context
 {
     use _generated\AcceptanceTesterActions;
 
