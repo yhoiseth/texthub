@@ -33,9 +33,9 @@ task('build', function () {
 });
 
 task('deploy:assets:upload', function () {
-    run('yarn run encore production');
-    run('rsync -avzp web/build/ texthub@139.59.161.132:deployer-test/release/web/build');
-})->local();
+    runLocally('yarn run encore production');
+    runLocally('rsync -avzp web/build/ texthub@139.59.161.132:deployer-test/release/web/build');
+});
 
 /**
  * Main task
