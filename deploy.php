@@ -4,7 +4,7 @@ namespace Deployer;
 require 'recipe/symfony3.php';
 
 // Project name
-set('application', 'my_project');
+set('application', 'texthub');
 
 // Project repository
 set('repository', 'https://github.com/yhoiseth/texthub.git');
@@ -24,7 +24,7 @@ add('writable_dirs', []);
 
 host('texthub@139.59.161.132')
     ->stage('stage')
-    ->set('deploy_path', '~/deployer-test');
+    ->set('deploy_path', '~/texthub');
     
 // Tasks
 
@@ -34,7 +34,7 @@ task('build', function () {
 
 task('deploy:assets:upload', function () {
     runLocally('yarn run encore production');
-    runLocally('rsync -avzp web/build/ texthub@139.59.161.132:deployer-test/release/web/build');
+    runLocally('rsync -avzp web/build/ texthub@139.59.161.132:texthub/release/web/build');
 });
 
 /**
