@@ -14,17 +14,21 @@ set('git_tty', true);
 
 // Shared files/dirs between deploys 
 add('shared_files', []);
-add('shared_dirs', []);
+add('shared_dirs', [
+    'var/collections',
+]);
 
 // Writable dirs by web server 
-add('writable_dirs', []);
+add('writable_dirs', [
+    'var/collections',
+]);
 
 
 // Hosts
 
 host('texthub@139.59.161.132')
     ->stage('stage')
-    ->set('deploy_path', '~/texthub');
+    ->set('deploy_path', '~');
     
 // Tasks
 
@@ -34,7 +38,7 @@ task('build', function () {
 
 task('deploy:assets:upload', function () {
     runLocally('yarn run encore production');
-    runLocally('rsync -avzp web/build/ texthub@139.59.161.132:texthub/release/web/build');
+    runLocally('rsync -avzp web/build/ texthub@stage.texthub.io:release/web/build');
 });
 
 /**
