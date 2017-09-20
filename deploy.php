@@ -26,8 +26,8 @@ add('writable_dirs', [
 
 // Hosts
 
-host('texthub@139.59.161.132')
-    ->stage('stage')
+host('texthub@139.59.156.157')
+    ->stage('production')
     ->set('deploy_path', '~');
     
 // Tasks
@@ -38,7 +38,7 @@ task('build', function () {
 
 task('deploy:assets:upload', function () {
     runLocally('yarn run encore production');
-    runLocally('rsync -avzp web/build/ texthub@stage.texthub.io:release/web/build');
+    runLocally('rsync -avzp web/build/ texthub@139.59.156.157:release/web/build');
 });
 
 /**
