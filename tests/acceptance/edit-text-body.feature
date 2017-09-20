@@ -18,7 +18,6 @@ Feature: Edit text body
     And I fill in "Title" with "Meditations Revisited"
     And I click "Let's go"
 
-    @watch
   Scenario: Happy path
     Given I am on "/marcus-aurelius/meditations-revisited/_edit"
     Then I should see "All changes saved"
