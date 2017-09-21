@@ -16,3 +16,5 @@
 /vendor/
 /web/bundles/
 /tests/acceptance.suite.yml
+/node_modules
+/web/build

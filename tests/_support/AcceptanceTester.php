@@ -395,7 +395,7 @@ class AcceptanceTester extends \Codeception\Actor implements Context
     public function theTitleFieldInTheEditTitleFormShouldBeSelected()
     {
         $this->verifyThatElementHasFocus(
-            '#appbundle_text_title'
+            'appbundle_text_title'
         );
 
         $this->verifyThatTextIsSelected(
@@ -409,7 +409,7 @@ class AcceptanceTester extends \Codeception\Actor implements Context
     public function theTitleFieldInTheNewTextFormShouldBeSelected()
     {
         $this->verifyThatElementHasFocus(
-            '#appbundle_text_new_title'
+            'appbundle_text_new_title'
         );
 
         $this->verifyThatTextIsSelected(
@@ -443,11 +443,11 @@ class AcceptanceTester extends \Codeception\Actor implements Context
         )->true();
     }
 
-    private function verifyThatElementHasFocus(string $selector): void
+    private function verifyThatElementHasFocus(string $id): void
     {
         verify(
             $this->executeJS(
-                "return $('$selector').is(':focus')"
+                "return document.getElementById('$id') === document.activeElement"
             )
         )->true();
     }
