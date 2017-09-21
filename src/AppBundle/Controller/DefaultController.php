@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use Elastica\Query;
+use Elastica\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -74,9 +76,29 @@ class DefaultController extends Controller
     /**
      * @param Request $request
      * @Route("/_search", name="app_text_search")
+     * @return Response
      */
     public function searchAction(Request $request)
     {
-        return new Response('search');
+        $searchingFor = $request->query->get('query');
+        $queryBuilder = new QueryBuilder();
+
+        $searchQuery = $queryBuilder->query()->bool()
+            ->addMust(
+                $queryBuilder->query()->match()
+                    ->setFieldQuery('title', $searchingFor)
+            )
+        ;
+
+        $finder = $this->get('fos_elastica.finder.app.text');
+
+        $texts = $finder->find($searchQuery);
+
+        return $this->render(
+            ':Text:list.html.twig',
+            compact(
+                'texts'
+            )
+        );
     }
 }

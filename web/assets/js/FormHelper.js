@@ -12,6 +12,9 @@ class FormHelper {
     this.$searchInput = this.$searchForm
       .find('input[type="text"]');
 
+    this.$textListContainer = this.$body
+      .find('#js-text-list-container');
+
     let textInputChangeEventTypes = 'input propertychange change selectionchange';
 
     this.$searchInput
@@ -54,6 +57,9 @@ class FormHelper {
   }
 
   updateTextList() {
+    const $textListContainer = this.$body
+      .find('#js-text-list-container');
+
     if (this.searchRequest !== null) {
       this.searchRequest.abort();
       this.searchRequest = null;
@@ -62,8 +68,9 @@ class FormHelper {
     this.searchRequest = $.ajax({
       type: this.$searchForm.attr('method'),
       url: this.$searchForm.attr('action'),
-      data: this.$searchInput.val()
+      data: this.$searchForm.serialize()
     }).done(function(response) {
+      $textListContainer.html(response);
       console.log(response);
     });
   }
