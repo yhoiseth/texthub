@@ -32,11 +32,11 @@ host('texthub@139.59.156.157')
     
 // Tasks
 
-task('build', function () {
+task('build', function() {
     run('cd {{release_path}} && build');
 });
 
-task('deploy:assets:upload', function () {
+task('deploy:assets:upload', function() {
     runLocally('yarn run encore production');
     runLocally('rsync -avzp web/build/ texthub@139.59.156.157:release/web/build');
 });
