@@ -83,10 +83,12 @@ class DefaultController extends Controller
         $searchingFor = $request->query->get('query');
         $queryBuilder = new QueryBuilder();
 
+        $matchPhrasePrefixQuery = new Query\MatchPhrasePrefix();
+        $matchPhrasePrefixQuery->setFieldQuery('title', $searchingFor);
+
         $searchQuery = $queryBuilder->query()->bool()
             ->addMust(
-                $queryBuilder->query()->match()
-                    ->setFieldQuery('title', $searchingFor)
+                $matchPhrasePrefixQuery
             )
         ;
 
