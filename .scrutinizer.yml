@@ -9,6 +9,7 @@ build:
       - 'export SYMFONY_DEPRECATIONS_HELPER=weak'
       - 'git config --global user.email "you@example.com"'
       - 'git config --global user.name "Your Name"'
+      - 'yarn run encore production'
 
 filter:
   excluded_paths:

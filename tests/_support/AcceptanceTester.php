@@ -2,6 +2,7 @@
 
 use AppBundle\Entity\Text;
 use AppBundle\Entity\User;
+use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Doctrine\UserManager;
@@ -25,7 +26,7 @@ use Codeception\Util\Locator;
  *
  * @SuppressWarnings(PHPMD)
 */
-class AcceptanceTester extends \Codeception\Actor
+class AcceptanceTester extends \Codeception\Actor implements Context
 {
     use _generated\AcceptanceTesterActions;
 
@@ -395,7 +396,7 @@ class AcceptanceTester extends \Codeception\Actor
     public function theTitleFieldInTheEditTitleFormShouldBeSelected()
     {
         $this->verifyThatElementHasFocus(
-            '#appbundle_text_title'
+            'appbundle_text_title'
         );
 
         $this->verifyThatTextIsSelected(
@@ -409,7 +410,7 @@ class AcceptanceTester extends \Codeception\Actor
     public function theTitleFieldInTheNewTextFormShouldBeSelected()
     {
         $this->verifyThatElementHasFocus(
-            '#appbundle_text_new_title'
+            'appbundle_text_new_title'
         );
 
         $this->verifyThatTextIsSelected(
@@ -570,11 +571,11 @@ class AcceptanceTester extends \Codeception\Actor
         )->true();
     }
 
-    private function verifyThatElementHasFocus(string $selector): void
+    private function verifyThatElementHasFocus(string $id): void
     {
         verify(
             $this->executeJS(
-                "return $('$selector').is(':focus')"
+                "return document.getElementById('$id') === document.activeElement"
             )
         )->true();
     }
