@@ -96,6 +96,10 @@ class DefaultController extends Controller
             ->addShould(
                 $this->matchUserName($queryBuilder, $searchingFor)
             )
+            ->addShould(
+                $queryBuilder->query()->match()
+                    ->setField('htmlBody', $searchingFor)
+            )
         ;
 
         $finder = $this->get('fos_elastica.finder.app.text');

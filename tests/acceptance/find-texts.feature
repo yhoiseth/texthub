@@ -57,7 +57,6 @@ Feature: Find texts
     Then I should see "The first text by Marcus"
     But I should not see "I am last"
 
-  @watch
   Scenario: Search in body
     When I fill in "Search" with "writing"
     And I wait 1 seconds
