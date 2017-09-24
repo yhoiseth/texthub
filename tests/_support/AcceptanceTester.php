@@ -439,7 +439,6 @@ class AcceptanceTester extends \Codeception\Actor implements Context
     public function iSeeBeforeTheOtherTexts(string $title)
     {
         $this->canSee($title, Locator::firstElement('h3'));
-//        $this->canSee(Locator::firstElement('h3'), $title);
     }
 
     /**
