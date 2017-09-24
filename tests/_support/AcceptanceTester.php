@@ -556,7 +556,7 @@ class AcceptanceTester extends \Codeception\Actor implements Context
      */
     public function theSearchFieldShouldHaveFocus()
     {
-        $this->verifyThatElementHasFocus('#query');
+        $this->verifyThatElementHasFocus('query');
     }
 
     /**
