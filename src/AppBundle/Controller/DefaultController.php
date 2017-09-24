@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Elastica\Query;
 use Elastica\Query\MatchPhrasePrefix;
+use Elastica\Query\Nested;
 use Elastica\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -85,34 +86,15 @@ class DefaultController extends Controller
         $searchingFor = $request->query->get('query');
         $queryBuilder = new QueryBuilder();
 
-        $matchPhrasePrefixQuery = new MatchPhrasePrefix();
-        $matchPhrasePrefixQuery->setFieldQuery('title', $searchingFor);
-
-        $matchUserName = new MatchPhrasePrefix();
-        $matchUserName->setFieldQuery('createdBy.name', $searchingFor);
-//        $matchUserName->setFieldFuzziness('createdBy.name', 100);
+        $matchTitle = new MatchPhrasePrefix();
+        $matchTitle->setFieldQuery('title', $searchingFor);
 
         $searchQuery = $queryBuilder->query()->bool()
-            ->addMust(
-                $queryBuilder->query()->bool()
-                    ->addShould(
-                        $matchPhrasePrefixQuery
-                    )
-                    ->addShould(
-                        $queryBuilder->query()->nested()
-                            ->setPath('createdBy')
-                            ->setQuery(
-                                $queryBuilder->query()->bool()
-                                    ->addShould(
-                                        $matchUserName
-                                    )
-                                    ->addShould(
-                                        $queryBuilder->query()->match()
-                                            ->setFieldQuery('createdBy.name', $searchingFor)
-                                            ->setFieldFuzziness('createdBy.name', 5)
-                                    )
-                            )
-                    )
+            ->addShould(
+                $matchTitle
+            )
+            ->addShould(
+                $this->matchUserName($queryBuilder, $searchingFor)
             )
         ;
 
@@ -126,5 +108,33 @@ class DefaultController extends Controller
                 'texts'
             )
         );
+    }
+
+    /**
+     * @param QueryBuilder $queryBuilder
+     * @param string $searchingFor
+     * @return Nested
+     */
+    private function matchUserName(QueryBuilder $queryBuilder, string $searchingFor)
+    {
+        $matchUserNamePrefix = new MatchPhrasePrefix();
+        $matchUserNamePrefix->setFieldQuery('createdBy.name', $searchingFor);
+
+        $matchUserName = $queryBuilder->query()->nested()
+            ->setPath('createdBy')
+            ->setQuery(
+                $queryBuilder->query()->bool()
+                    ->addShould(
+                        $matchUserNamePrefix
+                    )
+                    ->addShould(
+                        $queryBuilder->query()->match()
+                            ->setFieldQuery('createdBy.name', $searchingFor)
+                            ->setFieldFuzziness('createdBy.name', 5)
+                    )
+            )
+        ;
+
+        return $matchUserName;
     }
 }
