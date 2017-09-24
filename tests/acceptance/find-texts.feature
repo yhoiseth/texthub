@@ -50,7 +50,6 @@ Feature: Find texts
   Scenario: Search autofocus
     Then the search field should have focus
 
-  @watch
   Scenario: Search for title
     When I fill in "Search" with "first"
     And I wait 1 seconds
@@ -58,8 +57,10 @@ Feature: Find texts
     Then I should see "The first text by Marcus"
     But I should not see "I am last"
 
+  @watch
   Scenario: Search in body
     When I fill in "Search" with "writing"
+    And I wait 1 seconds
     Then I should see "The first text by Zeno"
     But I should not see "I am last"
     But I should not see "The first text by Marcus"
