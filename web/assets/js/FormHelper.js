@@ -71,7 +71,6 @@ class FormHelper {
       data: this.$searchForm.serialize()
     }).done(function(response) {
       $textListContainer.html(response);
-      console.log(response);
     });
   }
 
