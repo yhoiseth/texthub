@@ -38,7 +38,6 @@ Feature: Find texts
     Then I should be redirected to "/zeno"
     And I should see "Zeno of Citium"
 
-  @watch
   Scenario: Search for user
     When I fill in "Search" with "sen"
     Then I should see "The first text by Zeno"
@@ -51,8 +50,10 @@ Feature: Find texts
   Scenario: Search autofocus
     Then the search field should have focus
 
+  @watch
   Scenario: Search for title
     When I fill in "Search" with "first"
+    And I wait 1 seconds
     Then I should see "The first text by Zeno"
     Then I should see "The first text by Marcus"
     But I should not see "I am last"
