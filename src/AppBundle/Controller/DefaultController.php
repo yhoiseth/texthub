@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Elastica\Query;
+use Elastica\Query\MatchPhrasePrefix;
 use Elastica\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,6 +33,7 @@ class DefaultController extends Controller
                 'label' => 'Search',
                 'attr' => [
                     'autofocus' => true,
+                    'autocomplete' => 'off',
                 ],
                 'block_name' => '',
             ])
@@ -83,12 +85,34 @@ class DefaultController extends Controller
         $searchingFor = $request->query->get('query');
         $queryBuilder = new QueryBuilder();
 
-        $matchPhrasePrefixQuery = new Query\MatchPhrasePrefix();
+        $matchPhrasePrefixQuery = new MatchPhrasePrefix();
         $matchPhrasePrefixQuery->setFieldQuery('title', $searchingFor);
+
+        $matchUserName = new MatchPhrasePrefix();
+        $matchUserName->setFieldQuery('createdBy.name', $searchingFor);
+//        $matchUserName->setFieldFuzziness('createdBy.name', 100);
 
         $searchQuery = $queryBuilder->query()->bool()
             ->addMust(
-                $matchPhrasePrefixQuery
+                $queryBuilder->query()->bool()
+                    ->addShould(
+                        $matchPhrasePrefixQuery
+                    )
+                    ->addShould(
+                        $queryBuilder->query()->nested()
+                            ->setPath('createdBy')
+                            ->setQuery(
+                                $queryBuilder->query()->bool()
+                                    ->addShould(
+                                        $matchUserName
+                                    )
+                                    ->addShould(
+                                        $queryBuilder->query()->match()
+                                            ->setFieldQuery('createdBy.name', $searchingFor)
+                                            ->setFieldFuzziness('createdBy.name', 5)
+                                    )
+                            )
+                    )
             )
         ;
 

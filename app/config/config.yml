@@ -125,7 +125,12 @@ fos_elastica:
 #                            fielddata: true
                         title: ~
                         htmlBody: ~
-                        createdBy: ~
+                        createdBy:
+                            type: nested
+                            properties:
+                                id: ~
+                                name: ~
+
                     persistence:
                         driver: orm
                         model: AppBundle\Entity\Text
