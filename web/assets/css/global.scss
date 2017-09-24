@@ -45,3 +45,9 @@ textarea
 {
   height: 300px !important;
 }
+
+a.panel-wrapper:hover,
+a.username-wrapper
+{
+  text-decoration: none;
+}

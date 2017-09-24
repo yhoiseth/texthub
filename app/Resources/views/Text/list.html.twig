@@ -1,0 +1,42 @@
+{% for text in texts %}
+
+    <div
+            class="panel panel-default"
+    >
+
+        <div
+                class="panel-heading"
+        >
+            <a
+                    href="{{ path('app_text_show', {
+                        'username': text.createdBy.username,
+                        'slugBody': text.currentSlug,
+                    }) }}"
+                    class="panel-wrapper"
+            >
+                <h3
+                        class="panel-title"
+                >
+                    {{ text.title }}
+                </h3>
+            </a>
+        </div>
+        <div
+                class="panel-body"
+        >
+            <a href="{{ path('app_user_show', {
+                'username': text.createdBy.username,
+            }) }}"
+               class="username-wrapper"
+            >
+                {% include ':components:gravatar.html.twig' with {
+                'email': text.createdBy.email,
+                'size': 20,
+                } %}
+                &nbsp;
+                {{ text.createdBy.name }}
+            </a>
+
+        </div>
+    </div>
+{% endfor %}

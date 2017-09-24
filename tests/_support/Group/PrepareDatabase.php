@@ -23,6 +23,7 @@ class PrepareDatabase extends \Codeception\Platform\Group
             'doctrine:database:drop --force',
             'doctrine:database:create',
             'doctrine:migrations:migrate --no-interaction --allow-no-migration --quiet',
+            'fos:elastica:populate',
         ];
 
         foreach ($commands as $command) {

@@ -4,12 +4,31 @@ class FormHelper {
 
     this.timeoutId = undefined;
 
+    this.searchRequest = null;
+
+    this.$searchForm = this.$body
+      .find('#js-search-form');
+
+    this.$searchInput = this.$searchForm
+      .find('input[type="text"]');
+
+    this.$textListContainer = this.$body
+      .find('#js-text-list-container');
+
+    let textInputChangeEventTypes = 'input propertychange change selectionchange';
+
+    this.$searchInput
+      .on(
+        textInputChangeEventTypes,
+        this.updateTextList.bind(this)
+      );
+
     this.$editTextForm = this.$body
       .find('#js-edit-text-form');
 
     this.$editTextForm
       .on(
-        'input propertychange change selectionchange',
+        textInputChangeEventTypes,
         this.saveTextBodyDraft.bind(this)
       );
 
@@ -35,6 +54,24 @@ class FormHelper {
         'shown.bs.modal',
         this.handleEditTextTitleModalOpen
       );
+  }
+
+  updateTextList() {
+    const $textListContainer = this.$body
+      .find('#js-text-list-container');
+
+    if (this.searchRequest !== null) {
+      this.searchRequest.abort();
+      this.searchRequest = null;
+    }
+
+    this.searchRequest = $.ajax({
+      type: this.$searchForm.attr('method'),
+      url: this.$searchForm.attr('action'),
+      data: this.$searchForm.serialize()
+    }).done(function(response) {
+      $textListContainer.html(response);
+    });
   }
 
   handleEditTextTitleModalOpen() {

@@ -103,3 +103,36 @@ oneup_flysystem:
     filesystems:
         collections:
             adapter: collections
+
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app:
+            types:
+                user:
+                    properties:
+                        name: ~
+                        username: ~
+                    persistence:
+                        driver: orm
+                        model: AppBundle\Entity\User
+                        provider: ~
+                        finder: ~
+                text:
+                    properties:
+                        id:
+#                            fielddata: true
+                        title: ~
+                        htmlBody: ~
+                        createdBy:
+                            type: nested
+                            properties:
+                                id: ~
+                                name: ~
+
+                    persistence:
+                        driver: orm
+                        model: AppBundle\Entity\Text
+                        provider: ~
+                        finder: ~

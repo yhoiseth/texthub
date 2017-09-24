@@ -29,6 +29,7 @@
         "doctrine/orm": "^2.5",
         "egeloen/ordered-form-bundle": "^3.0",
         "exercise/htmlpurifier-bundle": "^0.2.4",
+        "friendsofsymfony/elastica-bundle": "^4.0",
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "mopa/bootstrap-bundle": "^3.1",

@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Doctrine\UserManager;
 use League\Flysystem\FilesystemInterface;
 use function Stringy\create as stringy;
+use Codeception\Util\Locator;
 
 
 /**
@@ -429,6 +430,132 @@ class AcceptanceTester extends \Codeception\Actor implements Context
         );
 
         $this->addExample('textBody', $value);
+    }
+
+    /**
+     * @Then I see :title before the other texts
+     * @param string $title
+     */
+    public function iSeeBeforeTheOtherTexts(string $title)
+    {
+        $this->canSee($title, Locator::firstElement('h3'));
+    }
+
+    /**
+     * @Given the users
+     * @param TableNode $users
+     */
+    public function theUsers(TableNode $users)
+    {
+        /** @var string[] $user */
+        foreach ($users->getHash() as $user) {
+            /**
+             * @var string $name
+             * @var string $username
+             */
+            extract($user);
+
+            $this->amOnPage('/register');
+
+            $this->fillField(
+                'Name',
+                $name
+            );
+
+            $this->fillField(
+                'Email',
+                "$username@example.com"
+            );
+
+            $this->fillField(
+                'Username',
+                $username
+            );
+
+            $this->fillField(
+                'Password',
+                $username
+            );
+
+            $this->fillField(
+                'Repeat password',
+                $username
+            );
+
+            $this->submitForm(
+                'form[name="fos_user_registration_form"]',
+                []
+            );
+
+            $this->cantSee('Register');
+
+            $this->amOnPage('/logout');
+        }
+    }
+
+    /**
+     * @Given the texts
+     * @param TableNode $texts
+     */
+    public function theTexts(TableNode $texts)
+    {
+        /** @var string[] $text */
+        foreach ($texts->getHash() as $text) {
+            /**
+             * @var string $username
+             * @var string $title
+             * @var string $body
+             */
+            extract($text);
+
+            $this->amOnPage('/login');
+            $this->fillField(
+                'Email or username',
+                $username
+            );
+
+            $this->fillField(
+                'Password',
+                $username
+            );
+
+            $this->submitForm(
+                'form[action="/login_check"]',
+                []
+            );
+
+            $this->click('New text');
+
+            sleep(1);
+
+            $this->fillField(
+                'Title',
+                $title
+            );
+
+            $this->click("Let's go!");
+
+            $this->shouldContain(
+                'h1',
+                $title
+            );
+
+            $this->iFillInTheBodyFieldWith($body);
+
+            sleep(3);
+
+            $this->click('Save text');
+
+            $this->amOnPage('/logout');
+        }
+    }
+
+    /**
+     * @Then the search field should have focus
+     */
+    public function theSearchFieldShouldHaveFocus()
+    {
+        $this->verifyThatElementHasFocus('query');
     }
 
     /**
